@@ -1,6 +1,6 @@
 ---
 layout: null
-permalink: /instructors.json
+permalink: /all_instructors.json
 ---
 {
   "type": "FeatureCollection",
