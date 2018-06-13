@@ -1,0 +1,30 @@
+---
+layout: null
+permalink: /workshops_past.json
+---
+{% assign first = true %}
+{
+  "type": "FeatureCollection",
+  "features": [
+  {% for workshop in site.data.all_amy.workshops_past %}
+    {% unless workshop.longitude == NULL or workshop.latitude == NULL %}
+      {% if first == true %}
+        {% assign first = false %}
+      {% else %},{% endif %}
+      {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates":[{{workshop.longitude}},{{workshop.latitude}}]
+        },
+        "properties": {
+          "marker-color": "#2b3990",
+          "details": [
+            "<a href='{{workshop.url}}'>{{workshop.venue}}: {{workshop.humandate}}</a>"
+          ]
+        }
+      }
+    {% endunless %}
+  {% endfor %}
+  ]
+}
