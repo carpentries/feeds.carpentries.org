@@ -33,4 +33,5 @@ deploy:
   secret_access_key: $S3_SECRET
   bucket: amydata.carpentries.org
   local-dir: _site
+  upload-dir: amy
   acl: public_read
