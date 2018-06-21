@@ -1,6 +1,6 @@
 # AMY Data Feeds
 
-This is a Jekyll repo for taking YAML Data from AMY and converting it to the JSON and GeoJSON formats used to show workshop and instructor data on The Carpentries website.
+This is a Jekyll repo for taking YAML Data from AMY and converting it to the JSON, GeoJSON and ICS formats used to show dynamic workshop and instructor data on The Carpentries website.
 
 ## Usage 
 
