@@ -20,18 +20,19 @@ make site
 This repo is used to dynamically update AMY instructor profiles. Travis is set to rebuild from the AMY instructor database once per day. Then the built feeds are pushed to an S3 bucket and mapped (via CloudFlare CDN) to `https://carpentries.org/amy/<pagename>`
 
 ## Access Feeds
-
-* [all_instructors.json](https://carpentries.org/amy/all_instructors.json)
-* [dc_instructors.json](https://carpentries.org/amy/dc_instructors.json)
-* [dc_workshops.json](https://carpentries.org/amy/dc_workshops.json)
-* [dc_workshops_past.json](https://carpentries.org/amy/dc_workshops_past.json)
-* [swc_instructors.json](https://carpentries.org/amy/swc_instructors.json)
-* [swc_workshops.json](https://carpentries.org/amy/swc_workshops.json)
-* [swc_workshops_past.json](https://carpentries.org/amy/swc_workshops_past.json)
-* [workshops.json](https://carpentries.org/amy/workshops.json)
-* [workshops_past.json](https://carpentries.org/amy/workshops_past.json)
-* [all_workshops.ics](https://carpentries.org/amy/all_workshops.ics)
-* [dc_workshops.ics](https://carpentries.org/amy/dc_workshops.ics)
-* [swc_workshops.ics](https://carpentries.org/amy/swc_workshops.ics)
+| File        | Description 
+|------------|---------------|
+| [all_instructors.json](https://carpentries.org/amy/all_instructors.json) | GeoJSON - airport, list of names
+| [dc_instructors.json](https://carpentries.org/amy/dc_instructors.json) | GeoJSON - airport, list of names
+| [dc_workshops.json](https://carpentries.org/amy/dc_workshops.json) | GeoJSON - workshop location, html fragment
+| [dc_workshops_past.json](https://carpentries.org/amy/dc_workshops_past.json) | GeoJSON - workshop location, html fragment
+| [swc_instructors.json](https://carpentries.org/amy/swc_instructors.json) | GeoJSON - airport, list of names
+| [swc_workshops.json](https://carpentries.org/amy/swc_workshops.json) | GeoJSON - workshop location, html fragment
+| [swc_workshops_past.json](https://carpentries.org/amy/swc_workshops_past.json) | GeoJSON - workshop location, html fragment
+| [workshops.json](https://carpentries.org/amy/workshops.json) | GeoJSON  workshop location, html fragment
+| [workshops_past.json](https://carpentries.org/amy/workshops_past.json) | GeoJSON - workshop location, html fragment
+| [all_workshops.ics](https://carpentries.org/amy/all_workshops.ics) | GeoJSON - workshop location, html fragment
+| [dc_workshops.ics](https://carpentries.org/amy/dc_workshops.ics) | iCal - Calendar of workshops
+| [swc_workshops.ics](https://carpentries.org/amy/swc_workshops.ics) |iCal - Calendar of workshops
 
 
