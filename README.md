@@ -17,7 +17,7 @@ make site
 
 ## Travis CI Deploy
 
-This repo is used to dynamically update AMY instructor profiles. Travis is set to rebuild from the AMY instructor database once per day.
+This repo is used to dynamically update AMY instructor profiles. Travis is set to rebuild from the AMY instructor database once per day. Then the built feeds are pushed to an S3 bucket and mapped (via CloudFlare CDN) to `https://carpentries.org/amy/<pagename>`
 
 ## Access Feeds
 
