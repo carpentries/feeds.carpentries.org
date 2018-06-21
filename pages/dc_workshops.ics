@@ -1,0 +1,19 @@
+---
+layout: null
+permalink: /dc_workshops.ics
+---
+BEGIN:VCALENDAR{% comment %}Note: no blank lines allowed, and end date is one day past actual end (non-inclusive), so we add seconds per day.{% endcomment %}
+VERSION:2.0
+PRODID:-//Software Carpentry/Workshops//NONSGML v1.0//EN
+{% for series in site.data.dc_amy.workshops %}{% for w in series %}BEGIN:VEVENT
+UID:{{ w.slug }}@software-carpentry.org
+DTSTAMP:{{ site.data.dc_amy.timestamp }}
+DTSTART;VALUE=DATE:{{ w.start|date: '%Y%m%d' }}
+DTEND;VALUE=DATE:{% if w.end == NULL %}{% assign e=w.start %}{% else %}{% assign e=w.end %}{% endif %}{{ e|date: '%s'|plus: 86400|date: '%Y%m%d' }}
+SUMMARY:{{ w.venue|strip }}
+DESCRIPTION;ALTREP="{{ w.url|strip }}":{{ w.url|strip }}
+URL:{{ w.url|strip }}
+LOCATION:{{ w.venue|strip }}
+GEO:{{ w.latitude }};{{ w.longitude }}
+END:VEVENT
+{% endfor %}{% endfor %}END:VCALENDAR
