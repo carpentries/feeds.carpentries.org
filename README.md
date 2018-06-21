@@ -15,3 +15,7 @@ make amy
 make site 
 ```
 
+## Travis CI Deploy
+
+This repo is used to dynamically update AMY instructor profiles. Travis is set to rebuild from the AMY instructor database once per day.
+
