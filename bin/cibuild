@@ -1,5 +1,4 @@
 #!/bin/sh 
 
-pip install requests
 make amy
 make site 
