@@ -30,5 +30,8 @@ This repo is used to dynamically update AMY instructor profiles. Travis is set t
 * [swc_workshops_past.json](https://carpentries.org/amy/swc_workshops_past.json)
 * [workshops.json](https://carpentries.org/amy/workshops.json)
 * [workshops_past.json](https://carpentries.org/amy/workshops_past.json)
+* [all_workshops.ics](https://carpentries.org/amy/all_workshops.ics)
+* [dc_workshops.ics](https://carpentries.org/amy/dc_workshops.ics)
+* [swc_workshops.ics(https://carpentries.org/amy/swc_workshops.ics)
 
 
