@@ -4,7 +4,7 @@ amy :
 	${PY} bin/get-amy.py -u https://amy.software-carpentry.org/api/v1/ -o _data/all_amy.yml --tags-any=SWC,DC,LC
 	${PY} bin/get-amy.py -u https://amy.software-carpentry.org/api/v1/ -o _data/swc_amy.yml --tags-any=SWC
 	${PY} bin/get-amy.py -u https://amy.software-carpentry.org/api/v1/ -o _data/dc_amy.yml --tags-any=DC
-	${PY} bin/get-amy.py -u https://amy.software-carpentry.org/api/v1/ -o _data/dc_amy.yml --tags-any=LC
+	${PY} bin/get-amy.py -u https://amy.software-carpentry.org/api/v1/ -o _data/lc_amy.yml --tags-any=LC
 
 
 ## site       : build files but do not run a server.
