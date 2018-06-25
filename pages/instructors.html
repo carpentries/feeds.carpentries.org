@@ -1,0 +1,10 @@
+---
+layout: null
+permalink: instructors.html 
+---
+
+<table>
+{% for ins in site.data.instructors.results %}
+<tr><td>{{ ins.personal }} {{ ins.family }}</td>
+{% endfor %}
+</table>
