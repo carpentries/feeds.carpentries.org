@@ -26,7 +26,9 @@ This repo is used to dynamically update AMY instructor profiles. Travis is set t
 | [dc_instructors.json](https://carpentries.org/amy/dc_instructors.json) | GeoJSON - airport, list of names
 | [lc_instructors.json](https://carpentries.org/amy/lc_instructors.json) | GeoJSON - airport, list of names
 | [dc_workshops.json](https://carpentries.org/amy/dc_workshops.json) | GeoJSON - workshop location, html fragment
+| [lc_workshops.json](https://carpentries.org/amy/lc_workshops.json) | GeoJSON - workshop location, html fragment
 | [dc_workshops_past.json](https://carpentries.org/amy/dc_workshops_past.json) | GeoJSON - workshop location, html fragment
+| [lc_workshops_past.json](https://carpentries.org/amy/lc_workshops.json) | GeoJSON - workshop location, html fragment
 | [swc_instructors.json](https://carpentries.org/amy/swc_instructors.json) | GeoJSON - airport, list of names
 | [swc_workshops.json](https://carpentries.org/amy/swc_workshops.json) | GeoJSON - workshop location, html fragment
 | [swc_workshops_past.json](https://carpentries.org/amy/swc_workshops_past.json) | GeoJSON - workshop location, html fragment
