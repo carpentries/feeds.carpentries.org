@@ -45,13 +45,13 @@ def main(amy_url, output_file, tags, all_=True):
     # Get stock information from AMY.
     config = {
         'timestamp' : time.strftime('%Y%m%dT%H%M%SZ', time.gmtime()),
-        'badges' : fetch_info(amy_url, 'export/badges.yaml'),
-        'airports' : fetch_info(amy_url, 'export/instructors.yaml')
+        'badges' : fetch_info(amy_url, 'export/badges/'),
+        'airports' : fetch_info(amy_url, 'export/instructors/')
     }
 
     if all_:
         # Fetch workshops that have all of the specified tags.
-        unique_workshops = fetch_info(amy_url, 'events/published.yaml',
+        unique_workshops = fetch_info(amy_url, 'events/published/',
                                       tags=tags)
     else:
         # Fetch workshops for each tag. This is required because AMY treats
@@ -59,7 +59,7 @@ def main(amy_url, output_file, tags, all_=True):
         # that have either SWC tag or DC tag (or both)".
         workshops = []
         for tag in tags:
-            workshops.extend(fetch_info(amy_url, 'events/published.yaml',
+            workshops.extend(fetch_info(amy_url, 'events/published/',
                                         tags=[tag]))
 
         # Remove duplicates. We can't use set() because yaml.load returns lists
@@ -106,6 +106,7 @@ def fetch_info(base_url, url, tags=None):
     address = base_url + url
     if tags:
         query_params = [('tag', tag) for tag in tags]
+        query_params.append((('format', 'yaml')))
         query = urllib.parse.urlencode(query_params)
         address = '{address}?{query}'.format(address=address, query=query)
 
