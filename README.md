@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.com/carpentries/amy-feeds.svg?branch=master)](https://travis-ci.com/carpentries/amy-feeds)
+
 # AMY Data Feeds
 
 This is a Jekyll repo for taking YAML Data from AMY and converting it to the JSON, GeoJSON and ICS formats used to show dynamic workshop and instructor data on The Carpentries website.
