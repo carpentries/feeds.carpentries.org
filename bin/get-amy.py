@@ -127,11 +127,24 @@ def split_workshops(workshops, today):
     return past, current
 
 
+def get_initials(fullname):
+    xs = (fullname)
+    name_list = xs.split()
+
+    initials = ""
+
+    for name in name_list:  # go through each name
+      initials += name[0].upper()  # append the initial
+    return initials
+
 def sort_flags(data):
     '''Create sorted list of unique flags, lower-casing as a side effect.'''
 
     for entry in data:
         entry['country'] = entry['country'].lower()
+        # Redact names to just initials 
+        if 'instructors' in entry:
+            entry['instructors'] = [ {'name': get_initials(item['name'])} for item in entry['instructors'] ]
     return sorted({entry['country'] for entry in data if entry['country']})
 
 
