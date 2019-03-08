@@ -22,9 +22,8 @@ fi
 ## Download the file from Redash
 REDASH_API_INSTRUCTORS="https://data.softwarecarpentry.org/api/queries/128/results.json?api_key=$REDASH_API_INSTRUCTORS_KEY"
 
-##curl "$REDASH_API_INSTRUCTORS" |
-##jq '.query_result.data.rows' > "$OUTPUT_PATH"/instructors_raw.json
-
+curl "$REDASH_API_INSTRUCTORS" |
+    jq '.query_result.data.rows' > "$OUTPUT_PATH"/instructors_raw.json
 
 ## Make sure the file was successfully downloaded
 if [ ! -s "$OUTPUT_PATH"/instructors_raw.json ]
