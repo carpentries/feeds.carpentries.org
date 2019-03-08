@@ -28,5 +28,4 @@ deploy:
   secret_access_key: $S3_SECRET
   bucket: feeds.carpentries.org
   local-dir: _site
-  upload-dir: .
   acl: public_read
