@@ -26,7 +26,7 @@ deploy:
   provider: s3
   access_key_id: AKIAIBW6BTQUUTKCF5YA
   secret_access_key: $S3_SECRET
-  bucket: amydata.carpentries.org
+  bucket: feeds.carpentries.org
   local-dir: _site
-  upload-dir: amy
+  upload-dir: .
   acl: public_read
