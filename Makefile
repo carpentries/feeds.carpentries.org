@@ -12,6 +12,7 @@ instructors:
 site :
 	bundle exec jekyll build
 	find _data -name '*_plain.json' -exec cp {} _site/ \;
+	find _data -name 'publish_instructors.json' -exec cp {} _site/ \;
 
 ## install    : install missing Ruby gems using bundle.
 install :
