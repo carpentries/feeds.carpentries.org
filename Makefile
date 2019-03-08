@@ -1,3 +1,10 @@
+## everything : rebuild all data files and then serve the site
+everything:
+	@make workshops
+	@make instructors
+	@make site
+
+
 ## workshops  : workshop JSON feeds from AMY data accessed from redash
 workshops :
 	./bin/make_workshop_feeds.sh _data/
@@ -17,12 +24,6 @@ site :
 ## install    : install missing Ruby gems using bundle.
 install :
 	bundle install
-
-## everything : rebuild all data files and then serve the site
-everything:
-	@make workshops
-	@make instructors
-	@make site
 
 #-------------------------------------------------------------------------------
 
