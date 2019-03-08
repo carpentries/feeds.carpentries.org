@@ -32,3 +32,12 @@ jq 'map(select(.end_date | strptime("%Y-%m-%d")? | mktime >= now)) | sort_by(.st
 for prgm in "${CARPENTRIES_PROGRAMS[@]}"; do
     jq "map(select(.tag_name == \"$prgm\"))" < "$OUTPUT_PATH"/all_upcoming_workshops_plain.json > "$OUTPUT_PATH"/"$prgm"_upcoming_workshops_plain.json
 done
+
+## Instructors -----------------------------------------------------------------
+
+## For the instructors the content of the original REDASH query (#128) remains
+## secret.
+## From it, we generate 2 public files:
+## - one with filename, person_name, github, twitter, url, country, badges,
+##   gravatar, orcid_
+## - one with the instructors' initials, their lat/long, their country.

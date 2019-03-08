@@ -5,18 +5,18 @@ permalink: /all_instructors.json
 {
   "type": "FeatureCollection",
   "features": [
-  {% for airport in site.data.all_amy.airports %}
+  {% for airport in site.data.amy_airports %}
     {
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates":[{{airport.longitude}},{{airport.latitude}}]
+        "coordinates":[{{airport.airport_longitude}},{{airport.airport_latitude}}]
       },
       "properties": {
         "marker-color": "#2b3990",
         "details": [
           {% for i in airport.instructors %}
-          "{{i.name|escape}}"{% unless forloop.last %},{% endunless%}
+          "{{i | escape}}"{% unless forloop.last %},{% endunless%}
           {% endfor %}
         ]
       }

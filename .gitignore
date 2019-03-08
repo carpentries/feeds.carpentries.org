@@ -2,3 +2,5 @@ _data/*.yml
 _site
 .sass-cache
 .jekyll-metadata
+api_key.sh
+/Gemfile.lock
