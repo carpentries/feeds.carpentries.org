@@ -34,8 +34,8 @@ fi
 
 ## anonymized feed with airport information
 jq '
-  .[].person_name |= (. | gsub("(\\b(?<fl>[A-Za-z]{1})\\w*)";"\(.fl)") |
-   gsub("[\\s\\-\\.]"; "")) |
+  .[].person_name_with_middle |= (. | gsub("(\\b(?<fl>[A-Za-z]{1})\\w*)";"\(.fl)") |
+   gsub("[^A-Za-z]"; "")) |
    group_by(.iata) |
    map(
      reduce .[] as $x(.[0] | del (.person_name_with_middle);
