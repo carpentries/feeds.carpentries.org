@@ -6,22 +6,18 @@ This is a Jekyll repo for taking YAML Data from AMY and converting it to the JSO
 
 ## Usage 
 
-Set environment variables in the shell for AMY authentication:
-```
-export AMY_USER="XXXX"
-export AMY_PASS="XXXX"
-```
+Set environment variables in the shell for the Redash API key for [query 128](https://data.softwarecarpentry.org/queries/128):
 
 ```
-make amy
-make site 
+make everything 
 ```
 
 ## Travis CI Deploy
 
-This repo is used to dynamically update AMY instructor profiles. Travis is set to rebuild from the AMY instructor database once per day. Then the built feeds are pushed to an S3 bucket and mapped (via CloudFlare CDN) to `https://carpentries.org/amy/<pagename>`
+Travis builds are triggered for this repo by a CRON job on the build.carpentries.org server. The files are are pushed to an S3 bucket and mapped (via CloudFlare CDN) to `https://feeds.carpentries.org/<pagename>`.
 
 ## Access Feeds
+
 | File        | Description 
 |------------|---------------|
 | [all_instructors.json](https://carpentries.org/amy/all_instructors.json) | GeoJSON - airport, list of names
