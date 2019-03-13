@@ -70,7 +70,13 @@ jq 'map(
                then . else "http://" + . end |
    .orcid   |= if (. != null) then . | split("/") | last else . end |
    .twitter |= if (. != null) then . | gsub("^@";  "") else . end |
-   .person_email |= if (. != null) then . | ascii_downcase else . end
+   .person_email |= if (. != null) then . | ascii_downcase else . end |
+   .is_maintainer =  contains({badges: "6"}) |
+   .is_swc_instructor = contains({badges: "2"}) |
+   .is_dc_instructor = contains({badges: "5"}) |
+   .is_lc_instructor = contains({badges: "10"}) |
+   .is_trainer = contains({badges: "7"}) |
+   .is_mentor = contains({badges: "8"})
 )' < "$OUTPUT_PATH"/instructors_raw.json > /tmp/instructors_clean.json
 
 
