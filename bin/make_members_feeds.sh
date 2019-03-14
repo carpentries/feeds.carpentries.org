@@ -132,7 +132,7 @@ jq '
        instructors: .people
      }
    )
-' < /tmp/instructors_raw.json > "$OUTPUT_PATH"/all_instructors_by_airports.json
+' < /tmp/instructors_raw.json > "$OUTPUT_PATH"/all_instructors_by_airport.json
 
 jq '
    map(select(.publish_profile == 1)) |
@@ -160,7 +160,7 @@ jq '
        instructors: .people
      }
    )
-' < /tmp/instructors_raw.json > "$OUTPUT_PATH"/swc_instructors_by_airports.json
+' < /tmp/instructors_raw.json > "$OUTPUT_PATH"/swc_instructors_by_airport.json
 
 
 jq '
@@ -189,7 +189,7 @@ jq '
        instructors: .people
      }
    )
-' < /tmp/instructors_raw.json > "$OUTPUT_PATH"/dc_instructors_by_airports.json
+' < /tmp/instructors_raw.json > "$OUTPUT_PATH"/dc_instructors_by_airport.json
 
 
 jq '
@@ -218,7 +218,7 @@ jq '
        instructors: .people
      }
    )
-' < /tmp/instructors_raw.json > "$OUTPUT_PATH"/lc_instructors_by_airports.json
+' < /tmp/instructors_raw.json > "$OUTPUT_PATH"/lc_instructors_by_airport.json
 
 
 

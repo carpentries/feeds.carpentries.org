@@ -5,7 +5,7 @@ permalink: /all_instructors_by_airport.geojson
 {
   "type": "FeatureCollection",
   "features": [
-  {% for airport in site.data.all_instructors_by_airports %}
+  {% for airport in site.data.all_instructors_by_airport %}
     {
       "type": "Feature",
       "geometry": {
