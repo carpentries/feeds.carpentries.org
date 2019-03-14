@@ -1,7 +1,7 @@
 ## everything : rebuild all data files and then the site
 everything:
 	@make workshops
-	@make instructors
+	@make members
 	@make site
 
 
@@ -9,8 +9,8 @@ everything:
 workshops :
 	./bin/make_workshop_feeds.sh _data/
 
-instructors:
-	./bin/make_instructors_feeds.sh _data/
+members:
+	./bin/make_members_feeds.sh _data/
 
 ## site       : build files but do not run a server.
 ## the files with the _plain suffix are created from the Redash query
