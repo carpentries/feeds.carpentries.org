@@ -1,6 +1,6 @@
 ---
 layout: null
-permalink: /dc_workshops.json
+permalink: /dc_workshops.geojson
 ---
 {% assign first = true %}
 {
