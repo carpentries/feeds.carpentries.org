@@ -31,10 +31,10 @@ curl "$REDASH_API_INSTRUCTORS" |
    .is_lc_instructor = contains({badges: "10"}) |
    .is_trainer = contains({badges: "7"}) |
    .is_mentor = contains({badges: "8"})
-   )' > "$OUTPUT_PATH"/instructors_raw.json
+   )' > /tmp/instructors_raw.json
 
 ## Make sure the file was successfully downloaded
-if [ ! -s "$OUTPUT_PATH"/instructors_raw.json ]
+if [ ! -s /tmp/instructors_raw.json ]
 then
     echo "Couldn't get data from Redash server."
     exit 1
@@ -102,7 +102,7 @@ jq '{
       { (.[].country): . | length }
     ) | unique
 }
-' < "$OUTPUT_PATH"/instructors_raw.json > "$OUTPUT_PATH"/badges_stats.json
+' < /tmp/instructors_raw.json > "$OUTPUT_PATH"/badges_stats.json
 
 
 ## anonymized feed with airport information
@@ -132,7 +132,7 @@ jq '
        instructors: .people
      }
    )
-' < "$OUTPUT_PATH"/instructors_raw.json > "$OUTPUT_PATH"/all_instructors_by_airports.json
+' < /tmp/instructors_raw.json > "$OUTPUT_PATH"/all_instructors_by_airports.json
 
 jq '
    map(select(.publish_profile == 1)) |
@@ -160,7 +160,7 @@ jq '
        instructors: .people
      }
    )
-' < "$OUTPUT_PATH"/instructors_raw.json > "$OUTPUT_PATH"/swc_instructors_by_airports.json
+' < /tmp/instructors_raw.json > "$OUTPUT_PATH"/swc_instructors_by_airports.json
 
 
 jq '
@@ -189,7 +189,7 @@ jq '
        instructors: .people
      }
    )
-' < "$OUTPUT_PATH"/instructors_raw.json > "$OUTPUT_PATH"/dc_instructors_by_airports.json
+' < /tmp/instructors_raw.json > "$OUTPUT_PATH"/dc_instructors_by_airports.json
 
 
 jq '
@@ -218,7 +218,7 @@ jq '
        instructors: .people
      }
    )
-' < "$OUTPUT_PATH"/instructors_raw.json > "$OUTPUT_PATH"/lc_instructors_by_airports.json
+' < /tmp/instructors_raw.json > "$OUTPUT_PATH"/lc_instructors_by_airports.json
 
 
 
@@ -238,7 +238,7 @@ jq '
    .twitter |= if (. != null) then . | gsub("^@";  "") else . end |
    .person_email |= if (. != null) then . | ascii_downcase else . end |
    del(.publish_profile)
-)' < "$OUTPUT_PATH"/instructors_raw.json > /tmp/instructors_clean.json
+)' < /tmp/instructors_raw.json > /tmp/instructors_clean.json
 
 
 jq -c '.[]' < /tmp/instructors_clean.json |
@@ -260,3 +260,4 @@ jq -c '.[]' < /tmp/instructors_clean.json |
 
 
 rm /tmp/instructors_clean.json
+rm /tmp/instructors_raw.json
