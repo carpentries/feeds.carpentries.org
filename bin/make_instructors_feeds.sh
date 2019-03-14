@@ -107,6 +107,7 @@ jq '{
 
 ## anonymized feed with airport information
 jq '
+   map(select(.publish_profile == 1)) |
   .[].person_name_with_middle |= (. | gsub("(\\b(?<fl>[A-Za-z]{1})\\w*)";"\(.fl)") |
    gsub("[^A-Za-z]"; "")) |
    group_by(.iata) |
@@ -116,7 +117,7 @@ jq '
    ) |
    map(
       del(
-        .person_name, .person_email,
+        .person_name, .person_email, .publish_profile,
         .github, .url, .country, .twitter, .orcid,
         .badges
          )
@@ -138,12 +139,15 @@ jq '
 ## We remove potential '@' in front of twitter handle
 ## We make sure the email are all lower case to get the correct MD5 hash
 
-jq 'map(
+jq '
+   map(select(.publish_profile == 1)) |
+   map(
    .url |= if ((. | length) == 0 or test("^https?"))
                then . else "http://" + . end |
    .orcid   |= if (. != null) then . | split("/") | last else . end |
    .twitter |= if (. != null) then . | gsub("^@";  "") else . end |
    .person_email |= if (. != null) then . | ascii_downcase else . end |
+   del(.publish_profile)
 )' < "$OUTPUT_PATH"/instructors_raw.json > /tmp/instructors_clean.json
 
 
