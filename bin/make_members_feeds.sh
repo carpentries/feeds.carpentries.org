@@ -30,7 +30,8 @@ curl "$REDASH_API_INSTRUCTORS" |
    .is_dc_instructor = contains({badges: "5"}) |
    .is_lc_instructor = contains({badges: "10"}) |
    .is_trainer = contains({badges: "7"}) |
-   .is_mentor = contains({badges: "8"})
+   .is_mentor = contains({badges: "8"}) |
+   .is_instructor = .is_swc_instructor or .is_dc_instructor or .is_lc_instructor
    )' > /tmp/instructors_raw.json
 
 ## Make sure the file was successfully downloaded
