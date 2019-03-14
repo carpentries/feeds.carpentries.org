@@ -2,7 +2,7 @@
 layout: null
 permalink: /dc_workshops.ics
 ---
-{% assign workshops = site.data.all_workshops_plain | where_exp: "item", "item.tag_name contains 'DC'" %}
+{% assign workshops = site.data.all_workshops | where_exp: "item", "item.tag_name contains 'DC'" %}
 BEGIN:VCALENDAR{% comment %}Note: no blank lines allowed, and end date is one day past actual end (non-inclusive), so we add seconds per day.{% endcomment %}
 VERSION:2.0
 PRODID:-//Data Carpentry/Workshops//NONSGML v1.0//EN

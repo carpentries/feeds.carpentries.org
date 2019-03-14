@@ -6,7 +6,7 @@ permalink: /lc_workshops_past.geojson
 {
   "type": "FeatureCollection",
   "features": [
-  {% for workshop in site.data.LC_past_workshops_plain %}
+  {% for workshop in site.data.lc_past_workshops %}
     {% unless workshop.longitude == NULL or workshop.latitude == NULL %}
       {% if first == true %}
         {% assign first = false %}
@@ -21,7 +21,7 @@ permalink: /lc_workshops_past.geojson
           "marker-color": "#2b3990",
           "details": [
             "<a href='{{workshop.url}}'>{{workshop.venue}}: {{workshop.start_date | date: "%b %-d"}} - {{workshop.end_date | date: "%b %-d, %Y"}}</a>"
-          ]
+          ]lc
         }
       }
     {% endunless %}

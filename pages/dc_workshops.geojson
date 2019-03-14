@@ -6,7 +6,7 @@ permalink: /dc_workshops.geojson
 {
   "type": "FeatureCollection",
   "features": [
-  {% for workshop in site.data.DC_upcoming_workshops_plain %}
+  {% for workshop in site.data.dc_upcoming_workshops %}
     {% unless workshop.longitude == NULL or workshop.latitude == NULL %}
       {% if first == true %}
         {% assign first = false %}
