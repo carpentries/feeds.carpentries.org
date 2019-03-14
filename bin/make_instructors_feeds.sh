@@ -108,8 +108,10 @@ jq '{
 ## anonymized feed with airport information
 jq '
    map(select(.publish_profile == 1)) |
+   map(select(.is_swc_instructor or .is_dc_instructor or .is_lc_instructor))  |
   .[].person_name_with_middle |= (. | gsub("(\\b(?<fl>[A-Za-z]{1})\\w*)";"\(.fl)") |
    gsub("[^A-Za-z]"; "")) |
+   map(select(.iata != null)) |
    group_by(.iata) |
    map(
      reduce .[] as $x(.[0] | del (.person_name_with_middle);
