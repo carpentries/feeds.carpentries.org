@@ -1,4 +1,4 @@
-## everything : rebuild all data files and then serve the site
+## everything : rebuild all data files and then the site
 everything:
 	@make workshops
 	@make instructors
@@ -20,6 +20,7 @@ site :
 	bundle exec jekyll build
 	find _data -name '*_plain.json' -exec cp {} _site/ \;
 	find _data -name 'publish_instructors.json' -exec cp {} _site/ \;
+	find _data -name 'badges_stats.json' -exec cp {} _site/ \;
 
 ## install    : install missing Ruby gems using bundle.
 install :
