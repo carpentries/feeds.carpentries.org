@@ -256,7 +256,7 @@ jq -c '.[]' < /tmp/instructors_clean.json |
             .iata, .latitude, .longitude,
             .person_email
           ))
-    '> "$OUTPUT_PATH"/publish_instructors.json
+    '> "$OUTPUT_PATH"/badged_members.json
 
 
 rm /tmp/instructors_clean.json
