@@ -40,6 +40,71 @@ then
     exit 1
 fi
 
+## statistics
+jq '{
+  n_maintainers: map(select(.is_maintainer)) | length,
+  n_trainers: map(select(.is_trainer)) | length,
+  n_instructors: map(select(
+      .is_swc_instructor or .is_dc_instructor or
+      .is_lc_instructor
+  )) | length,
+  n_swc_instructors: map(select(.is_swc_instructor)) | length,
+  n_dc_instructors:  map(select(.is_dc_instructor)) | length,
+  n_lc_instructors:  map(select(.is_lc_instructor)) | length,
+  n_mentors:         map(select(.is_mentor))  | length,
+  instructors_by_country: map(
+    select(
+       .country != "" and
+      (.is_swc_instructor or .is_lc_instructor or .is_dc_instructor)
+    )) |
+    group_by(.country) |
+    map(
+      { (.[].country): . | length }
+    ) | unique ,
+  dc_instructors_by_country: map(
+    select(
+     .country != "" and .is_dc_instructor
+    )) |
+    group_by(.country) |
+    map(
+      { (.[].country): . | length }
+    ) | unique,
+  lc_instructors_by_country: map(
+    select(
+     .country != "" and .is_lc_instructor
+    )) |
+    group_by(.country) |
+    map(
+      { (.[].country): . | length }
+    ) | unique,
+  swc_instructors_by_country: map(
+    select(
+     .country != "" and .is_swc_instructor
+    )) |
+    group_by(.country) |
+    map(
+      { (.[].country): . | length }
+    ) | unique,
+  trainers_by_country: map(
+      select(
+     .country != "" and .is_trainer
+    )) |
+    group_by(.country) |
+    map(
+      { (.[].country): . | length }
+    ) | unique,
+  maintainers_by_country: map(
+      select(
+     .country != "" and .is_maintainer
+    )) |
+    group_by(.country) |
+    map(
+      { (.[].country): . | length }
+    ) | unique
+}
+' < "$OUTPUT_PATH"/instructors_raw.json > "$OUTPUT_PATH"/badges_stats.json
+
+
 ## anonymized feed with airport information
 jq '
   .[].person_name_with_middle |= (. | gsub("(\\b(?<fl>[A-Za-z]{1})\\w*)";"\(.fl)") |
