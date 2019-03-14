@@ -1,6 +1,6 @@
 ---
 layout: null
-permalink: /all_instructors.json
+permalink: /all_instructors_by_airport.geojson
 ---
 {
   "type": "FeatureCollection",
