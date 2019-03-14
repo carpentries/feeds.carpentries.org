@@ -23,7 +23,15 @@ fi
 REDASH_API_INSTRUCTORS="https://data.softwarecarpentry.org/api/queries/128/results.json?api_key=$REDASH_API_INSTRUCTORS_KEY"
 
 curl "$REDASH_API_INSTRUCTORS" |
-    jq '.query_result.data.rows' > "$OUTPUT_PATH"/instructors_raw.json
+    jq '.query_result.data.rows |
+    map(
+   .is_maintainer =  contains({badges: "6"}) |
+   .is_swc_instructor = contains({badges: "2"}) |
+   .is_dc_instructor = contains({badges: "5"}) |
+   .is_lc_instructor = contains({badges: "10"}) |
+   .is_trainer = contains({badges: "7"}) |
+   .is_mentor = contains({badges: "8"})
+   )' > "$OUTPUT_PATH"/instructors_raw.json
 
 ## Make sure the file was successfully downloaded
 if [ ! -s "$OUTPUT_PATH"/instructors_raw.json ]
@@ -71,12 +79,6 @@ jq 'map(
    .orcid   |= if (. != null) then . | split("/") | last else . end |
    .twitter |= if (. != null) then . | gsub("^@";  "") else . end |
    .person_email |= if (. != null) then . | ascii_downcase else . end |
-   .is_maintainer =  contains({badges: "6"}) |
-   .is_swc_instructor = contains({badges: "2"}) |
-   .is_dc_instructor = contains({badges: "5"}) |
-   .is_lc_instructor = contains({badges: "10"}) |
-   .is_trainer = contains({badges: "7"}) |
-   .is_mentor = contains({badges: "8"})
 )' < "$OUTPUT_PATH"/instructors_raw.json > /tmp/instructors_clean.json
 
 
