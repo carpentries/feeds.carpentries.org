@@ -1,12 +1,16 @@
 [![Build Status](https://travis-ci.com/carpentries/amy-feeds.svg?branch=master)](https://travis-ci.com/carpentries/amy-feeds)
 
-# AMY Data Feeds
+# The Carpentries Data Feeds
 
-This is a Jekyll repo for taking YAML Data from AMY and converting it to the JSON, GeoJSON and ICS formats used to show dynamic workshop and instructor data on The Carpentries website.
+This is a Jekyll repo for taking data from AMY and converting it to the JSON, GeoJSON and ICS formats used to show dynamic workshop and community member (trainers, instructors, maintainers, ...) data on The Carpentries websites.
 
 ## Usage 
 
-Set environment variables in the shell for the Redash API key for [query 128](https://data.softwarecarpentry.org/queries/128):
+If you want to run it locally, make sure you set the environment variable in the
+shell for the Redash API key for [query
+128](https://data.softwarecarpentry.org/queries/128).
+You can then run the following command which will create all the feeds within
+the `_site` folder.
 
 ```
 make everything 
@@ -14,37 +18,50 @@ make everything
 
 ## Travis CI Deploy
 
-Travis builds are triggered for this repo by a CRON job on the build.carpentries.org server. The files are are pushed to an S3 bucket and mapped (via CloudFlare CDN) to `https://feeds.carpentries.org/<pagename>`.
+Travis builds are triggered for this repo by a CRON job on the `build.carpentries.org` server. The files are are pushed to an S3 bucket and mapped (via CloudFlare CDN) to `https://feeds.carpentries.org/<pagename>`.
 
 ## Access Feeds
 
-| File        | Description 
-|------------|---------------|
-| [all_instructors.json](https://feeds.carpentries.org/all_instructors.json) | GeoJSON - airport, list of names
-| [dc_instructors.json](https://feeds.carpentries.org/dc_instructors.json) | GeoJSON - airport, list of names
-| [lc_instructors.json](https://feeds.carpentries.org/lc_instructors.json) | GeoJSON - airport, list of names
-| [dc_workshops.json](https://feeds.carpentries.org/dc_workshops.json) | GeoJSON - workshop location, html fragment
-| [lc_workshops.json](https://feeds.carpentries.org/lc_workshops.json) | GeoJSON - workshop location, html fragment
-| [dc_workshops_past.json](https://feeds.carpentries.org/dc_workshops_past.json) | GeoJSON - workshop location, html fragment
-| [lc_workshops_past.json](https://feeds.carpentries.org/lc_workshops.json) | GeoJSON - workshop location, html fragment
-| [swc_instructors.json](https://feeds.carpentries.org/swc_instructors.json) | GeoJSON - airport, list of names
-| [swc_workshops.json](https://feeds.carpentries.org/swc_workshops.json) | GeoJSON - workshop location, html fragment
-| [swc_workshops_past.json](https://feeds.carpentries.org/swc_workshops_past.json) | GeoJSON - workshop location, html fragment
-| [workshops.json](https://feeds.carpentries.org/workshops.json) | GeoJSON  workshop location, html fragment
-| [workshops_past.json](https://feeds.carpentries.org/workshops_past.json) | GeoJSON - workshop location, html fragment
-| [all_workshops.ics](https://feeds.carpentries.org/all_workshops.ics) | GeoJSON - workshop location, html fragment
-| [dc_workshops.ics](https://feeds.carpentries.org/dc_workshops.ics) | iCal - Calendar of workshops
-| [swc_workshops.ics](https://feeds.carpentries.org/swc_workshops.ics) |iCal - Calendar of workshops
-| [DC_past_workshops_plain.json](https://feeds.carpentries.org/DC_past_workshops_plain.json) | JSON of past DC workshops |
-| [DC_upcoming_workshops_plain.json](https://feeds.carpentries.org/DC_upcoming_workshops_plain.json) | JSON of upcoming DC workshops |
-| [LC_past_workshops_plain.json](https://feeds.carpentries.org/LC_past_workshops_plain.json) | JSON of past LC workshops |
-| [LC_upcoming_workshops_plain.json](https://feeds.carpentries.org/LC_upcoming_workshops_plain.json) | JSON of upcoming LC workshops |
-| [SWC_past_workshops_plain.json](https://feeds.carpentries.org/SWC_past_workshops_plain.json) | JSON of past SWC workshops |
-| [SWC_upcoming_workshops_plain.json](https://feeds.carpentries.org/SWC_upcoming_workshops_plain.json) | JSON of upcoming SWC workshops |
-| [TTT_past_workshops_plain.json](https://feeds.carpentries.org/TTT_past_workshops_plain.json) | JSON of past Instructor training workshops |
-| [TTT_upcoming_workshops_plain.json](https://feeds.carpentries.org/TTT_upcoming_workshops_plain.json) | JSON of upcoming Instructor training workshops |
-| [all_past_workshops_plain.json](https://feeds.carpentries.org/all_past_workshops_plain.json) | JSON of all past workshops since 2012 |
-| [all_upcoming_workshops_plain.json](https://feeds.carpentries.org/all_upcoming_workshops_plain.json) | JSON of all upcoming workshops |
-| [all_workshops_plain.json](https://feeds.carpentries.org/all_workshops_plain.json) | JSON of all workshops |
+### JSON files
+
+#### Workshops
+
+*   [all\_instructors\_by\_airport.json](https://feeds.carpentries.org/all_instructors_by_airport.json)
+*   [all\_past\_workshops.json](https://feeds.carpentries.org/all_past_workshops.json)
+*   [all\_upcoming\_workshops.json](https://feeds.carpentries.org/all_upcoming_workshops.json)
+*   [all\_workshops.json](https://feeds.carpentries.org/all_workshops.json)
+*   [dc\_past\_workshops.json](https://feeds.carpentries.org/dc_past_workshops.json)
+*   [dc\_upcoming\_workshops.json](https://feeds.carpentries.org/dc_upcoming_workshops.json)
+*   [lc\_past\_workshops.json](https://feeds.carpentries.org/lc_past_workshops.json)
+*   [lc\_upcoming\_workshops.json](https://feeds.carpentries.org/lc_upcoming_workshops.json)
+*   [swc\_past\_workshops.json](https://feeds.carpentries.org/swc_past_workshops.json)
+*   [swc\_upcoming\_workshops.json](https://feeds.carpentries.org/swc_upcoming_workshops.json)
+*   [ttt\_past\_workshops.json](https://feeds.carpentries.org/ttt_past_workshops.json)
+*   [ttt\_upcoming\_workshops.json](https://feeds.carpentries.org/ttt_upcoming_workshops.json)
 
 
+#### Community members
+
+*   [badges\_stats.json](https://feeds.carpentries.org/badges_stats.json)
+*   [badged\_members.json](https://feeds.carpentries.org/badged_members.json)
+*   [dc\_instructors\_by\_airport.json](https://feeds.carpentries.org/dc_instructors_by_airport.json)
+*   [lc\_instructors\_by\_airport.json](https://feeds.carpentries.org/lc_instructors_by_airport.json)
+*   [swc\_instructors\_by\_airport.json](https://feeds.carpentries.org/swc_instructors_by_airport.json)
+
+
+### GeoJSON files
+
+#### Workshops
+
+*   [all\_workshops.geojson](https://feeds.carpentries.org/all_workshops.geojson)
+*   [all\_workshops\_past.geojson](https://feeds.carpentries.org/all_workshops_past.geojson)
+*   [dc\_workshops.geojson](https://feeds.carpentries.org/dc_workshops.geojson)
+*   [dc\_workshops\_past.geojson](https://feeds.carpentries.org/dc_workshops_past.geojson)
+*   [lc\_workshops.geojson](https://feeds.carpentries.org/lc_workshops.geojson)
+*   [lc\_workshops\_past.geojson](https://feeds.carpentries.org/lc_workshops_past.geojson)
+*   [swc\_workshops.geojson](https://feeds.carpentries.org/swc_workshops.geojson)
+*   [swc\_workshops\_past.geojson](https://feeds.carpentries.org/swc_workshops_past.geojson)
+
+#### Community members
+
+*   [all\_instructors\_by\_airport.geojson](https://feeds.carpentries.org/all_instructors_by_airport.geojson)
