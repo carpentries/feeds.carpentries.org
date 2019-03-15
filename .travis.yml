@@ -1,6 +1,6 @@
 language: ruby
 rvm:
-- 2.2.5
+- 2.5.3
 
 addons:
   apt:
@@ -20,12 +20,14 @@ branches:
 env:
   global:
   - NOKOGIRI_USE_SYSTEM_LIBRARIES=true # speeds up installation of html-proofer
-  
+
+before_deploy:
+  - pip install --user awscli
+  - export PATH=$PATH:$HOME/.local/bin
+  - export AWS_ACCESS_KEY_ID=AKIAIBW6BTQUUTKCF5YA
+  - export AWS_SECRET_ACCESS_KEY=$S3_SECRET
+
 deploy:
   skip_cleanup: true
-  provider: s3
-  access_key_id: AKIAIBW6BTQUUTKCF5YA
-  secret_access_key: $S3_SECRET
-  bucket: feeds.carpentries.org
-  local-dir: _site
-  acl: public_read
+  provider: script
+  script: aws s3 sync _site s3://feeds.carpentries.org --delete --exclude "*.xml" --exclude "404.html"
