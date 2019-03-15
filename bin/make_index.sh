@@ -47,8 +47,8 @@ do
 done
 
 echo "</ul>" >> _site/index.html
-echo "</body>" >> _site/index.html
 
 echo "</div>" >> _site/index.html
 
+echo "</body>" >> _site/index.html
 echo "</html>" >> _site/index.html
