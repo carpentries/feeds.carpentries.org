@@ -1,9 +1,11 @@
 ## everything : rebuild all data files and then the site
+##   make sure `site` target is last in the list as it depends on all
+##        the other ones
 everything:
 	@make workshops
 	@make members
-	@make site
 	@make newsletter
+	@make site
 
 
 ## workshops  : workshop JSON feeds from AMY data accessed from redash
