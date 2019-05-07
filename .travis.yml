@@ -12,6 +12,7 @@ before_script:
   - chmod +x bin/make_index.sh
   - chmod +x bin/make_members_feeds.sh
   - chmod +x bin/make_workshop_feeds.sh
+  - chmod +x bin/make_newsletter_feed.sh
 
 
 # Assume bundler is being used, therefore
