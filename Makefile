@@ -3,6 +3,7 @@ everything:
 	@make workshops
 	@make members
 	@make site
+	@make newsletter
 
 
 ## workshops  : workshop JSON feeds from AMY data accessed from redash
@@ -12,6 +13,10 @@ workshops :
 ## members    : feeds with information about our community members
 members:
 	./bin/make_members_feeds.sh _data/
+
+## newsletter: pulls newsletters from Mailchip
+newsletter:
+	./bin/make_newsletter_feed.sh _data/
 
 ## site       : build files but do not run a server.
 ## some files created from the Redash query need to be copied to the
