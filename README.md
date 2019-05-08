@@ -6,11 +6,13 @@ This is a Jekyll repo for taking data from AMY and converting it to the JSON, Ge
 
 ## Usage 
 
-If you want to run it locally, make sure you set the environment variable in the
+**For data about The Carpentries workshops and community members:** If you want to run it locally, make sure you set the environment variable in the
 shell for the Redash API key for [query
 128](https://data.softwarecarpentry.org/queries/128).
 You can then run the following command which will create all the feeds within
 the `_site` folder.
+
+**For The Carpentries newsletter feed** be sure the Mailchimp API key is set.
 
 ```
 make everything 
@@ -48,6 +50,9 @@ Travis builds are triggered for this repo by a CRON job on the `build.carpentrie
 *   [lc\_instructors\_by\_airport.json](https://feeds.carpentries.org/lc_instructors_by_airport.json)
 *   [swc\_instructors\_by\_airport.json](https://feeds.carpentries.org/swc_instructors_by_airport.json)
 
+#### Other data
+
+* [newsletter.json](https://feeds.carpentries.org/newsletter.json)
 
 ### GeoJSON files
 
