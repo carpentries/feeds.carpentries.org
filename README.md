@@ -2,7 +2,7 @@
 
 # The Carpentries Data Feeds
 
-This is a Jekyll repo for taking data from AMY and converting it to the JSON, GeoJSON and ICS formats used to show dynamic workshop and community member (trainers, instructors, maintainers, ...) data on The Carpentries websites.
+This is a Jekyll repo for taking data from AMY and other sources and converting it to the JSON, GeoJSON and ICS formats used to show dynamic workshop and community member (trainers, instructors, maintainers, ...) data on The Carpentries websites.
 
 ## Usage 
 
