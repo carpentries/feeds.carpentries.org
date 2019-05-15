@@ -14,6 +14,8 @@ the `_site` folder.
 
 **For The Carpentries newsletter feed** be sure the Mailchimp API key is set.
 
+Source JSON feeds are transformed using the [jq](https://stedolan.github.io/jq/) package.
+
 ```
 make everything 
 ```
