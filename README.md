@@ -72,3 +72,14 @@ Travis builds are triggered for this repo by a CRON job on the `build.carpentrie
 #### Community members
 
 *   [all\_instructors\_by\_airport.geojson](https://feeds.carpentries.org/all_instructors_by_airport.geojson)
+
+
+## Adding new data feeds
+
+New data feeds can be added by:
+
+1. Including a script in [bin](/bin) to retrieve the JSON feed and send it to a file. For example: `"$OUTPUT_PATH"/newsletter.json`
+1. Adding a rule in the [Makefile](Makefile) for that script and putting that rule under `everything`.
+1. Adding the script from [bin](/bin) to the `before_script` section of [Travis](.travis.yml).
+
+
