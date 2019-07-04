@@ -25,6 +25,20 @@ echo "  about these feeds are available in the" >> _site/index.html
 echo "  <a href=\"https://github.com/carpentries/amy-feeds\">GitHub repository</a>." >> _site/index.html
 echo "</p>" >> _site/index.html
 
+## Plots
+
+echo "<h2>Plots</h2>" >> _site/index.html
+echo "<ul>" >> _site/index.html
+
+for f in _site/plot_*.html
+do
+    f="$(basename -- $f)"
+    echo "<li><a href=\"$f\">$f</a></li>" >> _site/index.html
+done
+
+echo "</ul>" >> _site/index.html
+
+## JSON files
 
 echo "<h2>JSON files</h2>" >> _site/index.html
 echo "<ul>" >> _site/index.html
@@ -36,6 +50,8 @@ do
 done
 
 echo "</ul>" >> _site/index.html
+
+## JSON files
 
 echo "<h2>GeoJSON files</h2>" >> _site/index.html
 echo "<ul>" >> _site/index.html
