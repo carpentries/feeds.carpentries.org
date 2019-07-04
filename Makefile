@@ -5,6 +5,7 @@ everything:
 	@make workshops
 	@make members
 	@make newsletter
+	@make plots
 	@make site
 
 
@@ -19,6 +20,10 @@ members:
 ## newsletter: pulls newsletters from Mailchip
 newsletter:
 	./bin/make_newsletter_feed.sh _data/
+
+## plots: plot summaries
+plots:
+	R -q -e "source('R/workshop_summary.R')"
 
 ## site       : build files but do not run a server.
 ## some files created from the Redash query need to be copied to the
