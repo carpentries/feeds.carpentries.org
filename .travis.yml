@@ -43,7 +43,7 @@ before_install:
   - sudo dpkg -i /tmp/pandoc-2.2-1-amd64.deb
   - sudo apt-get install -f
   - rm /tmp/pandoc-2.2-1-amd64.deb
-  - R -q -e "install.packages(c('countrycode','maps',readr','dplyr','tidyr','plotly','ggplot2','htmlwidgets','svglite'))"
+  - R -q -e "install.packages(c('countrycode','maps','readr','dplyr','tidyr','plotly','ggplot2','htmlwidgets','svglite'))"
   - Rscript -e 'sessionInfo()'
 
 # Assume bundler is being used, therefore
