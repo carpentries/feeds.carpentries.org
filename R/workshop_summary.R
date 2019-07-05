@@ -4,6 +4,9 @@ library(tidyr)
 library(plotly)
 library(ggplot2)
 library(htmlwidgets)
+library(countrycode)
+library(maps)
+library(svglite)
 
 check_for_na <- function(.data, ...) {
   test <- pull(.data, ...) %>%
@@ -112,6 +115,70 @@ workshops_by_year <- function(wksp_data, outfile = "./plot_workshops_by_year.htm
 
 }
 
+workshops_map <- function(wksp_data, outfile = "./plot_workshops_map.svg") {
+
+  check_export_dir(outfile)
+
+  wksp_data <- wksp_data %>%
+    filter(latitude < 90) %>%
+    mutate(year = format(start_date, "%Y"))
+
+  wksp_data_no_online <- wksp_data %>%
+    filter(country != "W3" &
+             !grepl("online", tag_name)) %>%
+    mutate(country_name = countrycode(
+      country,
+      "iso2c",
+      "country.name"
+    ))
+
+  wksp_map_points <- wksp_data_no_online %>%
+    mutate(coords = paste(latitude, longitude, sep = "|")) %>%
+    group_by(coords) %>%
+    mutate(n_loc = n()) %>%
+    ungroup() %>%
+    distinct(latitude, longitude, n_loc)
+
+  summ_by_country <- wksp_data_no_online %>%
+    count(country_name) %>%
+    complete(country_name, fill = list(n = 0))
+
+
+  world <- map_data("world") %>%
+    mutate(region_2 = countrycode::countrycode(
+      region,
+      "country.name",
+      "country.name"
+    )) %>%
+    left_join(summ_by_country, by = c("region_2" = "country_name"))
+
+  map <- ggplot() +
+    geom_map(aes(fill = n, x = long, y = lat, map_id = region),
+      data = world, map = world)  +
+    scale_fill_viridis_c(na.value = "gray70",
+      breaks = c(1, 10, 100, 500),
+      trans = "log", name = "Number of Workshops") +
+    scale_size(name = "Number of workshops") +
+    geom_point(data = wksp_map_points,
+      aes(x = longitude, y = latitude, size = n_loc),
+      color = "coral",
+      inherit.aes = FALSE) +
+    coord_quickmap() +
+    theme_minimal() +
+    theme(legend.position = "bottom") +
+    labs(
+      x = "", y = ""
+    ) +
+    scale_color_identity(guide = FALSE)
+
+  svglite::svglite(file = outfile, width = 1600/72, height = 900/72)
+  print(map)
+  dev.off()
+
+
+  outfile
+}
+
 
 wksp <- read_csv("https://data.softwarecarpentry.org/api/queries/125/results.csv?api_key=ef7xp02JqDvg7JkEbxbElfg8ICgBaQEaXnz0NhQS") %>%
   filter(
@@ -123,3 +190,4 @@ message("working directory: ", getwd())
 
 workshops_through_time(wksp)
 workshops_by_year(wksp)
+workshops_map(wksp)

@@ -30,7 +30,7 @@ echo "</p>" >> _site/index.html
 echo "<h2>Plots</h2>" >> _site/index.html
 echo "<ul>" >> _site/index.html
 
-for f in _site/plot_*.html
+for f in _site/plot_*.{html,svg}
 do
     f="$(basename -- $f)"
     echo "<li><a href=\"$f\">$f</a></li>" >> _site/index.html
