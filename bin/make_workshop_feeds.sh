@@ -10,7 +10,10 @@ CARPENTRIES_PROGRAMS=('swc' 'dc' 'lc' 'ttt')
 
 ## ALL workshops ---------------------------------------------------------------
 
-curl "$REDASH_API_WORKSHOPS" | jq '.query_result.data.rows' > "$OUTPUT_PATH"/all_workshops.json
+curl "$REDASH_API_WORKSHOPS" | jq '
+     .query_result.data.rows |
+     map(select(.url != null))
+' > "$OUTPUT_PATH"/all_workshops.json
 
 ## Past workshops --------------------------------------------------------------
 
