@@ -94,7 +94,10 @@ workshops_by_year <- function(wksp_data, outfile = "./plot_workshops_by_year.htm
 
   summary_per_year <- prepare_workshops_through_time(wksp_data) %>%
     mutate(year = format(.data$end_date, "%Y")) %>%
-    count(year, tag_name)  %>%
+    group_by(year, tag_name)  %>%
+    summarize(
+      n = sum(n)
+    ) %>%
     complete(year, tag_name, fill = list(n = 0))
 
   plot_per_year <- ggplot(summary_per_year) +
@@ -181,6 +184,7 @@ workshops_map <- function(wksp_data, outfile = "./plot_workshops_map.svg") {
 
 
 wksp <- read_csv("https://data.softwarecarpentry.org/api/queries/125/results.csv?api_key=ef7xp02JqDvg7JkEbxbElfg8ICgBaQEaXnz0NhQS") %>%
+  mutate(tag_name = gsub(",(unresponsive|online)", "", tag_name)) %>%
   filter(
     end_date <= Sys.Date(),
     tag_name %in% c("SWC", "LC", "DC", "TTT")
