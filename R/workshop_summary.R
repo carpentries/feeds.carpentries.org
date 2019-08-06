@@ -183,7 +183,7 @@ workshops_map <- function(wksp_data, outfile = "./plot_workshops_map.svg") {
 }
 
 
-wksp <- read_csv("https://data.softwarecarpentry.org/api/queries/125/results.csv?api_key=ef7xp02JqDvg7JkEbxbElfg8ICgBaQEaXnz0NhQS") %>%
+wksp <- read_csv("https://redash.carpentries.org/api/queries/125/results.csv?api_key=ef7xp02JqDvg7JkEbxbElfg8ICgBaQEaXnz0NhQS") %>%
   mutate(tag_name = gsub(",(unresponsive|online)", "", tag_name)) %>%
   filter(
     end_date <= Sys.Date(),

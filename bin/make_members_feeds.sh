@@ -20,7 +20,7 @@ fi
 
 
 ## Download the file from Redash
-REDASH_API_INSTRUCTORS="https://data.softwarecarpentry.org/api/queries/128/results.json?api_key=$REDASH_API_INSTRUCTORS_KEY"
+REDASH_API_INSTRUCTORS="https://redash.carpentries.org/api/queries/128/results.json?api_key=$REDASH_API_INSTRUCTORS_KEY"
 
 curl "$REDASH_API_INSTRUCTORS" |
     jq '.query_result.data.rows |

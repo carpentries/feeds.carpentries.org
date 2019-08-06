@@ -8,7 +8,7 @@ This is a Jekyll repo for taking data from AMY and other sources and converting 
 
 **For data about The Carpentries workshops and community members:** If you want to run it locally, make sure you set the environment variable in the
 shell for the Redash API key for [query
-128](https://data.softwarecarpentry.org/queries/128).
+128](https://redash.carpentries.org/queries/128).
 
 **For The Carpentries newsletter feed** be sure the Mailchimp API key is set.
 
