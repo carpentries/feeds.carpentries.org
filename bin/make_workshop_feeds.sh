@@ -4,7 +4,7 @@
 
 OUTPUT_PATH=$1
 
-REDASH_API_WORKSHOPS="https://data.softwarecarpentry.org/api/queries/125/results.json?api_key=ef7xp02JqDvg7JkEbxbElfg8ICgBaQEaXnz0NhQS"
+REDASH_API_WORKSHOPS="https://redash.carpentries.org/api/queries/125/results.json?api_key=ef7xp02JqDvg7JkEbxbElfg8ICgBaQEaXnz0NhQS"
 
 CARPENTRIES_PROGRAMS=('swc' 'dc' 'lc' 'ttt')
 
