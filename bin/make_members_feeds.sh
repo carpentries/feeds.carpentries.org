@@ -32,10 +32,10 @@ curl "$REDASH_API_INSTRUCTORS" |
    .is_trainer = contains({badges: "7"}) |
    .is_mentor = contains({badges: "8"}) |
    .is_instructor = .is_swc_instructor or .is_dc_instructor or .is_lc_instructor
-   )' > /tmp/instructors_raw.json
+   )' > /tmp/badged_people_raw.json
 
 ## Make sure the file was successfully downloaded
-if [ ! -s /tmp/instructors_raw.json ]
+if [ ! -s /tmp/badged_people_raw.json ]
 then
     echo "Couldn't get data from Redash server."
     exit 1
@@ -103,7 +103,7 @@ jq '{
       { (.[].country): . | length }
     ) | unique
 }
-' < /tmp/instructors_raw.json > "$OUTPUT_PATH"/badges_stats.json
+' < /tmp/badged_people_raw.json > "$OUTPUT_PATH"/badges_stats.json
 
 
 ## anonymized feed with airport information
@@ -133,7 +133,7 @@ jq '
        instructors: .people
      }
    )
-' < /tmp/instructors_raw.json > "$OUTPUT_PATH"/all_instructors_by_airport.json
+' < /tmp/badged_people_raw.json > "$OUTPUT_PATH"/all_instructors_by_airport.json
 
 jq '
    map(select(.publish_profile == 1)) |
@@ -161,7 +161,7 @@ jq '
        instructors: .people
      }
    )
-' < /tmp/instructors_raw.json > "$OUTPUT_PATH"/swc_instructors_by_airport.json
+' < /tmp/badged_people_raw.json > "$OUTPUT_PATH"/swc_instructors_by_airport.json
 
 
 jq '
@@ -190,7 +190,7 @@ jq '
        instructors: .people
      }
    )
-' < /tmp/instructors_raw.json > "$OUTPUT_PATH"/dc_instructors_by_airport.json
+' < /tmp/badged_people_raw.json > "$OUTPUT_PATH"/dc_instructors_by_airport.json
 
 
 jq '
@@ -219,7 +219,7 @@ jq '
        instructors: .people
      }
    )
-' < /tmp/instructors_raw.json > "$OUTPUT_PATH"/lc_instructors_by_airport.json
+' < /tmp/badged_people_raw.json > "$OUTPUT_PATH"/lc_instructors_by_airport.json
 
 
 
@@ -239,10 +239,10 @@ jq '
    .twitter |= if (. != null) then . | gsub("^@";  "") else . end |
    .person_email |= if (. != null) then . | ascii_downcase else . end |
    del(.publish_profile)
-)' < /tmp/instructors_raw.json > /tmp/instructors_clean.json
+)' < /tmp/badged_people_raw.json > /tmp/badged_people_clean.json
 
 
-jq -c '.[]' < /tmp/instructors_clean.json |
+jq -c '.[]' < /tmp/badged_people_clean.json |
     while read -r line;
     do
         email=$(jq -r '[.person_email]|add' <<< "$line")
@@ -260,5 +260,5 @@ jq -c '.[]' < /tmp/instructors_clean.json |
     '> "$OUTPUT_PATH"/badged_members.json
 
 
-rm /tmp/instructors_clean.json
-rm /tmp/instructors_raw.json
+rm /tmp/badged_people_clean.json
+rm /tmp/badged_people_raw.json
