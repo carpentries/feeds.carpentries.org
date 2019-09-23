@@ -257,7 +257,7 @@ jq -c '.[]' < /tmp/badged_people_clean.json |
             .iata, .latitude, .longitude,
             .person_email
           ))
-    '> "$OUTPUT_PATH"/badged_members.json
+    '> "$OUTPUT_PATH"/all_badged_people.json
 
 
 rm /tmp/badged_people_clean.json
