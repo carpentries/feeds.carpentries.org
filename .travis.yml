@@ -45,7 +45,7 @@ before_install:
   - rm /tmp/pandoc-2.2-1-amd64.deb
   - R -q -e "install.packages(c('countrycode','maps','readr','dplyr','tidyr','plotly','ggplot2','htmlwidgets','svglite'))"
   - Rscript -e 'sessionInfo()'
-  - python -m pip install numpy scipy matplotlib ipython jupyter pandas
+  - python3 -m pip install numpy scipy matplotlib ipython jupyter pandas
 
 # Assume bundler is being used, therefore
 # # the `install` step will run `bundle install` by default.
