@@ -46,7 +46,7 @@ before_install:
   - R -q -e "install.packages(c('countrycode','maps','readr','dplyr','tidyr','plotly','ggplot2','htmlwidgets','svglite'))"
   - Rscript -e 'sessionInfo()'
   - python3 -m pip install --upgrade pip setuptools wheel
-  - python3 -m pip install numpy scipy matplotlib ipython jupyter pandas
+  - python3 -m pip install --user numpy scipy matplotlib ipython jupyter pandas
 
 # Assume bundler is being used, therefore
 # # the `install` step will run `bundle install` by default.
