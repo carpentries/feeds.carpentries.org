@@ -30,6 +30,7 @@ curl "$REDASH_API_INSTRUCTORS" |
    .is_dc_instructor = contains({badges: "5"}) |
    .is_lc_instructor = contains({badges: "10"}) |
    .is_trainer = contains({badges: "7"}) |
+   .is_trainer_inactive = contains({badges: "11"}) |
    .is_mentor = contains({badges: "8"}) |
    .is_instructor = .is_swc_instructor or .is_dc_instructor or .is_lc_instructor
    )' > /tmp/badged_people_raw.json
@@ -45,6 +46,7 @@ fi
 jq '{
   n_maintainers: map(select(.is_maintainer)) | length,
   n_trainers: map(select(.is_trainer)) | length,
+  n_trainers_inactive: map(select(.is_trainer_inactive)) | length,
   n_instructors: map(select(
       .is_swc_instructor or .is_dc_instructor or
       .is_lc_instructor
@@ -89,6 +91,14 @@ jq '{
   trainers_by_country: map(
       select(
      .country != "" and .is_trainer
+    )) |
+    group_by(.country) |
+    map(
+      { (.[].country): . | length }
+    ) | unique,
+  trainers_inactive_by_country: map(
+      select(
+     .country != "" and .is_trainer_inactive
     )) |
     group_by(.country) |
     map(
