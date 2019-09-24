@@ -48,7 +48,7 @@ Travis builds are triggered for this repo by a CRON job on the `build.carpentrie
 #### Community members
 
 *   [badges\_stats.json](https://feeds.carpentries.org/badges_stats.json)
-*   [badged\_members.json](https://feeds.carpentries.org/badged_members.json)
+*   [all\_badged\_people.json](https://feeds.carpentries.org/all_badged_people.json)
 *   [dc\_instructors\_by\_airport.json](https://feeds.carpentries.org/dc_instructors_by_airport.json)
 *   [lc\_instructors\_by\_airport.json](https://feeds.carpentries.org/lc_instructors_by_airport.json)
 *   [swc\_instructors\_by\_airport.json](https://feeds.carpentries.org/swc_instructors_by_airport.json)
