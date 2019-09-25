@@ -24,6 +24,7 @@ newsletter:
 ## plots: plot summaries
 plots:
 	R -q -e "source('R/workshop_summary.R')"
+	python3 python/test.py
 
 ## site       : build files but do not run a server.
 ## some files created from the Redash query need to be copied to the
