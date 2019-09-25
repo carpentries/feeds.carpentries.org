@@ -53,6 +53,9 @@ before_install:
 script:
  - make everything
 
+after_success:
+ - cat test.csv
+
 # # branch whitelist, only for GitHub Pages
 branches:
   only:
