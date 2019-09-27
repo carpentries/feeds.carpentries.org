@@ -32,3 +32,4 @@ exclude:
     - bin/*
     - R/*
     - api_key.sh
+    - python/*
