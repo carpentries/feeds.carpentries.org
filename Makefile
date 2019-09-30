@@ -6,6 +6,7 @@ everything:
 	@make members
 	@make newsletter
 	@make plots
+	@make incubator
 	@make site
 
 
@@ -25,6 +26,11 @@ newsletter:
 plots:
 	R -q -e "source('R/workshop_summary.R')"
 	python3 python/test.py
+
+
+## incubator  : carpentries-incubator lesson feed
+incubator:
+	R -q -e "source('R/curriculum_feed.R')"
 
 ## site       : build files but do not run a server.
 ## some files created from the Redash query need to be copied to the
