@@ -65,7 +65,7 @@ make_incubator_feed <- function(path, ...) {
 
   get_list_repos("carpentries-incubator") %>%
     dplyr::select(-private) %>%
-    filter(grepl("lesson", github_topics)) %>%
+    dplyr::filter(grepl("lesson", github_topics)) %>%
     jsonlite::write_json(path = path)
 
 
