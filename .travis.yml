@@ -4,8 +4,10 @@ rvm:
 - 2.5.3
 
 env:
-  - R_LIBS_USER=~/R/Library
-  - R_LIBS_SITE=/usr/local/lib/R/site-library:/usr/lib/R/site-library
+  global:
+    - NOKOGIRI_USE_SYSTEM_LIBRARIES=true # speeds up installation of html-proofer
+    - R_LIBS_USER=~/R/Library
+    - R_LIBS_SITE=/usr/local/lib/R/site-library:/usr/lib/R/site-library
 
 cache:
   bundler: true
@@ -57,10 +59,6 @@ script:
 branches:
   only:
   - master     # test the gh-pages branch
-
-env:
-  global:
-  - NOKOGIRI_USE_SYSTEM_LIBRARIES=true # speeds up installation of html-proofer
 
 before_deploy:
   - pip install --user awscli
