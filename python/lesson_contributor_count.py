@@ -30,5 +30,5 @@ for repo in ALL_ORG_REPOS:
 
 print(contrib_dict)
 
-with open('result.json', 'w') as fp:
+with open('./lesson_contributor_count.json', 'w') as fp:
     json.dump(contrib_dict, fp)
