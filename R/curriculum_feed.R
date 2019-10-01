@@ -56,6 +56,7 @@ get_list_repos <- function(org) {
     list(
       carpentries_org = .x$owner$login %<<% "",
       repo = .x$name,
+      repo_url = .x$html_url,
       full_name = .x$full_name,
       description = .x$description %<<% "",
       rendered_site = .x$homepage %<<% "",
