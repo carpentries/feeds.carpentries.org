@@ -73,7 +73,6 @@ get_list_repos <- function(org) {
     )
 }
 
-make_incubator_feed <- function(path, ...) {
 ##' @param data the data frame that contains the column `github_topics` from
 ##'   which the tags should be extracted
 ##' @param new_col_name name of the new column that will contain the extracted
@@ -99,7 +98,6 @@ extract_tag <- function(data,
                         allow_empty
                         ) {
 
-  get_list_repos("carpentries-incubator") %>%
   approach <- match.arg(approach)
 
   if (identical(approach, "include")) {
@@ -133,11 +131,31 @@ extract_tag <- function(data,
       }))
 
 }
+
+make_community_lessons_feed <- function(path, ...) {
+
+  carp_inc <- get_list_repos("carpentries-incubator")
+  carp_lab <- get_list_repos("carpentrieslab")
+
+  dplyr::bind_rows(carp_inc, carp_lab) %>%
     dplyr::select(-private) %>%
     dplyr::filter(grepl("lesson", github_topics)) %>%
+    extract_tag(
+      life_cycle_tag,
+      LIFE_CYCLE_TAGS,
+      approach = "include",
+      allow_multiple = FALSE,
+      allow_empty = FALSE
+    ) %>%
+    extract_tag(
+      lesson_tags,
+      COMMON_TAGS,
+      approach = "exclude",
+      allow_multiple = TRUE,
+      allow_empty = TRUE
+    ) %>%
     jsonlite::write_json(path = path)
-
 
 }
 
-make_incubator_feed("_data/incubator_feed.json")
+make_community_lessons_feed("_data/community_lessons_feed.json")
