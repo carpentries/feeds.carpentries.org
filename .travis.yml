@@ -10,6 +10,7 @@ env:
     - R_LIBS_SITE=/usr/local/lib/R/site-library:/usr/lib/R/site-library
 
 cache:
+  apt: true
   bundler: true
   directories:
     - /home/travis/.rvm/
@@ -45,7 +46,7 @@ before_install:
   - sudo dpkg -i /tmp/pandoc-2.2-1-amd64.deb
   - sudo apt-get install -f
   - rm /tmp/pandoc-2.2-1-amd64.deb
-  - Rscript -e "install.packages(setdiff(c('countrycode', 'gh', 'jsonlite', 'maps','readr','dplyr','tidyr','plotly', 'purrr', 'ggplot2','htmlwidgets','svglite'), installed.packages())); update.packages(ask = FALSE, checkBuilt = TRUE)"
+  - Rscript -e "install.packages(setdiff(c('countrycode', 'gh', 'jsonlite', 'maps','readr','dplyr','tidyr','plotly', 'purrr', 'ggplot2','htmlwidgets','svglite'), installed.packages())); update.packages(lib.loc = Sys.getenv('R_LIBS_USER'), ask = FALSE, checkBuilt = TRUE)"
   - Rscript -e 'sessionInfo()'
   - python3 -m pip install --upgrade pip setuptools wheel
   - python3 -m pip install --user numpy scipy matplotlib ipython jupyter pandas
