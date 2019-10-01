@@ -30,7 +30,7 @@ plots:
 
 ## incubator  : carpentries-incubator lesson feed
 incubator:
-	R -q -e "source('R/curriculum_feed.R')"
+	R -q -e "source('R/community_lessons.R')"
 
 ## site       : build files but do not run a server.
 ## some files created from the Redash query need to be copied to the

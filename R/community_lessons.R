@@ -39,7 +39,7 @@ get_list_repos <- function(org) {
   i <- 1
 
   while (test) {
-    message("Getting page: ", i, " for ", sQuote("org"))
+    message("Getting page: ", i, " for ", sQuote(org))
     res <- append(res, init_res)
 
     init_res <- tryCatch({
@@ -159,4 +159,4 @@ make_community_lessons_feed <- function(path, ...) {
 
 }
 
-make_community_lessons_feed("_data/community_lessons_feed.json")
+make_community_lessons_feed("_data/community_lessons.json")
