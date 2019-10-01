@@ -39,7 +39,7 @@ get_list_repos <- function(org) {
   i <- 1
 
   while (test) {
-    message("Getting page: ", i)
+    message("Getting page: ", i, " for ", sQuote("org"))
     res <- append(res, init_res)
 
     init_res <- tryCatch({
