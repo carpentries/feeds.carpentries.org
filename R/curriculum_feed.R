@@ -42,7 +42,7 @@ get_list_repos <- function(org) {
 
   purrr::map_df(res, function(.x) {
     list(
-      owner = .x$owner$login %<<% "",
+      carpentries_org = .x$owner$login %<<% "",
       repo = .x$name,
       full_name = .x$full_name,
       description = .x$description %<<% "",
@@ -52,11 +52,11 @@ get_list_repos <- function(org) {
   }) %>%
      dplyr::filter(
        !private,
-       owner == org
+       carpentries_org == org
      ) %>%
     dplyr::mutate(
-      github_topics = purrr::pmap(., function(owner, repo, ...) {
-        get_github_topics(owner, repo) %<<% ""
+      github_topics = purrr::pmap(., function(carpentries_org, repo, ...) {
+        get_github_topics(carpentries_org, repo) %<<% ""
       })
     )
 }
