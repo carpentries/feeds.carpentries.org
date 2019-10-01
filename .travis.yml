@@ -56,6 +56,9 @@ before_install:
 script:
  - make everything
 
+after_success:
+ - cat lesson_contributor_count.json
+
 # # branch whitelist, only for GitHub Pages
 branches:
   only:
