@@ -25,8 +25,9 @@ newsletter:
 ## plots: plot summaries
 plots:
 	R -q -e "source('R/workshop_summary.R')"
-	python3 python/test.py
+# 	python3 python/test.py
 	python3 python/lesson_contributor_count.py
+	python3 python/instructor_training_completion_rates.py
 
 
 ## incubator  : carpentries-incubator lesson feed
