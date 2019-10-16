@@ -83,6 +83,6 @@ with open('checkout_completion_rates.html', 'w') as f:
     f.write("who completed 0, 1, or 2 checkout steps, and who completed all three steps (and were badged as Instructors.)")
     f.write("<br>")
     f.write("<a href='completion_rates.json'>Raw JSON data</a>")
-    f.write("<img src='checkout.png' />")
+    f.write("<img src='checkout_completion_rates.png' />")
 
     f.write(crt)
