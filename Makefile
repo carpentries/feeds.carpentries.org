@@ -29,6 +29,7 @@ plots:
 	python3 python/lesson_contributor_count.py
 	python3 python/instructor_training_completion_rates.py
 	python3 python/instructor_training_seat_usage.py
+	python3 python/curriculum_teaching_frequency.py
 
 
 ## incubator  : carpentries-incubator lesson feed
