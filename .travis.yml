@@ -3,6 +3,13 @@ language: ruby
 rvm:
 - 2.5.3
 
+notifications:
+  email:
+    recipients:
+      - sysadmin@carpentries.org
+    on_success: change
+    on_failure: always
+
 env:
   global:
     - NOKOGIRI_USE_SYSTEM_LIBRARIES=true # speeds up installation of html-proofer
