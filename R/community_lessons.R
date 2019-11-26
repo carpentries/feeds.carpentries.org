@@ -1,4 +1,4 @@
-source("utils.R")
+source("R/utils.R")
 
 LIFE_CYCLE_TAGS <- c("pre-alpha", "alpha", "beta", "stable")
 COMMON_TAGS <- c(

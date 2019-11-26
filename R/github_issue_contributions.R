@@ -1,4 +1,4 @@
-source("utils.R")
+source("R/utils.R")
 
 get_gh_issues_raw <- function(owner, repo, labels) {
   if (!is.null(labels)) {
