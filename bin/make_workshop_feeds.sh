@@ -26,8 +26,9 @@ jq '
 ## for each program
 for prgm in "${CARPENTRIES_PROGRAMS[@]}"; do
     jq "
-     map(select(.tag_name == (\"$prgm\" | ascii_upcase)))
-    " < "$OUTPUT_PATH"/all_past_workshops.json > "$OUTPUT_PATH"/"$prgm"_past_workshops.json
+    map(select(.tag_name | test(\"$prgm\" | ascii_upcase))) |
+        .[].tag_name |= (. | gsub(\"[^$prgm]\" | ascii_upcase; \"\"))
+   " < "$OUTPUT_PATH"/all_past_workshops.json > "$OUTPUT_PATH"/"$prgm"_past_workshops.json
 done
 
 
@@ -42,6 +43,7 @@ jq '
 ## for each program
 for prgm in "${CARPENTRIES_PROGRAMS[@]}"; do
     jq "
-     map(select(.tag_name == (\"$prgm\" | ascii_upcase)))
+    map(select(.tag_name | test(\"$prgm\" | ascii_upcase))) |
+        .[].tag_name |= (. | gsub(\"[^$prgm]\" | ascii_upcase; \"\"))
     " < "$OUTPUT_PATH"/all_upcoming_workshops.json > "$OUTPUT_PATH"/"$prgm"_upcoming_workshops.json
 done
