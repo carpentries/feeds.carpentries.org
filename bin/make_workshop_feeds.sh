@@ -25,10 +25,13 @@ jq '
 
 ## for each program
 for prgm in "${CARPENTRIES_PROGRAMS[@]}"; do
-    jq "
-    map(select(.tag_name | test(\"$prgm\" | ascii_upcase))) |
-        .[].tag_name |= (. | gsub(\"[^$prgm]\" | ascii_upcase; \"\"))
-   " < "$OUTPUT_PATH"/all_past_workshops.json > "$OUTPUT_PATH"/"$prgm"_past_workshops.json
+    upper_prgm=$(echo $prgm | tr '[:lower:]' '[:upper:]')
+    reg_exp=".*(?<pg>"$upper_prgm").*"
+    echo $upper_prgm " (Past)"
+    jq --arg upper_prgm "$upper_prgm" --arg reg_exp "$reg_exp"  '
+    map(select(.tag_name | test($upper_prgm))) |
+    .[].tag_name |= (. | gsub($reg_exp;"\(.pg)"))
+    ' < "$OUTPUT_PATH"/all_past_workshops.json > "$OUTPUT_PATH"/"$prgm"_past_workshops.json
 done
 
 
@@ -42,8 +45,11 @@ jq '
 
 ## for each program
 for prgm in "${CARPENTRIES_PROGRAMS[@]}"; do
-    jq "
-    map(select(.tag_name | test(\"$prgm\" | ascii_upcase))) |
-        .[].tag_name |= (. | gsub(\"[^$prgm]\" | ascii_upcase; \"\"))
-    " < "$OUTPUT_PATH"/all_upcoming_workshops.json > "$OUTPUT_PATH"/"$prgm"_upcoming_workshops.json
+    upper_prgm=$(echo $prgm | tr '[:lower:]' '[:upper:]')
+    reg_exp=".*(?<pg>"$upper_prgm").*"
+    echo $upper_prgm " (Upcoming)"
+    jq --arg upper_prgm "$upper_prgm" --arg reg_exp "$reg_exp" '
+    map(select(.tag_name | test($upper_prgm))) |
+    .[].tag_name |= (. | gsub($reg_exp;"\(.pg)"))
+    ' < "$OUTPUT_PATH"/all_upcoming_workshops.json > "$OUTPUT_PATH"/"$prgm"_upcoming_workshops.json
 done
