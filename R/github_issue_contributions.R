@@ -24,7 +24,9 @@ extract_issue_info <- function(issues) {
         url = .x$html_url,
         title = .x$title,
         labels = purrr::map_chr(.x$labels, "name") %>% paste(., collapse = ","),
-        label_colors = purrr::map_chr(.x$labels, "color") %>% paste(., collapse = ", "),
+        label_colors = purrr::map_chr(.x$labels, "color") %>% paste0("#", ., collapse = ","),
+        font_colors = purrr::map_chr(.x$labels, "color") %>% paste0("#", .) %>%
+          font_color(.) %>% paste(., collapse = ","),
         created_at = .x$created_at,
         updated_at = .x$updated_at
       )
@@ -36,7 +38,8 @@ get_gh_issues <- function(owner, repo, labels) {
     extract_issue_info() %>%
     dplyr::mutate(
       org = owner,
-      repo = repo
+      repo = repo,
+      full_repo = paste0(owner, "/", repo)
     )
 }
 
@@ -44,13 +47,14 @@ list_help_wanted <- purrr::map_df(
   c("datacarpentry", "swcarpentry", "librarycarpentry",
     "carpentrieslab", "carpentries-incubator"),
   ~ get_list_repos(.) %>%
-    purrr::pmap_df(function(carpentries_org, repo, ...) {
+    purrr::pmap_df(function(carpentries_org, repo, description, ...) {
       message("  repo: ", repo, appendLF = FALSE)
       res <- get_gh_issues(
         owner = carpentries_org, repo = repo, labels = "help wanted"
       )
       message(" -- n issues: ", nrow(res))
-      res
+      res %>%
+        dplyr::mutate(description = description)
     })
 )
 

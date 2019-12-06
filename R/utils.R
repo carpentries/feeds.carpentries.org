@@ -47,3 +47,15 @@ get_list_repos <- function(org) {
       carpentries_org == org
     )
 }
+
+
+font_color <- function(hexcode) {
+  rgb <- colorspace::hex2RGB(hexcode)
+  rgbR <- rgb@coords[, "R"]
+  rgbG <- rgb@coords[, "G"]
+  rgbB <- rgb@coords[, "B"]
+  luma <- ((0.299 * rgbR) + (0.587 * rgbG) + (0.114 * rgbB))
+  res <- rep("#ffffff", length(hexcode))
+  res[luma > .5] <- "#222222"
+  res
+}
