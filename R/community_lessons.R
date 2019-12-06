@@ -1,6 +1,4 @@
-library(gh)
-library(jsonlite)
-library(purrr)
+source("R/utils.R")
 
 LIFE_CYCLE_TAGS <- c("pre-alpha", "alpha", "beta", "stable")
 COMMON_TAGS <- c(
@@ -14,13 +12,6 @@ COMMON_TAGS <- c(
   "lesson"
 )
 
-`%<<%` <- function(x, y) {
-  if (identical(length(x), 0L)) return(y)
-  if (is.null(x) || identical(x, "") ||
-        is.na(x)) return(y)
-  x
-}
-
 get_github_topics <- function(owner, repo) {
   res <- gh::gh(
     "GET /repos/:owner/:repo/topics",
@@ -31,42 +22,13 @@ get_github_topics <- function(owner, repo) {
   purrr::map_chr(res[["names"]], ~ .)
 }
 
-get_list_repos <- function(org) {
+get_org_topics <- function(org) {
 
-  init_res  <- gh::gh("GET /orgs/:org/repos", org = org)
-  res <- list()
-  test <- TRUE
-  i <- 1
-
-  while (test) {
-    message("Getting page: ", i, " for ", sQuote(org))
-    res <- append(res, init_res)
-
-    init_res <- tryCatch({
-      gh::gh_next(init_res)
-    },
-    error = function(e) {
-      test <<- FALSE
-      NULL
-    })
-    i <- i+1
-  }
-
-  purrr::map_df(res, function(.x) {
-    list(
-      carpentries_org = .x$owner$login %<<% "",
-      repo = .x$name,
-      repo_url = .x$html_url,
-      full_name = .x$full_name,
-      description = .x$description %<<% "",
-      rendered_site = .x$homepage %<<% "",
-      private = .x$private
-    )
-  }) %>%
-     dplyr::filter(
-       !private,
-       carpentries_org == org
-     ) %>%
+  get_list_repos(org) %>%
+    dplyr::filter(
+      !private,
+      carpentries_org == org
+    ) %>%
     dplyr::mutate(
       github_topics = purrr::pmap(., function(carpentries_org, repo, ...) {
         get_github_topics(carpentries_org, repo) %<<% ""
@@ -135,8 +97,8 @@ extract_tag <- function(data,
 
 make_community_lessons_feed <- function(path, ...) {
 
-  carp_inc <- get_list_repos("carpentries-incubator")
-  carp_lab <- get_list_repos("carpentrieslab")
+  carp_inc <- get_org_topics("carpentries-incubator")
+  carp_lab <- get_org_topics("carpentrieslab")
 
   dplyr::bind_rows(carp_inc, carp_lab) %>%
     dplyr::select(-private) %>%

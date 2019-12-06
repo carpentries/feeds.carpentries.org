@@ -7,6 +7,7 @@ everything:
 	@make newsletter
 	@make plots
 	@make incubator
+	@make help-wanted
 	@make site
 
 
@@ -35,6 +36,10 @@ plots:
 ## incubator  : carpentries-incubator lesson feed
 incubator:
 	R -q -e "source('R/community_lessons.R')"
+
+## help-wanted: list of issues that have the label "help wanted"
+help-wanted:
+	R -q -e "source('R/github_issue_contributions.R')"
 
 ## site       : build files but do not run a server.
 ## some files created from the Redash query need to be copied to the
