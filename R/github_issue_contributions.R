@@ -23,10 +23,18 @@ extract_issue_info <- function(issues) {
       list(
         url = .x$html_url,
         title = .x$title,
-        labels = purrr::map_chr(.x$labels, "name") %>% paste(., collapse = ","),
-        label_colors = purrr::map_chr(.x$labels, "color") %>% paste0("#", ., collapse = ","),
-        font_colors = purrr::map_chr(.x$labels, "color") %>% paste0("#", .) %>%
-          font_color(.) %>% paste(., collapse = ","),
+        type = dplyr::case_when(
+          grepl("/pull/[0-9]+$", .x$html_url) ~ "PR",
+          TRUE ~ "issue"
+        ),
+        labels = purrr::map_chr(.x$labels, "name") %>%
+          paste(., collapse = ","),
+        label_colors = purrr::map_chr(.x$labels, "color") %>%
+          paste0("#", ., collapse = ","),
+        font_colors = purrr::map_chr(.x$labels, "color") %>%
+          paste0("#", .) %>%
+          font_color(.) %>%
+          paste(., collapse = ","),
         created_at = .x$created_at,
         updated_at = .x$updated_at
       )
@@ -43,19 +51,30 @@ get_gh_issues <- function(owner, repo, labels) {
     )
 }
 
-list_help_wanted <- purrr::map_df(
-  c("datacarpentry", "swcarpentry", "librarycarpentry",
-    "carpentrieslab", "carpentries-incubator"),
-  ~ get_list_repos(.) %>%
-    purrr::pmap_df(function(carpentries_org, repo, description, ...) {
-      message("  repo: ", repo, appendLF = FALSE)
-      res <- get_gh_issues(
-        owner = carpentries_org, repo = repo, labels = "help wanted"
-      )
-      message(" -- n issues: ", nrow(res))
-      res %>%
-        dplyr::mutate(description = description)
-    })
+list_organizations <- c(
+  "Data Carpentry" = "datacarpentry",
+  "Software Carpentry" = "swcarpentry",
+  "Library Carpentry" = "librarycarpentry",
+  "CarpentriesLab" = "carpentrieslab",
+  "The Carpentries Incubator" = "carpentries-incubator"
+)
+
+list_help_wanted <- purrr::imap_dfr(
+  list_organizations,
+  ~ get_list_repos(.x) %>%
+     purrr::pmap_df(function(carpentries_org, repo, description, ...) {
+       message("  repo: ", repo, appendLF = FALSE)
+       res <- get_gh_issues(
+         owner = carpentries_org, repo = repo, labels = "help wanted"
+       )
+       message(" -- n issues: ", nrow(res))
+       res %>%
+         dplyr::mutate(
+           description = description,
+           ## remove GitHub emoji from repo description
+           clean_description = gsub(":([a-z0-9_]+):", "", description),
+           org_name = .y)
+     })
 )
 
 jsonlite::write_json(list_help_wanted, "_data/help_wanted_issues.json")
