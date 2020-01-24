@@ -10,7 +10,8 @@ library(purrr)
 }
 
 
-get_list_repos <- function(org) {
+get_list_repos <- function(org, ignore_archived = FALSE,
+                           ignore_pattern = NULL, ...) {
 
   init_res  <- gh::gh("GET /orgs/:org/repos", org = org)
   res <- list()
@@ -31,7 +32,7 @@ get_list_repos <- function(org) {
     i <- i+1
   }
 
-  purrr::map_df(res, function(.x) {
+  res <- purrr::map_df(res, function(.x) {
     list(
       carpentries_org = .x$owner$login %<<% "",
       repo = .x$name,
@@ -39,13 +40,27 @@ get_list_repos <- function(org) {
       full_name = .x$full_name,
       description = .x$description %<<% "",
       rendered_site = .x$homepage %<<% "",
-      private = .x$private
+      private = .x$private,
+      archived = .x$archived
     )
   }) %>%
     dplyr::filter(
       !private,
-      carpentries_org == org
-    )
+      carpentries_org == org,
+      )
+
+  if (ignore_archived) {
+    res  <- res %>%
+      dplyr::filter(!archived)
+  }
+
+  if (!is.null(ignore_pattern)) {
+    res <- res %>%
+      dplyr::filter(!grepl(ignore_pattern, repo, ...))
+  }
+  
+  res %>%
+    dplyr::select(-archived)
 }
 
 

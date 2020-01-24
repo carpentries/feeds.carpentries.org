@@ -61,20 +61,23 @@ list_organizations <- c(
 
 list_help_wanted <- purrr::imap_dfr(
   list_organizations,
-  ~ get_list_repos(.x) %>%
-     purrr::pmap_df(function(carpentries_org, repo, description, ...) {
-       message("  repo: ", repo, appendLF = FALSE)
-       res <- get_gh_issues(
-         owner = carpentries_org, repo = repo, labels = "help wanted"
-       )
-       message(" -- n issues: ", nrow(res))
-       res %>%
-         dplyr::mutate(
-           description = description,
-           ## remove GitHub emoji from repo description
-           clean_description = gsub(":([a-z0-9_]+):", "", description),
-           org_name = .y)
-     })
+  ~ get_list_repos(
+    .x, ignore_archived = TRUE,
+    ignore_pattern = "^\\d{4}-\\d{2}-\\d{2}"
+  ) %>%
+    purrr::pmap_df(function(carpentries_org, repo, description, ...) {
+      message("  repo: ", repo, appendLF = FALSE)
+      res <- get_gh_issues(
+        owner = carpentries_org, repo = repo, labels = "help wanted"
+      )
+      message(" -- n issues: ", nrow(res))
+      res %>%
+        dplyr::mutate(
+          description = description,
+          ## remove GitHub emoji from repo description
+          clean_description = gsub(":([a-z0-9_]+):", "", description),
+          org_name = .y)
+    })
 )
 
 jsonlite::write_json(list_help_wanted, "_data/help_wanted_issues.json")
