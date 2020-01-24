@@ -14,7 +14,7 @@ get_gh_issues_raw <- function(owner, repo, labels) {
 
 extract_issue_info <- function(issues) {
 
-  if (is.null(names(issues[[1]]))) {
+  if (is.null(names(issues)) || is.null(names(issues[[1]]))) {
     return(tibble::tibble())
   }
 
