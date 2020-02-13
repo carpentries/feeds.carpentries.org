@@ -17,8 +17,8 @@ for lesson_program, lessons in ALL_ORG_REPOS.items():
         
         for i in range(1, 10):
         
-            CONTRIBS = "https://api.github.com/repos/" + repo + "/contributors?per_page=100&page=" + str(i) + "&access_token=" + token
-            r = requests.get(url=CONTRIBS)
+            CONTRIBS = "https://api.github.com/repos/" + repo + "/contributors?per_page=100&page=" + str(i)
+            r = requests.get(url=CONTRIBS, auth=('fmichonneau', token))
             contrib_count += len(r.json())
             if len(r.json()) == 0:
                 break
