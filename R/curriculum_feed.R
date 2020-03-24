@@ -59,3 +59,6 @@ make_lessons_feed <- function(path) {
     jsonlite::write_json(path)
 
 }
+
+
+make_lessons_feed("_data/lessons.json")
