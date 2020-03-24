@@ -14,6 +14,8 @@ shell for the Redash API key for [query
 
 Source JSON feeds are transformed using the [jq](https://stedolan.github.io/jq/) package.
 
+**For data about The Carpentries lessons** make sure you have a Github PAT (Personal Authentication Token) set as an environment variable (`GITHUB_PAT`) with appropriate priviledges to read GitHub topics and issues for all our repositories.
+
 You can then run the following command which will create all the feeds within
 the `_site` folder.
 
@@ -52,6 +54,13 @@ Travis builds are triggered for this repo by a CRON job on the `build.carpentrie
 *   [dc\_instructors\_by\_airport.json](https://feeds.carpentries.org/dc_instructors_by_airport.json)
 *   [lc\_instructors\_by\_airport.json](https://feeds.carpentries.org/lc_instructors_by_airport.json)
 *   [swc\_instructors\_by\_airport.json](https://feeds.carpentries.org/swc_instructors_by_airport.json)
+
+#### Lessons
+
+* [lessons.json](https://feeds.carpentries.org/lessons.json)
+* [community_lessons.md](https://feeds.carpentries.org/community_lessons.json)
+* [help_wanted_issues.json](https://feeds.carpentries.org/help_wanted_issues.json)
+
 
 #### Other data
 
