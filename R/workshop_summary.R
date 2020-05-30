@@ -41,13 +41,11 @@ export_ggplotly <- function(plot, file) {
 ## including total number of workshops
 prepare_workshops_through_time <- function(wksp_data) {
   summary_by_type <- wksp_data %>%
-    count(tag_name, end_date) %>%
-    ungroup(tag_name)
+    count(tag_name, end_date)
 
   summary_total <- wksp_data %>%
     count(end_date) %>%
-    mutate(tag_name = "Total") %>%
-    ungroup(tag_name)
+    mutate(tag_name = "Total")
 
   summary_through_time <- bind_rows(
     summary_by_type,
@@ -67,7 +65,6 @@ prepare_workshops_through_time <- function(wksp_data) {
 }
 
 workshops_through_time <- function(wksp_data, outfile = "./plot_workshops_through_time.html") {
-
   check_export_dir(outfile)
 
   summary_through_time <- prepare_workshops_through_time(wksp_data)
