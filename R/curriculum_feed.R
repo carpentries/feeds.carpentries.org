@@ -1,6 +1,9 @@
 ### data feed for the repository information for the official lessons.
 ###
-### this script has a side effect to ensure that all repos with the 'lesson'
+### Currently the curriculum is hard-coded, ideally we'd want this information
+### to come from somewhere else.
+###
+### This script has a side effect to ensure that all repos with the 'lesson'
 ### github topic have the appropriate other topics (at least for life cycle and
 ### human languages).
 
