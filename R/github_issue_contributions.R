@@ -52,6 +52,7 @@ get_gh_issues <- function(owner, repo, labels) {
 }
 
 list_organizations <- c(
+  "The Carpentries" = "carpentries",
   "Data Carpentry" = "datacarpentry",
   "Software Carpentry" = "swcarpentry",
   "Library Carpentry" = "librarycarpentry",
