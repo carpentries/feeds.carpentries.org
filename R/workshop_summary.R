@@ -124,8 +124,7 @@ workshops_map <- function(wksp_data, outfile = "./plot_workshops_map.svg") {
     mutate(year = format(start_date, "%Y"))
 
   wksp_data_no_online <- wksp_data %>%
-    filter(country != "W3" &
-             !grepl("online", tag_name)) %>%
+    filter(country != "W3") %>%
     mutate(country_name = countrycode(
       country,
       "iso2c",
@@ -190,5 +189,6 @@ wksp <- read_csv("https://redash.carpentries.org/api/queries/125/results.csv?api
 message("working directory: ", getwd())
 
 workshops_through_time(wksp)
+
 workshops_by_year(wksp)
 workshops_map(wksp)
