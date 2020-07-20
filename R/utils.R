@@ -46,8 +46,8 @@ get_list_repos <- function(org, ignore_archived = FALSE,
   }) %>%
     dplyr::filter(
       !private,
-      carpentries_org == org,
-      )
+      tolower(carpentries_org) == tolower(org)
+    )
 
   if (ignore_archived) {
     res  <- res %>%
