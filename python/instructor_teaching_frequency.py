@@ -3,6 +3,7 @@ import pandas as pd
 import requests
 import matplotlib.pyplot as plt
 import os
+import json
 
 api_key33 = os.environ['REDASH_KEY_QUERY33']
 api_key39 = os.environ['REDASH_KEY_QUERY39']
@@ -54,4 +55,5 @@ plt.tight_layout()  # Keeps labels on edges from getting cut off
 
 # Save outputs as png image and json data
 plt.savefig('./instructor_teaching_frequency.png')
-teaching_frequency_df.to_json('./instructor_teaching_frequency.json')
+with open('./instructor_teaching_frequency.json', 'w') as fp:
+    json.dump(teaching_frequency_json_data, fp)
