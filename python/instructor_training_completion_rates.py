@@ -8,7 +8,7 @@ import matplotlib.pyplot as plt
 
 api_key = os.environ['REDASH_KEY_QUERY184']
 
-url = "http://redash.carpentries.org/api/queries/184/results.json?api_key=" + api_key
+url = "https://redash.carpentries.org/api/queries/184/results.json?api_key=" + api_key
 
 # Read query results as json and extract just the actual data
 training_progress = requests.get(url)

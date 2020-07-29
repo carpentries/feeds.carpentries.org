@@ -16,7 +16,7 @@ pd.set_option('display.max_colwidth', -1)
 import numpy as np
 
 api_key = os.environ['REDASH_KEY_QUERY157']
-query_url = "http://redash.carpentries.org/api/queries/157/results.json?api_key=" + api_key
+query_url = "https://redash.carpentries.org/api/queries/157/results.json?api_key=" + api_key
 
 all_events = requests.get(query_url)
 all_events_json = all_events.json()
