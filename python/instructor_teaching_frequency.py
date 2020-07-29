@@ -9,14 +9,14 @@ api_key33 = os.environ['REDASH_KEY_QUERY33']
 api_key39 = os.environ['REDASH_KEY_QUERY39']
 
 # Count Instructor and their teaching frequency
-url = "http://redash.carpentries.org/api/queries/33/results.json?api_key=" +  api_key33
+url = "https://redash.carpentries.org/api/queries/33/results.json?api_key=" +  api_key33
 # Read query results as json and extract just the actual data
 teaching_frequency = requests.get(url)
 teaching_frequency_json = teaching_frequency.json()
 teaching_frequency_json_data = teaching_frequency_json['query_result']['data']['rows']
 
 # Get count of instructors who have never taught and add it to the above json data
-url_never = "http://redash.carpentries.org/api/queries/39/results.json?api_key=" + api_key39
+url_never = "https://redash.carpentries.org/api/queries/39/results.json?api_key=" + api_key39
 never_taught = requests.get(url_never)
 never_taught_count = len(never_taught.json()['query_result']['data']['rows'])
 teaching_frequency_json_data.append({'num_wkshps': 0, 'num_instructors': never_taught_count})
