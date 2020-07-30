@@ -16,7 +16,7 @@ import matplotlib.pyplot as plt
 import plotly.graph_objects as go
 
 # Keeps long text in columns from getting truncated
-pd.set_option('display.max_colwidth', -1)
+pd.set_option('display.max_colwidth', None)
 
 api_key = os.environ['REDASH_KEY_QUERY187']
 
