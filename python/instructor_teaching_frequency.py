@@ -54,6 +54,6 @@ for p in ax.patches:
 plt.tight_layout()  # Keeps labels on edges from getting cut off
 
 # Save outputs as png image and json data
-plt.savefig('./instructor_teaching_frequency.svg')
+plt.savefig('./plot_instructor_teaching_frequency.svg')
 with open('./instructor_teaching_frequency.json', 'w') as fp:
     json.dump(teaching_frequency_json_data, fp)
