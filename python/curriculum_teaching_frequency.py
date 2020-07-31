@@ -11,7 +11,8 @@ matplotlib.use('agg')
 import matplotlib.pyplot as plt
 # %matplotlib inline # only for Jupyter Notebook
 
-pd.set_option('display.max_colwidth', -1)
+# Keeps long text in columns from getting truncated
+pd.set_option('display.max_colwidth', None)
 
 import numpy as np
 
