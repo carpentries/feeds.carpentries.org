@@ -75,14 +75,3 @@ plt.savefig('plot_checkout_completion_rates.svg')
 
 # Save dataframe to json
 completion_rates.to_json('checkout_completion_rates.json')
-
-crt = completion_rates.to_html()
-
-with open('checkout_completion_rates.html', 'w') as f:
-    f.write("Of all trainees who completed our two day Instructor Training course, the number of people ")
-    f.write("who completed 0, 1, or 2 checkout steps, and who completed all three steps (and were badged as Instructors.)")
-    f.write("<br>")
-    f.write("<a href='checkout_completion_rates.json'>Raw JSON data</a>")
-    f.write("<img src='plot_checkout_completion_rates.svg' />")
-
-    f.write(crt)
