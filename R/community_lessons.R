@@ -12,13 +12,40 @@ COMMON_TAGS <- c(
   "lesson"
 )
 
+check_missing_repo_info <- function(.d, field) {
+  if (any(!nzchar(.d[[field]]))) {
+    paste0(
+      "Missing repo ", sQuote(field), " for: \n",
+      paste0("  - ", .d$repo_url[!nzchar(.d[[field]])], collapse = "\n"),
+      "\n"
+    )
+  }
+}
+
+check_repo_info <- function(.d, fields) {
+  tryCatch({
+    out <- purrr::map(
+      fields, ~ check_missing_repo_info(.d, .)
+    )
+    msgs <- purrr::keep(out, ~ !is.null(.))
+
+    if (length(msgs)) {
+      stop(msgs, call. = FALSE)
+    }
+
+    cli::cli_alert_success("No issues detected!")
+  },
+  error = function(err) {
+    stop(err$message, call. = FALSE)
+  })
+}
 
 make_community_lessons_feed <- function(path, ...) {
 
   carp_inc <- get_org_topics("carpentries-incubator")
   carp_lab <- get_org_topics("carpentrieslab")
 
-  dplyr::bind_rows(carp_inc, carp_lab) %>%
+  res <- dplyr::bind_rows(carp_inc, carp_lab) %>%
     dplyr::select(-private) %>%
     dplyr::filter(grepl("lesson", github_topics)) %>%
     extract_tag(
@@ -34,7 +61,12 @@ make_community_lessons_feed <- function(path, ...) {
       approach = "exclude",
       allow_multiple = TRUE,
       allow_empty = TRUE
-    ) %>%
+    )
+
+  ## checks
+  check_repo_info(res, c("description", "rendered_site"))
+
+  res %>%
     jsonlite::write_json(path = path)
 
 }
