@@ -23,6 +23,7 @@ cache:
   directories:
     - /home/travis/.rvm/
     - $R_LIBS_USER
+    - $HOME/.cache/pip
 
 before_script:
   - chmod +x bin/make_index.sh
