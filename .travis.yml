@@ -41,7 +41,7 @@ before_install:
   - export LD_LIBRARY_PATH=${TRAVIS_HOME}/R-bin/lib:$LD_LIBRARY_PATH
   - sudo mkdir -p /usr/local/lib/R/site-library $R_LIBS_USER
   - sudo chmod 2777 /usr/local/lib/R /usr/local/lib/R/site-library $R_LIBS_USER
-  - echo 'options(repos = c(CRAN = "https://cloud.r-project.org"))' > ~/.Rprofile.site
+  - echo 'options(repos = c(CRAN = "https://packagemanager.rstudio.com/all/__linux__/bionic/latest"))' > ~/.Rprofile.site
   - export R_PROFILE=~/.Rprofile.site
   - curl -fLo /tmp/texlive.tar.gz https://github.com/jimhester/ubuntu-bin/releases/download/latest/texlive.tar.gz
   - tar xzf /tmp/texlive.tar.gz -C ~
@@ -51,7 +51,7 @@ before_install:
   - sudo dpkg -i /tmp/pandoc-2.2-1-amd64.deb
   - sudo apt-get install -f
   - rm /tmp/pandoc-2.2-1-amd64.deb
-  - Rscript -e "install.packages(setdiff(c('colorspace', 'countrycode', 'gh', 'jsonlite', 'maps','readr','dplyr','tidyr','plotly', 'purrr', 'ggplot2','htmlwidgets','svglite'), installed.packages())); update.packages(lib.loc = Sys.getenv('R_LIBS_USER'), ask = FALSE, checkBuilt = TRUE)"
+  - Rscript -e "install.packages(setdiff(c('cli', 'colorspace', 'countrycode', 'gh', 'jsonlite', 'maps','readr','dplyr','tidyr','plotly', 'purrr', 'ggplot2','htmlwidgets','svglite'), installed.packages())); update.packages(lib.loc = Sys.getenv('R_LIBS_USER'), ask = FALSE, checkBuilt = TRUE)"
   - Rscript -e 'sessionInfo()'
   - python3 -m pip install --upgrade pip setuptools wheel
   - python3 -m pip install --user numpy scipy matplotlib ipython jupyter pandas plotly
