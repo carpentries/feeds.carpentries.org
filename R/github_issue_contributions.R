@@ -51,6 +51,47 @@ get_gh_issues <- function(owner, repo, labels) {
     )
 }
 
+keep_opted_in <- function(orgs) {
+
+  at_opted_in <- airtabler::airtable(
+    base = "appeZJGnGremE1MYm",
+    tables = "Repositories"
+  )
+
+  opted_in <- at_opted_in$Repositories$select_all()
+
+  dplyr::left_join(
+    orgs, opted_in,
+    by = c(
+      "carpentries_org" = "lesson_program",
+      "repo" = "repository"
+    )
+  ) %>%
+    dplyr::filter(display_help_wanted)
+
+}
+
+keep_other_repos <- function(orgs) {
+  other_repos <- tibble::tribble(
+    ~carpentries_org, ~repo,
+    "carpentries", "glosario",
+    "carpentries", "glosario-r",
+    "carpentries", "glosario-py",
+    ##    "carpentries", "glosario-js",
+    "carpentries", "carpentries.org",
+    "carpentries", "docs.carpentries.org",
+    "datacarpentry", "datacarpentry.github.io",
+    "librarycarpentry", "librarycarpentry.github.io",
+    "swcarpentry", "website"
+  )
+
+  dplyr::inner_join(
+    orgs, other_repos,
+    by = c("carpentries_org", "repo")
+  )
+}
+
+
 list_organizations <- c(
   "The Carpentries" = "carpentries",
   "Data Carpentry" = "datacarpentry",
@@ -62,23 +103,38 @@ list_organizations <- c(
 
 list_help_wanted <- purrr::imap_dfr(
   list_organizations,
-  ~ get_list_repos(
-    .x, ignore_archived = TRUE,
-    ignore_pattern = "^\\d{4}-\\d{2}-\\d{2}"
-  ) %>%
-    purrr::pmap_df(function(carpentries_org, repo, description, ...) {
-      message("  repo: ", repo, appendLF = FALSE)
-      res <- get_gh_issues(
-        owner = carpentries_org, repo = repo, labels = "help wanted"
-      )
-      message(" -- n issues: ", nrow(res))
-      res %>%
-        dplyr::mutate(
-          description = description,
-          ## remove GitHub emoji from repo description
-          clean_description = gsub(":([a-z0-9_]+):", "", description),
-          org_name = .y)
-    })
+  function(.x, .y) {
+    orgs <- get_list_repos(
+      .x, ignore_archived = TRUE,
+      ignore_pattern = "^\\d{4}-\\d{2}-\\d{2}"
+    )
+
+    lessons <- orgs %>%
+      keep_opted_in()
+
+    other_repos <- orgs %>%
+      keep_other_repos()
+
+    dplyr::bind_rows(
+      lessons,
+      other_repos
+    )  %>%
+      dplyr::distinct(carpentries_org, repo, .keep_all = TRUE) %>%
+      purrr::pmap_df(function(carpentries_org, repo, description, ...) {
+        message("  repo: ", repo, appendLF = FALSE)
+        res <- get_gh_issues(
+          owner = carpentries_org, repo = repo, labels = "help wanted"
+        )
+        message(" -- n issues: ", nrow(res))
+        res %>%
+          dplyr::mutate(
+            description = description,
+            ## remove GitHub emoji from repo description
+            clean_description = gsub(":([a-z0-9_]+):", "", description),
+            org_name = .y)
+      })
+  }
 )
+
 
 jsonlite::write_json(list_help_wanted, "_data/help_wanted_issues.json")
