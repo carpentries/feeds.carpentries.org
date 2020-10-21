@@ -93,12 +93,12 @@ keep_other_repos <- function(orgs) {
 
 
 list_organizations <- c(
-  "The Carpentries" = "carpentries",
   "Data Carpentry" = "datacarpentry",
   "Software Carpentry" = "swcarpentry",
   "Library Carpentry" = "librarycarpentry",
   "CarpentriesLab" = "carpentrieslab",
-  "The Carpentries Incubator" = "carpentries-incubator"
+  "The Carpentries Incubator" = "carpentries-incubator",
+  "The Carpentries" = "carpentries"
 )
 
 list_help_wanted <- purrr::imap_dfr(
