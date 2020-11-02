@@ -29,8 +29,7 @@ for prgm in "${CARPENTRIES_PROGRAMS[@]}"; do
     reg_exp=".*(?<pg>"$upper_prgm").*"
     echo $upper_prgm " (Past)"
     jq --arg upper_prgm "$upper_prgm" --arg reg_exp "$reg_exp"  '
-    map(select(.tag_name | test($upper_prgm))) |
-    .[].tag_name |= (. | gsub($reg_exp;"\(.pg)"))
+    map(select(.tag_name | test($upper_prgm)))
     ' < "$OUTPUT_PATH"/all_past_workshops.json > "$OUTPUT_PATH"/"$prgm"_past_workshops.json
 done
 
@@ -49,7 +48,6 @@ for prgm in "${CARPENTRIES_PROGRAMS[@]}"; do
     reg_exp=".*(?<pg>"$upper_prgm").*"
     echo $upper_prgm " (Upcoming)"
     jq --arg upper_prgm "$upper_prgm" --arg reg_exp "$reg_exp" '
-    map(select(.tag_name | test($upper_prgm))) |
-    .[].tag_name |= (. | gsub($reg_exp;"\(.pg)"))
+    map(select(.tag_name | test($upper_prgm)))
     ' < "$OUTPUT_PATH"/all_upcoming_workshops.json > "$OUTPUT_PATH"/"$prgm"_upcoming_workshops.json
 done
