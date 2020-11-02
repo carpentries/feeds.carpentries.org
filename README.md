@@ -1,4 +1,5 @@
-[![Build Status](https://travis-ci.com/carpentries/amy-feeds.svg?branch=master)](https://travis-ci.com/carpentries/amy-feeds)
+[![Build Status](https://travis-ci.com/carpentries/feeds.carpentries.org.svg?branch=master)](https://travis-ci.com/carpentries/feeds.carpentries.org)
+
 
 # The Carpentries Data Feeds
 
