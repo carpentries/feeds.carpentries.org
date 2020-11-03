@@ -106,6 +106,13 @@ jobs:
         with:
           python-version: '3.x'
 
+      - uses: actions/cache@v2
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+
       - name: Install Python modules
         run: |
           python3 -m pip install --upgrade pip setuptools wheel
