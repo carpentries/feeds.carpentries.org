@@ -1,0 +1,33 @@
+Package: feeds.carpentries.org
+Title: Generation of the files for feeds.carpentries.org
+Version: 0.0.0.9000
+Authors@R: 
+    person(given = "Francois",
+           family = "Michonneau",
+           role = c("aut", "cre"),
+           email = "francois.michonneau@gmail.com")
+Description: What the package does (one paragraph).
+License: MIT + file LICENSE
+Encoding: UTF-8
+LazyData: true
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.1.1
+Imports: 
+    cli,
+    dplyr,
+    jsonlite,
+    purrr,
+    airtabler,
+    gh,
+    tibble,
+    colorspace,
+    rlang,
+    countrycode,
+    ggplot2,
+    htmlwidgets,
+    maps,
+    plotly,
+    readr,
+    svglite,
+    tidyr
+Remotes: bergant/airtabler
