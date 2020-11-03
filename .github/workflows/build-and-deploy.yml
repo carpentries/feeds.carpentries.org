@@ -12,6 +12,13 @@ jobs:
     runs-on: ubuntu-20.04
     env:
       RSPM: "https://packagemanager.rstudio.com/all/__linux__/focal/latest"
+      REDASH_KEY_QUERY33: ${{ secrets.REDASH_KEY_QUERY33 }}
+      REDASH_KEY_QUERY39: ${{ secrets.REDASH_KEY_QUERY39 }}
+      REDASH_KEY_QUERY184: ${{ secrets.REDASH_KEY_QUERY184 }}
+      REDASH_KEY_QUERY157: ${{ secrets.REDASH_KEY_QUERY157 }}
+      REDASH_KEY_QUERY187: ${{ secrets.REDASH_KEY_QUERY187 }}
+      AIRTABLE_API_KEY: ${{ secrets.AIRTABLE_API_KEY }}
+
 
     defaults:
       run:
@@ -44,7 +51,7 @@ jobs:
         with:
           path: ${{ env.R_LIBS_USER }}
           key: ${{ hashFiles('.github/R-version') }}-1-${{ hashFiles('.github/depends.Rds') }}
-          restore-keys: ${{ runner.os }}-${{ hashFiles('.github/R-version') }}-1-
+          restore-keys: ${{ hashFiles('.github/R-version') }}-1-
 
       - name: Install system dependencies
         run: |
