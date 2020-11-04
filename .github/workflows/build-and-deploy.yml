@@ -137,3 +137,15 @@ jobs:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           SOURCE_DIR: _site/
+
+      ### Post actions ---------------------------------------------------------
+
+      - name: Ping Healthcheck when successful
+        if: ${{ success() }}
+        run: |
+          curl -fsS --retry 3 ${{ secrets.HEALTHCHECK_URL }}
+
+      - name: Ping Healthcheck when failure
+        if: ${{ failure() }}
+        run: |
+          curl -fsS --retry 3 ${{ secrets.HEALTHCHECK_URL }}/fail
