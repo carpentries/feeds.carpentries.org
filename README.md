@@ -35,7 +35,5 @@ New data feeds can be added by:
 
 1. Including a script in [bin](/bin) to retrieve the JSON feed and send it to a file. For example: `"$OUTPUT_PATH"/newsletter.json`
 1. Adding a rule in the [Makefile](Makefile) for that script and putting that rule under `everything`.
-1. Adding the script from [bin](/bin) to the `before_script` section of [Travis](.travis.yml).
-1. Adding the appropriate feed to the `/bin/update_feeds.sh` of the website repos that need it.
 
 
