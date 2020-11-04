@@ -4,15 +4,17 @@
 
 This is a Jekyll repo for taking data from AMY and other sources and converting it to the JSON, GeoJSON and ICS formats used to show dynamic workshop and community member (trainers, instructors, maintainers, ...) data on The Carpentries websites.
 
+Source JSON feeds are transformed using the [jq](https://stedolan.github.io/jq/)
+package.
+
+The Makefile calls for scripts written in R and Python.
+
 ## Usage 
 
 **For data about The Carpentries workshops and community members:** If you want to run it locally, make sure you set the environment variable in the
-shell for the Redash API key for [query
-128](https://redash.carpentries.org/queries/128).
+shell for all the Redash API keys for all the queries used.
 
 **For The Carpentries newsletter feed** be sure the Mailchimp API key is set.
-
-Source JSON feeds are transformed using the [jq](https://stedolan.github.io/jq/) package.
 
 **For data about The Carpentries lessons** make sure you have a Github PAT (Personal Authentication Token) set as an environment variable (`GITHUB_PAT`) with appropriate priviledges to read GitHub topics and issues for all our repositories.
 
@@ -23,66 +25,9 @@ the `_site` folder.
 make everything 
 ```
 
-## Travis CI Deploy
+## GitHub Actions Deployment
 
-Travis builds are triggered for this repo by a CRON job on the `build.carpentries.org` server. The files are are pushed to an S3 bucket and mapped (via CloudFlare CDN) to `https://feeds.carpentries.org/<pagename>`.
-
-## Access Feeds
-
-### JSON files
-
-#### Workshops
-
-*   [all\_instructors\_by\_airport.json](https://feeds.carpentries.org/all_instructors_by_airport.json)
-*   [all\_past\_workshops.json](https://feeds.carpentries.org/all_past_workshops.json)
-*   [all\_upcoming\_workshops.json](https://feeds.carpentries.org/all_upcoming_workshops.json)
-*   [all\_workshops.json](https://feeds.carpentries.org/all_workshops.json)
-*   [dc\_past\_workshops.json](https://feeds.carpentries.org/dc_past_workshops.json)
-*   [dc\_upcoming\_workshops.json](https://feeds.carpentries.org/dc_upcoming_workshops.json)
-*   [lc\_past\_workshops.json](https://feeds.carpentries.org/lc_past_workshops.json)
-*   [lc\_upcoming\_workshops.json](https://feeds.carpentries.org/lc_upcoming_workshops.json)
-*   [swc\_past\_workshops.json](https://feeds.carpentries.org/swc_past_workshops.json)
-*   [swc\_upcoming\_workshops.json](https://feeds.carpentries.org/swc_upcoming_workshops.json)
-*   [ttt\_past\_workshops.json](https://feeds.carpentries.org/ttt_past_workshops.json)
-*   [ttt\_upcoming\_workshops.json](https://feeds.carpentries.org/ttt_upcoming_workshops.json)
-
-
-#### Community members
-
-*   [badges\_stats.json](https://feeds.carpentries.org/badges_stats.json)
-*   [all\_badged\_people.json](https://feeds.carpentries.org/all_badged_people.json)
-*   [dc\_instructors\_by\_airport.json](https://feeds.carpentries.org/dc_instructors_by_airport.json)
-*   [lc\_instructors\_by\_airport.json](https://feeds.carpentries.org/lc_instructors_by_airport.json)
-*   [swc\_instructors\_by\_airport.json](https://feeds.carpentries.org/swc_instructors_by_airport.json)
-
-#### Lessons
-
-* [lessons.json](https://feeds.carpentries.org/lessons.json)
-* [community_lessons.md](https://feeds.carpentries.org/community_lessons.json)
-* [help_wanted_issues.json](https://feeds.carpentries.org/help_wanted_issues.json)
-
-
-#### Other data
-
-* [newsletter.json](https://feeds.carpentries.org/newsletter.json)
-
-### GeoJSON files
-
-#### Workshops
-
-*   [all\_workshops.geojson](https://feeds.carpentries.org/all_workshops.geojson)
-*   [all\_workshops\_past.geojson](https://feeds.carpentries.org/all_workshops_past.geojson)
-*   [dc\_workshops.geojson](https://feeds.carpentries.org/dc_workshops.geojson)
-*   [dc\_workshops\_past.geojson](https://feeds.carpentries.org/dc_workshops_past.geojson)
-*   [lc\_workshops.geojson](https://feeds.carpentries.org/lc_workshops.geojson)
-*   [lc\_workshops\_past.geojson](https://feeds.carpentries.org/lc_workshops_past.geojson)
-*   [swc\_workshops.geojson](https://feeds.carpentries.org/swc_workshops.geojson)
-*   [swc\_workshops\_past.geojson](https://feeds.carpentries.org/swc_workshops_past.geojson)
-
-#### Community members
-
-*   [all\_instructors\_by\_airport.geojson](https://feeds.carpentries.org/all_instructors_by_airport.geojson)
-
+A GitHub Action runs every 6 hours (at 0, 6am, noon, 6pm UTC) to retrieve the build the data feeds.
 
 ## Adding new data feeds
 
