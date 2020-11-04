@@ -20,6 +20,7 @@ jobs:
       AIRTABLE_API_KEY: ${{ secrets.AIRTABLE_API_KEY }}
       REDASH_API_INSTRUCTORS_KEY: ${{ secrets.REDASH_API_INSTRUCTORS_KEY }}
       MAILCHIMP_NEWSLETTER_KEY: ${{ secrets.MAILCHIMP_NEWSLETTER_KEY }}
+      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
 
     defaults:
       run:
