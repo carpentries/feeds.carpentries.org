@@ -1,5 +1,4 @@
-[![Build Status](https://travis-ci.com/carpentries/feeds.carpentries.org.svg?branch=master)](https://travis-ci.com/carpentries/feeds.carpentries.org)
-
+![build and deploy data feeds](https://github.com/carpentries/feeds.carpentries.org/workflows/build%20and%20deploy%20data%20feeds/badge.svg)
 
 # The Carpentries Data Feeds
 
