@@ -66,7 +66,7 @@ jobs:
         run: |
           remotes::install_deps(dependencies = TRUE)
           ## for system packages
-          update.packages(ask = FALSE, checkBuilt = TRUE)
+          update.packages(lib.loc = Sys.getenv("R_LIBS_USER"), ask = FALSE, checkBuilt = TRUE)
         shell: Rscript {0}
 
       - name: Session info
