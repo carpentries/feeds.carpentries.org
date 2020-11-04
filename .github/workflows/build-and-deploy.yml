@@ -117,7 +117,7 @@ jobs:
       - name: Install Python modules
         run: |
           python3 -m pip install --upgrade pip setuptools wheel
-          python3 -m pip install --user numpy scipy matplotlib ipython jupyter pandas plotly
+          python3 -m pip install --user numpy scipy matplotlib ipython jupyter pandas plotly requests
 
       ### Finally --------------------------------------------------------------
       - name: Make everything
