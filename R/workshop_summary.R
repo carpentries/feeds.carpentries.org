@@ -30,11 +30,9 @@ check_export_dir <- function(file) {
 }
 
 export_ggplotly <- function(plot, file) {
-
   tmp_file <- basename(file)
   res <- saveWidget(plot, file = tmp_file)
   file.rename(tmp_file, file)
-
 }
 
 ## function to create summary by workshops by date and by type,
@@ -91,7 +89,7 @@ workshops_by_year <- function(wksp_data, outfile = "./plot_workshops_by_year.htm
 
   summary_per_year <- prepare_workshops_through_time(wksp_data) %>%
     mutate(year = format(.data$end_date, "%Y")) %>%
-    group_by(year, tag_name)  %>%
+    group_by(year, tag_name) %>%
     summarize(
       n = sum(n)
     ) %>%
@@ -99,7 +97,8 @@ workshops_by_year <- function(wksp_data, outfile = "./plot_workshops_by_year.htm
 
   plot_per_year <- ggplot(summary_per_year) +
     geom_col(aes(x = year, y = n, fill = reorder(tag_name, n)),
-      position = "dodge") +
+      position = "dodge"
+    ) +
     scale_fill_viridis_d(name = "Workshop type", end = .95) +
     labs(
       title = "Number of workshops per year",
@@ -112,11 +111,9 @@ workshops_by_year <- function(wksp_data, outfile = "./plot_workshops_by_year.htm
   export_ggplotly(res_plot, outfile)
 
   outfile
-
 }
 
 workshops_map <- function(wksp_data, outfile = "./plot_workshops_map.svg") {
-
   check_export_dir(outfile)
 
   wksp_data <- wksp_data %>%
@@ -153,15 +150,20 @@ workshops_map <- function(wksp_data, outfile = "./plot_workshops_map.svg") {
 
   map <- ggplot() +
     geom_map(aes(fill = n, x = long, y = lat, map_id = region),
-      data = world, map = world)  +
-    scale_fill_viridis_c(na.value = "gray70",
+      data = world, map = world
+    ) +
+    scale_fill_viridis_c(
+      na.value = "gray70",
       breaks = c(1, 10, 100, 500),
-      trans = "log", name = "Number of Workshops") +
+      trans = "log", name = "Number of Workshops"
+    ) +
     scale_size(name = "Number of workshops") +
-    geom_point(data = wksp_map_points,
+    geom_point(
+      data = wksp_map_points,
       aes(x = longitude, y = latitude, size = n_loc),
       color = "coral",
-      inherit.aes = FALSE) +
+      inherit.aes = FALSE
+    ) +
     coord_quickmap() +
     theme_minimal() +
     theme(legend.position = "bottom") +
@@ -170,7 +172,7 @@ workshops_map <- function(wksp_data, outfile = "./plot_workshops_map.svg") {
     ) +
     scale_color_identity(guide = FALSE)
 
-  svglite::svglite(file = outfile, width = 1600/72, height = 900/72)
+  svglite::svglite(file = outfile, width = 1600 / 72, height = 900 / 72)
   print(map)
   dev.off()
 
