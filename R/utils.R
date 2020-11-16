@@ -34,7 +34,7 @@ get_list_repos <- function(org, ignore_archived = FALSE,
 
   res <- purrr::map_df(res, function(.x) {
     list(
-      carpentries_org = .x$owner$login %<<% "",
+      carpentries_org = tolower(.x$owner$login) %<<% "",
       repo = .x$name,
       repo_url = .x$html_url,
       full_name = .x$full_name,

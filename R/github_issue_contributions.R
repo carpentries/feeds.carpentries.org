@@ -58,7 +58,8 @@ keep_opted_in <- function(orgs) {
     tables = "Repositories"
   )
 
-  opted_in <- at_opted_in$Repositories$select_all()
+  opted_in <- at_opted_in$Repositories$select_all() %>%
+    mutate(lesson_program = tolower(lesson_program))
 
   dplyr::left_join(
     orgs, opted_in,
