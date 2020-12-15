@@ -1,5 +1,50 @@
 source("R/utils.R")
 
+new_tbl_github_issues <- function(url = character(0),
+                                  title = character(0),
+                                  type = character(0),
+                                  labels = character(0),
+                                  label_colors = character(0),
+                                  font_colors = character(0),
+                                  created_at = character(0),
+                                  updated_at = character(0),
+                                  empty = FALSE
+                                  ) {
+
+  stopifnot(rlang::is_scalar_logical(empty))
+
+  if (empty) {
+    stopifnot(rlang::is_character(url, n = 0L))
+    stopifnot(rlang::is_character(title, n = 0L))
+    stopifnot(rlang::is_character(type, n = 0L))
+    stopifnot(rlang::is_character(labels, n = 0L))
+    stopifnot(rlang::is_character(label_colors, n = 0L))
+    stopifnot(rlang::is_character(font_colors, n = 0L))
+    stopifnot(rlang::is_character(created_at, n = 0L))
+    stopifnot(rlang::is_character(updated_at, n = 0L))
+  } else {
+    stopifnot(rlang::is_scalar_character(url))
+    stopifnot(rlang::is_scalar_character(title))
+    stopifnot(rlang::is_scalar_character(type))
+    stopifnot(rlang::is_character(labels))
+    stopifnot(rlang::is_character(label_colors))
+    stopifnot(rlang::is_character(font_colors))
+    stopifnot(rlang::is_scalar_character(created_at))
+    stopifnot(rlang::is_scalar_character(updated_at))
+  }
+
+  tibble::tibble(
+    url,
+    title,
+    type,
+    labels,
+    font_colors,
+    created_at,
+    updated_at
+  )
+
+}
+
 get_gh_issues_raw <- function(owner, repo, labels) {
   if (!is.null(labels)) {
     stopifnot(identical(length(labels), 1L))
@@ -15,12 +60,12 @@ get_gh_issues_raw <- function(owner, repo, labels) {
 extract_issue_info <- function(issues) {
 
   if (identical(length(issues), 0L)) {
-    return(tibble::tibble())
+    return(new_tbl_github_issues(empty = TRUE))
   }
 
   issues %>%
     purrr::map_df(function(.x) {
-      list(
+      new_tbl_github_issues(
         url = .x$html_url,
         title = .x$title,
         type = dplyr::case_when(
