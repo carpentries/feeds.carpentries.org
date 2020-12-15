@@ -123,9 +123,13 @@ list_help_wanted <- purrr::imap_dfr(
       dplyr::distinct(carpentries_org, repo, .keep_all = TRUE) %>%
       purrr::pmap_df(function(carpentries_org, repo, description, ...) {
         message("  repo: ", repo, appendLF = FALSE)
-        res <- get_gh_issues(
-          owner = carpentries_org, repo = repo, labels = "help wanted"
-        )
+        res <- purrr::map_dfr(
+          c("help wanted",  "good first issue"),
+          ~ get_gh_issues(
+            owner = carpentries_org, repo = repo, labels = .x
+          )
+        ) %>%
+          dplyr::distinct(url, .keep_all = TRUE)
         message(" -- n issues: ", nrow(res))
         res %>%
           dplyr::mutate(
