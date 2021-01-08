@@ -50,7 +50,6 @@ completion_rates.columns = completion_rates.columns.droplevel()
 
 # Replace count of 3 with count of badged and rename the column.  People sometimes get badged without having all three steps checked.
 completion_rates.loc[3] = tp_pass['Badged'][tp_pass['Badged'] == True].count()
-completion_rates.rename(index={3:'3 (badged)'}, inplace=True)
 
 total_trainees = completion_rates['count'].sum()
 
@@ -65,8 +64,6 @@ for p in ax.patches:
     percentage = int((p.get_height() / completion_rates['count'].sum()) * 100)
     annotation = str(int(p.get_height())) + " (" + str(percentage) + "%)"
     ax.annotate(annotation, (p.get_x(), p.get_height() + 15 ))
-
-ax.set_ylim(0, completion_rates.loc['3 (badged)']['count'] + 100)
 
 plt.xticks(rotation='horizontal')
 
