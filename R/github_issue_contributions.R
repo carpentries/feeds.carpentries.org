@@ -38,6 +38,7 @@ new_tbl_github_issues <- function(url = character(0),
     title,
     type,
     labels,
+    label_colors,
     font_colors,
     created_at,
     updated_at
