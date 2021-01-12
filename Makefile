@@ -28,7 +28,7 @@ newsletter:
 plots:
 	R -q -e "source('R/workshop_summary.R')"
 	python3 python/lesson_contributor_count.py
-	- python3 python/instructor_training_completion_rates.py
+	python3 python/instructor_training_completion_rates.py
 	python3 python/instructor_training_seat_usage.py
 	python3 python/curriculum_teaching_frequency.py
 	python3 python/instructor_teaching_frequency.py
