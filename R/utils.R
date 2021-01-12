@@ -9,6 +9,15 @@ library(purrr)
   x
 }
 
+use_pat <- function() {
+  if (Sys.getenv("GITHUB_PAT") != "" || Sys.getenv("GITHUB_TOKEN") != "") {
+    cli::cli_alert_success("Using GitHub token!")
+  } else {
+    cli::cli_alert_danger("No GitHub token detected.")
+  }
+}
+use_pat()
+
 
 get_list_repos <- function(org, ignore_archived = FALSE,
                            ignore_pattern = NULL, ...) {
@@ -58,7 +67,7 @@ get_list_repos <- function(org, ignore_archived = FALSE,
     res <- res %>%
       dplyr::filter(!grepl(ignore_pattern, repo, ...))
   }
-  
+
   res %>%
     dplyr::select(-archived)
 }
