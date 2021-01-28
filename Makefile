@@ -40,7 +40,7 @@ incubator:
 
 ## help-wanted: list of issues that have the label "help wanted"
 help-wanted:
-	R -q -e "source('R/github_issue_contributions.R')"
+	R -q -e "source('R/help_wanted_issues.R')"
 
 ## lessons    : data feed for the repository information for all "official" lessons
 lessons:
