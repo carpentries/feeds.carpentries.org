@@ -20,9 +20,9 @@ all_events_json = all_events.json()
 
 all_events_json = all_events_json['query_result']['data']['rows']
 all_events_df = pd.DataFrame(all_events_json)
-all_2018 = all_events_df[all_events_df['YEAR'] == '2018']
-all_2019 = all_events_df[all_events_df['YEAR'] == '2019']
-all_2020 = all_events_df[all_events_df['YEAR'] == '2020']
+all_2018 = all_events_df[all_events_df['year'] == '2018']
+all_2019 = all_events_df[all_events_df['year'] == '2019']
+all_2020 = all_events_df[all_events_df['year'] == '2020']
 # Set up plot formatting
 title_text = "The Carpentries Instructor Training Events Seat Usage"
 
