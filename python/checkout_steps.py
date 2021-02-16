@@ -1,12 +1,16 @@
 # Import all the things
 import pandas as pd
 import requests
+import os 
 
 # Retreive data from Redash - checkout steps completed by each trainee
 # Remove trainees who had anything happen before 2019-01-01 as we were not 
 # systematically tracking this back then
 
-checkout_progress_url = "http://redash.carpentries.org/api/queries/295/results.json?api_key=Wffe5EPpdkDhcbdX0NhtSOit1qKpfBrzqqtAKvWv"
+api_key295 = os.environ['REDASH_KEY_QUERY295']
+
+checkout_progress_url = "http://redash.carpentries.org/api/queries/295/results.json?api_key=" + api_key295
+
 r = requests.get(checkout_progress_url)
 checkout = r.json()['query_result']['data']['rows']
 checkout = pd.DataFrame(checkout)
@@ -46,7 +50,6 @@ checkout_wide = checkout_wide[[  'DC Demo',
 
 # Get just the last columns (`'trainee_id','Training', 'Discussion', 'Homework', 'Demo'`). Save this to a new dataframe
 checkout_condensed = checkout_wide[['trainee_id','Training', 'Discussion', 'Homework', 'Demo']]
-
 
 # Aggregate this to a table that has counts grouped by each combination of checkout steps
 checkout_counts = checkout_condensed.groupby(['Training', 'Discussion', 'Homework', 'Demo']).size().reset_index()
