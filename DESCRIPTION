@@ -30,4 +30,6 @@ Imports:
     readr,
     svglite,
     tidyr
-Remotes: bergant/airtabler
+Remotes:
+   bergant/airtabler,
+   r-lib/gh#149
