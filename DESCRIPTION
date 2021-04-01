@@ -32,4 +32,4 @@ Imports:
     tidyr
 Remotes:
    bergant/airtabler,
-   r-lib/gh#149
+   r-lib/gh
