@@ -38,7 +38,18 @@ export_ggplotly <- function(plot, file) {
 ## function to create summary by workshops by date and by type,
 ## including total number of workshops
 prepare_workshops_through_time <- function(wksp_data) {
+
   summary_by_type <- wksp_data %>%
+    mutate(tags = strsplit(tag_name, ",")) %>%
+    rowwise() %>%
+    mutate(tag_name = case_when(
+      "SWC" %in% tags  ~ "Software Carpentry",
+      "DC"  %in% tags   ~ "Data Carpentry",
+      "LC"  %in% tags   ~ "Library Carpentry",
+      "TTT" %in% tags   ~ "Instructor Training",
+      "Circuits" %in% tags ~ "Mix & Match",
+      TRUE ~ NA_character_
+    )) %>%
     count(tag_name, end_date)
 
   summary_total <- wksp_data %>%
@@ -49,17 +60,12 @@ prepare_workshops_through_time <- function(wksp_data) {
     summary_by_type,
     summary_total
   ) %>%
-    mutate(tag_name = case_when(
-      tag_name == "SWC" ~ "Software Carpentry",
-      tag_name == "DC" ~ "Data Carpentry",
-      tag_name == "LC" ~ "Library Carpentry",
-      tag_name == "TTT" ~ "Instructor Training",
-      tag_name == "Total" ~ "Total"
-    )) %>%
     group_by(tag_name) %>%
     mutate(n_total = cumsum(n)) %>%
     check_for_na(tag_name) %>%
     ungroup(tag_name)
+
+  summary_through_time
 }
 
 workshops_through_time <- function(wksp_data, outfile = "./plot_workshops_through_time.html") {
@@ -91,7 +97,8 @@ workshops_by_year <- function(wksp_data, outfile = "./plot_workshops_by_year.htm
     mutate(year = format(.data$end_date, "%Y")) %>%
     group_by(year, tag_name) %>%
     summarize(
-      n = sum(n)
+      n = sum(n),
+      .groups = "drop"
     ) %>%
     complete(year, tag_name, fill = list(n = 0))
 
@@ -117,7 +124,12 @@ workshops_map <- function(wksp_data, outfile = "./plot_workshops_map.svg") {
   check_export_dir(outfile)
 
   wksp_data <- wksp_data %>%
-    filter(latitude < 90) %>%
+    filter(
+      latitude < 90,
+      latitude != 0 & longitude != 0,       # online workshops
+      latitude != 45 & longitude != -1,     # default template values
+      latitude != -48.9 & longitude != -123 # online workshops in AMY
+    ) %>%
     mutate(year = format(start_date, "%Y"))
 
   wksp_data_no_online <- wksp_data %>%
@@ -182,10 +194,9 @@ workshops_map <- function(wksp_data, outfile = "./plot_workshops_map.svg") {
 
 
 wksp <- read_csv("https://redash.carpentries.org/api/queries/125/results.csv?api_key=ef7xp02JqDvg7JkEbxbElfg8ICgBaQEaXnz0NhQS") %>%
-  mutate(tag_name = gsub(",(unresponsive|online)", "", tag_name)) %>%
   filter(
     end_date <= Sys.Date(),
-    tag_name %in% c("SWC", "LC", "DC", "TTT")
+    grepl("(SWC)|(LC)|(DC)|(TTT)|(Circuits)", tag_name)
   )
 
 message("working directory: ", getwd())
