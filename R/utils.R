@@ -168,3 +168,25 @@ extract_tag <- function(data,
     }))
 
 }
+
+
+
+## convert the name of the GitHub organization into the human version of the
+## name of the organization.
+expand_full_name <- function(org) {
+  res <- dplyr::case_when(
+    org == "carpentries" ~ "The Carpentries",
+    org == "carpentries-incubator" ~ "The Carpentries Incubator",
+    org == "carpentrieslab" ~ "The Carpentries Lab",
+    org == "datacarpentry" ~ "Data Carpentry",
+    org == "librarycarpentry" ~ "Library Carpentry",
+    org == "swcarpentry" ~ "Software Carpentry",
+    TRUE ~ NA_character_
+  )
+
+  if (is.na(res)) {
+    stop("Unrecognized organization: ", sQuote(org), call. = FALSE)
+  }
+
+  res
+}

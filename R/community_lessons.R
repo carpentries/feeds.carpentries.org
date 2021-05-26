@@ -48,6 +48,9 @@ make_community_lessons_feed <- function(path, ...) {
   res <- dplyr::bind_rows(carp_inc, carp_lab) %>%
     dplyr::select(-private) %>%
     dplyr::filter(grepl("lesson", github_topics)) %>%
+    dplyr::mutate(
+      org_full_name = purrr::map_chr(.data$carpentries_org, expand_full_name)
+    ) %>%
     extract_tag(
       life_cycle_tag,
       LIFE_CYCLE_TAGS,
