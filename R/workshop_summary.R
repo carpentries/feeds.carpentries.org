@@ -123,10 +123,11 @@ workshops_by_year <- function(wksp_data, outfile = "./plot_workshops_by_year.htm
 workshops_map <- function(wksp_data, outfile = "./plot_workshops_map.svg") {
   check_export_dir(outfile)
 
+  browser()
   wksp_data <- wksp_data %>%
     filter(
       latitude < 90,
-      latitude != 0 & longitude != 0,       # online workshops
+      !(latitude == 0 & longitude == 0),       # online workshops
       latitude != 45 & longitude != -1,     # default template values
       (latitude > -48.8 | latitude < -49.0) &
         (longitude > -122.9 | longitude < -123.1)  # online workshops in AMY

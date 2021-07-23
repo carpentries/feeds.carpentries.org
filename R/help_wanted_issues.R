@@ -144,7 +144,7 @@ list_organizations <- c(
   "Data Carpentry" = "datacarpentry",
   "Software Carpentry" = "swcarpentry",
   "Library Carpentry" = "librarycarpentry",
-  "CarpentriesLab" = "carpentrieslab",
+  "The Carpentries Lab" = "carpentries-lab",
   "The Carpentries Incubator" = "carpentries-incubator",
   "The Carpentries" = "carpentries",
   "CarpentryConnect" = "carpentryconnect"

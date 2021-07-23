@@ -177,7 +177,7 @@ expand_full_name <- function(org) {
   res <- dplyr::case_when(
     org == "carpentries" ~ "The Carpentries",
     org == "carpentries-incubator" ~ "The Carpentries Incubator",
-    org == "carpentrieslab" ~ "The Carpentries Lab",
+    org == "carpentries-lab" ~ "The Carpentries Lab",
     org == "datacarpentry" ~ "Data Carpentry",
     org == "librarycarpentry" ~ "Library Carpentry",
     org == "swcarpentry" ~ "Software Carpentry",
