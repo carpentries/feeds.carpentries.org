@@ -9,6 +9,7 @@ everything:
 	@make incubator
 	@make help-wanted
 	@make lessons
+	@make memberships
 	@make site
 
 
@@ -23,6 +24,10 @@ members:
 ## newsletter: pulls newsletters from Mailchip
 newsletter:
 	./bin/make_newsletter_feed.sh _data/
+
+## memberships
+memberships:
+	./bin/make_membership_feed.sh _data/
 
 ## plots: plot summaries
 plots:
