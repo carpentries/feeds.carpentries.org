@@ -123,7 +123,6 @@ workshops_by_year <- function(wksp_data, outfile = "./plot_workshops_by_year.htm
 workshops_map <- function(wksp_data, outfile = "./plot_workshops_map.svg") {
   check_export_dir(outfile)
 
-  browser()
   wksp_data <- wksp_data %>%
     filter(
       latitude < 90,
