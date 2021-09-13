@@ -35,7 +35,8 @@ check_rate_limit <- function() {
   )
 
 }
-check_rate_limit()
+## not available form GHA:
+## check_rate_limit()
 
 get_list_repos <- function(org, ignore_archived = FALSE,
                            ignore_pattern = NULL, ...) {
