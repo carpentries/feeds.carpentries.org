@@ -18,11 +18,35 @@ use_pat <- function() {
 }
 use_pat()
 
+check_rate_limit <- function() {
+  res <- gh::gh("GET /user")
+
+  rate_limit <- attr(res, "response")[["x-ratelimit-limit"]]
+  rate_remaining <- attr(res, "response")[["x-ratelimit-remaining"]]
+  reset_time <- lubridate::as_datetime(
+    as.numeric(attr(res, "response")[["x-ratelimit-reset"]])
+  )
+
+  cli::cli_alert_info(
+    paste("It remains", rate_remaining, "out of ", rate_limit)
+  )
+  cli::cli_alert_info(
+    paste("Next reset at:", reset_time)
+  )
+
+}
+check_rate_limit()
 
 get_list_repos <- function(org, ignore_archived = FALSE,
                            ignore_pattern = NULL, ...) {
 
-  init_res  <- gh::gh("GET /orgs/:org/repos", org = org)
+  init_res  <- gh::gh(
+    "GET /orgs/:org/repos",
+    org = org,
+    .send_headers = c(
+      "If-Modified-Since" = six_hours_ago()
+    )
+  )
   res <- list()
   test <- TRUE
   i <- 1
@@ -89,7 +113,10 @@ get_github_topics <- function(owner, repo) {
   res <- gh::gh(
     "GET /repos/:owner/:repo/topics",
     owner = owner, repo = repo,
-    .send_headers = c("Accept" = "application/vnd.github.mercy-preview+json")
+    .send_headers = c(
+      "Accept" = "application/vnd.github.mercy-preview+json",
+      "If-Modified-Since" = six_hours_ago()
+    )
   )
 
   purrr::map_chr(res[["names"]], ~ .)
@@ -189,4 +216,8 @@ expand_full_name <- function(org) {
   }
 
   res
+}
+
+six_hours_ago <- function() {
+  lubridate::now() - lubridate::hours(6)
 }

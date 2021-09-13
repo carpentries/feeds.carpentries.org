@@ -54,7 +54,10 @@ get_gh_issues_raw <- function(owner, repo, labels) {
     "GET /repos/:owner/:repo/issues",
     owner = owner,
     repo = repo,
-    labels = labels
+    labels = labels,
+    .send_headers = c(
+      "If-Modified-Since" = six_hours_ago()
+    )
   )
 }
 

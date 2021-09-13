@@ -18,6 +18,7 @@ Imports:
     jsonlite,
     purrr,
     airtabler,
+    lubridate,
     gh,
     tibble,
     colorspace,
