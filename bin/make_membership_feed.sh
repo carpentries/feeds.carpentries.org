@@ -4,8 +4,15 @@
 
 OUTPUT_PATH=$1
 
-REDASH_API_MEMBERSHIPS="https://redash.carpentries.org/api/queries/400/results.json?api_key=1234567"
 
+## Check that the API key is available
+if [ -z "$REDASH_KEY_QUERY400" ]
+then
+    echo "The variable REDASH_KEY_QUERY400 is not set"
+    exit 1
+fi
+
+REDASH_API_MEMBERSHIPS="https://redash.carpentries.org/api/queries/400/results.json?api_key=$REDASH_KEY_QUERY400"
 
 
 ## ALL members ---------------------------------------------------------------
