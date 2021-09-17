@@ -27,6 +27,7 @@ Imports:
     ggplot2,
     htmlwidgets,
     maps,
+    mapproj,
     plotly,
     readr,
     svglite,
