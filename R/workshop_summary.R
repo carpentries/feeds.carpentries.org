@@ -196,7 +196,7 @@ workshops_map <- function(wksp_data, outfile = "./plot_workshops_map.svg") {
     labs(
       x = "", y = ""
     ) +
-    scale_color_identity(guide = FALSE)
+    scale_color_identity(guide = "none")
 
   svglite::svglite(file = outfile, width = 1600 / 72, height = 900 / 72)
   print(map)
