@@ -55,4 +55,4 @@ checkout_condensed = checkout_wide[['trainee_id','Training', 'Discussion', 'Home
 checkout_counts = checkout_condensed.groupby(['Training', 'Discussion', 'Homework', 'Demo']).size().reset_index()
 checkout_counts.rename(columns={0:"count"}, inplace=True)
 
-checkout_counts.to_json('checkout_counts.json', orient='records')
+checkout_counts.to_json('_data/checkout_counts.json', orient='records')

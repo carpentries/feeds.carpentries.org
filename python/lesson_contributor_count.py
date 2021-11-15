@@ -25,7 +25,7 @@ for lesson_program, lessons in ALL_ORG_REPOS.items():
 
         contributor_count.append({'lesson':lesson, 'lesson_program':lesson_program, 'contributor_count':contrib_count})
 
-with open('./lesson_contributor_count.json', 'w') as fp:
+with open('_data/lesson_contributor_count.json', 'w') as fp:
     json.dump(contributor_count, fp)
 
 
