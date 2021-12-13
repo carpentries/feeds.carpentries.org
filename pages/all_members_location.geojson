@@ -1,0 +1,26 @@
+---
+layout: null
+permalink: /all_members_by_location.geojson
+---
+{
+  "type": "FeatureCollection",
+  "features": [
+  {% for member in site.data.all_public_memberships %}
+
+{% if member.longitude %}
+
+
+
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates":[{{member.longitude}},{{member.latitude}}]
+      },
+      "properties": {
+        "marker-color": "#2b3990",
+        "details": "{{member.name}}"
+      }
+    }{% unless forloop.last %},{% endunless %}  {% endif %}  {% endfor %}
+  ]
+}
