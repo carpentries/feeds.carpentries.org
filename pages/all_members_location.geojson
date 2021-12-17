@@ -19,7 +19,7 @@ permalink: /all_members_by_location.geojson
       },
       "properties": {
         "marker-color": "#2b3990",
-        "details": "{{member.name}}"
+        "details": ["{{member.name}}"]
       }
     }{% unless forloop.last %},{% endunless %}  {% endif %}  {% endfor %}
   ]
