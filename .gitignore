@@ -4,3 +4,5 @@ _site
 .jekyll-metadata
 api_key.sh
 /Gemfile.lock
+.Rhistory
+.RData
