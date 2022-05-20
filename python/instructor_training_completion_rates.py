@@ -71,4 +71,4 @@ plt.xticks(rotation='horizontal')
 plt.savefig('plot_checkout_completion_rates.svg')
 
 # Save dataframe to json
-completion_rates.to_json('checkout_completion_rates.json')
+completion_rates.to_json('_data/checkout_completion_rates.json')
