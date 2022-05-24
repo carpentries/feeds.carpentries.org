@@ -39,6 +39,7 @@ plots:
 	python3 python/curriculum_teaching_frequency.py
 	python3 python/instructor_teaching_frequency.py
 	python3 python/checkout_steps.py
+	python3 python/membership_trends.py
 
 
 ## incubator  : carpentries-incubator lesson feed
