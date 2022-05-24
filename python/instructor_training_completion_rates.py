@@ -68,7 +68,7 @@ for p in ax.patches:
 plt.xticks(rotation='horizontal')
 
 # Save plot to image file
-plt.savefig('plot_checkout_completion_rates.svg')
+plt.savefig('./plot_checkout_completion_rates.svg')
 
 # Save dataframe to json
-completion_rates.to_json('checkout_completion_rates.json')
+completion_rates.to_json('_data/checkout_completion_rates.json')

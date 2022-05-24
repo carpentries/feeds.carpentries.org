@@ -127,5 +127,5 @@ fig = go.Figure(data=data, layout=layout)
 # fig.show()
 
 
-all_events_df.to_csv('IT_seat_usage.csv')
-plotly.offline.plot(fig, filename='plot_IT_seat_usage.html', auto_open=False)
+all_events_df.to_csv('_data/IT_seat_usage.csv')
+plotly.offline.plot(fig, filename='./plot_IT_seat_usage.html', auto_open=False)
