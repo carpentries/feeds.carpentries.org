@@ -16,6 +16,7 @@ everything:
 ## workshops  : workshop JSON feeds from AMY data accessed from redash
 workshops :
 	./bin/make_workshop_feeds.sh _data/
+	python3 python/workshop_stats.py
 
 ## members    : feeds with information about our community members
 members:
@@ -38,7 +39,6 @@ plots:
 	python3 python/curriculum_teaching_frequency.py
 	python3 python/instructor_teaching_frequency.py
 	python3 python/checkout_steps.py
-	python3 python/workshop_stats.py 
 
 
 ## incubator  : carpentries-incubator lesson feed

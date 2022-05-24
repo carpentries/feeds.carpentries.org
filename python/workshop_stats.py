@@ -38,16 +38,16 @@ def get_lesson_program(tags):
 
 def admin_name(row):
     """Sets administrator as self organized, centrally organized, instructor training"""
-    if row['administrator_id'] in (302, 642, 173):
+    if row['administrator_id'] in ("302", "642", "173"):
         return 'CO'
-    elif row['administrator_id'] == 717:
+    elif row['administrator_id'] == "717":
         return 'IT'
     else:
         return 'SO'
 
 # Read data from redash query for workshops with administrator
-api_key384 = os.environ['REDASH_KEY_QUERY384']
-data = pd.read_csv("http://redash.carpentries.org/api/queries/384/results.csv?api_key=" + api_key384, keep_default_na=False)
+api_key168 = os.environ['REDASH_KEY_QUERY168']
+data = pd.read_csv("http://redash.carpentries.org/api/queries/168/results.csv?api_key=" + api_key168, keep_default_na=False)
 
 # Set full country name
 data['country_name'] = data['country'].apply(lambda x: get_country_name(x))

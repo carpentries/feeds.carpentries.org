@@ -14,8 +14,9 @@ jobs:
       RSPM: "https://packagemanager.rstudio.com/all/__linux__/focal/latest"
       REDASH_KEY_QUERY33: ${{ secrets.REDASH_KEY_QUERY33 }}
       REDASH_KEY_QUERY39: ${{ secrets.REDASH_KEY_QUERY39 }}
-      REDASH_KEY_QUERY184: ${{ secrets.REDASH_KEY_QUERY184 }}
       REDASH_KEY_QUERY157: ${{ secrets.REDASH_KEY_QUERY157 }}
+      REDASH_KEY_QUERY168: ${{ secrets.REDASH_KEY_QUERY168 }}
+      REDASH_KEY_QUERY184: ${{ secrets.REDASH_KEY_QUERY184 }}
       REDASH_KEY_QUERY187: ${{ secrets.REDASH_KEY_QUERY187 }}
       REDASH_KEY_QUERY295: ${{ secrets.REDASH_KEY_QUERY295 }}
       REDASH_KEY_QUERY400: ${{ secrets.REDASH_KEY_QUERY400 }}
@@ -122,7 +123,7 @@ jobs:
       - name: Install Python modules
         run: |
           python3 -m pip install --upgrade pip setuptools wheel
-          python3 -m pip install --user numpy scipy matplotlib ipython jupyter pandas plotly requests
+          python3 -m pip install --user numpy scipy matplotlib ipython jupyter pandas plotly requests pycountry
 
       ### Finally --------------------------------------------------------------
 
