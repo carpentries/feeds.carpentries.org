@@ -4,6 +4,7 @@
 everything:
 	@make workshops
 	@make members
+	@make curricula
 	@make newsletter
 	@make plots
 	@make incubator
@@ -21,6 +22,10 @@ workshops :
 ## members    : feeds with information about our community members
 members:
 	./bin/make_members_feeds.sh _data/
+
+## curricula  : feeds with information about our curricula as recorded in AMY
+curricula:
+	./bin/make_curricula.sh _data/
 
 ## newsletter: pulls newsletters from Mailchip
 newsletter:
