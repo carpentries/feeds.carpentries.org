@@ -25,6 +25,7 @@ jobs:
       REDASH_API_INSTRUCTORS_KEY: ${{ secrets.REDASH_API_INSTRUCTORS_KEY }}
       MAILCHIMP_NEWSLETTER_KEY: ${{ secrets.MAILCHIMP_NEWSLETTER_KEY }}
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+      EXIT_STATUS: 0
 
     defaults:
       run:
@@ -148,7 +149,7 @@ jobs:
       - name: Ping Healthcheck when successful
         if: ${{ success() }}
         run: |
-          curl -fsS --retry 3 ${{ secrets.HEALTHCHECK_URL }}
+          curl -fsS --retry 3 ${{ secrets.HEALTHCHECK_URL }}/${{ env.EXIT_STATUS }}
 
       - name: Ping Healthcheck when failure
         if: ${{ failure() }}
