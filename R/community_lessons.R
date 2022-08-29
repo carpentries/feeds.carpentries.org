@@ -13,10 +13,11 @@ COMMON_TAGS <- c(
 )
 
 check_missing_repo_info <- function(.d, field) {
-  if (any(!nzchar(.d[[field]]))) {
+  has_missing_info <- !nzchar(.d[[field]])
+  if (any(has_missing_info)) {
     paste0(
       "Missing repo ", sQuote(field), " for: \n",
-      paste0("  - ", .d$repo_url[!nzchar(.d[[field]])], collapse = "\n"),
+      paste0("  - ", .d$repo_url[has_missing_info], collapse = "\n"),
       "\n"
     )
   }
@@ -36,7 +37,10 @@ check_repo_info <- function(.d, fields) {
     cli::cli_alert_success("No issues detected!")
   },
   error = function(err) {
-    stop(err$message, call. = FALSE)
+    # Append the status to github env so that we can use it for healthchecks
+    # https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions#setting-an-environment-variable
+    cat("EXIT_STATUS=1", file = Sys.getenv("GITHUB_ENV"), append = TRUE)
+    cat("::warning::", err$message, "\n")
   })
 }
 
