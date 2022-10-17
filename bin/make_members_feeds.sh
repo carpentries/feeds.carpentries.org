@@ -26,9 +26,6 @@ curl "$REDASH_API_INSTRUCTORS" |
     jq '.query_result.data.rows |
     map(
    .is_maintainer =  contains({badges: "6"}) |
-   .is_swc_instructor = contains({badges: "2"}) |
-   .is_dc_instructor = contains({badges: "5"}) |
-   .is_lc_instructor = contains({badges: "10"}) |
    .is_trainer = contains({badges: "7"}) |
    .is_trainer_inactive = contains({badges: "11"}) |
    .is_mentor = contains({badges: "8"}) |
@@ -48,48 +45,21 @@ jq '{
   n_maintainers: map(select(.is_maintainer)) | length,
   n_trainers: map(select(.is_trainer)) | length,
   n_trainers_inactive: map(select(.is_trainer_inactive)) | length,
-  n_instructors: map(select(
-      .is_swc_instructor or .is_dc_instructor or
-      .is_lc_instructor
-  )) | length,
-  n_swc_instructors: map(select(.is_swc_instructor)) | length,
-  n_dc_instructors:  map(select(.is_dc_instructor)) | length,
-  n_lc_instructors:  map(select(.is_lc_instructor)) | length,
+  n_instructors: map(select(.is_instructor)) | length,
   n_mentors:         map(select(.is_mentor))  | length,
   n_mentees:         map(select(.is_mentee))  |length,
+
+
   instructors_by_country: map(
     select(
        .country != "" and
-      (.is_swc_instructor or .is_lc_instructor or .is_dc_instructor)
+      .is_instructor
     )) |
     group_by(.country) |
     map(
       { (.[].country): . | length }
     ) | unique ,
-  dc_instructors_by_country: map(
-    select(
-     .country != "" and .is_dc_instructor
-    )) |
-    group_by(.country) |
-    map(
-      { (.[].country): . | length }
-    ) | unique,
-  lc_instructors_by_country: map(
-    select(
-     .country != "" and .is_lc_instructor
-    )) |
-    group_by(.country) |
-    map(
-      { (.[].country): . | length }
-    ) | unique,
-  swc_instructors_by_country: map(
-    select(
-     .country != "" and .is_swc_instructor
-    )) |
-    group_by(.country) |
-    map(
-      { (.[].country): . | length }
-    ) | unique,
+
   trainers_by_country: map(
       select(
      .country != "" and .is_trainer
@@ -121,7 +91,7 @@ jq '{
 ## anonymized feed with airport information
 jq '
    map(select(.publish_profile == 1)) |
-   map(select(.is_swc_instructor or .is_dc_instructor or .is_lc_instructor))  |
+   map(select(.is_instructor))  |
   .[].person_name_with_middle |= (. | gsub("(\\b(?<fl>[A-Za-z]{1})\\w*)";"\(.fl)") |
    gsub("[^A-Za-z]"; "")) |
    map(select(.iata != null)) |
@@ -146,93 +116,6 @@ jq '
      }
    )
 ' < /tmp/badged_people_raw.json > "$OUTPUT_PATH"/all_instructors_by_airport.json
-
-jq '
-   map(select(.publish_profile == 1)) |
-   map(select(.is_swc_instructor))  |
-  .[].person_name_with_middle |= (. | gsub("(\\b(?<fl>[A-Za-z]{1})\\w*)";"\(.fl)") |
-   gsub("[^A-Za-z]"; "")) |
-   map(select(.iata != null)) |
-   group_by(.iata) |
-   map(
-     reduce .[] as $x(.[0] | del (.person_name_with_middle);
-     .people += [ $x.person_name_with_middle ])
-   ) |
-   map(
-      del(
-        .person_name, .person_email, .publish_profile,
-        .github, .url, .country, .twitter, .orcid,
-        .badges
-         )
-   ) |
-   map(
-     {
-       airport_code: .iata,
-       airport_latitude: .latitude,
-       airport_longitude: .longitude,
-       instructors: .people
-     }
-   )
-' < /tmp/badged_people_raw.json > "$OUTPUT_PATH"/swc_instructors_by_airport.json
-
-
-jq '
-   map(select(.publish_profile == 1)) |
-   map(select(.is_dc_instructor))  |
-  .[].person_name_with_middle |= (. | gsub("(\\b(?<fl>[A-Za-z]{1})\\w*)";"\(.fl)") |
-   gsub("[^A-Za-z]"; "")) |
-   map(select(.iata != null)) |
-   group_by(.iata) |
-   map(
-     reduce .[] as $x(.[0] | del (.person_name_with_middle);
-     .people += [ $x.person_name_with_middle ])
-   ) |
-   map(
-      del(
-        .person_name, .person_email, .publish_profile,
-        .github, .url, .country, .twitter, .orcid,
-        .badges
-         )
-   ) |
-   map(
-     {
-       airport_code: .iata,
-       airport_latitude: .latitude,
-       airport_longitude: .longitude,
-       instructors: .people
-     }
-   )
-' < /tmp/badged_people_raw.json > "$OUTPUT_PATH"/dc_instructors_by_airport.json
-
-
-jq '
-   map(select(.publish_profile == 1)) |
-   map(select(.is_lc_instructor))  |
-  .[].person_name_with_middle |= (. | gsub("(\\b(?<fl>[A-Za-z]{1})\\w*)";"\(.fl)") |
-   gsub("[^A-Za-z]"; "")) |
-   map(select(.iata != null)) |
-   group_by(.iata) |
-   map(
-     reduce .[] as $x(.[0] | del (.person_name_with_middle);
-     .people += [ $x.person_name_with_middle ])
-   ) |
-   map(
-      del(
-        .person_name, .person_email, .publish_profile,
-        .github, .url, .country, .twitter, .orcid,
-        .badges
-         )
-   ) |
-   map(
-     {
-       airport_code: .iata,
-       airport_latitude: .latitude,
-       airport_longitude: .longitude,
-       instructors: .people
-     }
-   )
-' < /tmp/badged_people_raw.json > "$OUTPUT_PATH"/lc_instructors_by_airport.json
-
 
 
 ###  Feed for instructor page
