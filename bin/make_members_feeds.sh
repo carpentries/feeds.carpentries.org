@@ -45,13 +45,7 @@ jq '{
   n_maintainers: map(select(.is_maintainer)) | length,
   n_trainers: map(select(.is_trainer)) | length,
   n_trainers_inactive: map(select(.is_trainer_inactive)) | length,
-  n_instructors: map(select(
-      .is_swc_instructor or .is_dc_instructor or
-      .is_lc_instructor
-  )) | length,
-  n_swc_instructors: map(select(.is_swc_instructor)) | length,
-  n_dc_instructors:  map(select(.is_dc_instructor)) | length,
-  n_lc_instructors:  map(select(.is_lc_instructor)) | length,
+  n_instructors: map(select(.is_instructor)) | length,
   n_mentors:         map(select(.is_mentor))  | length,
   n_mentees:         map(select(.is_mentee))  |length,
   instructors_by_country: map(
