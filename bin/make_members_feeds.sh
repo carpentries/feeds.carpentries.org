@@ -91,7 +91,7 @@ jq '{
 ## anonymized feed with airport information
 jq '
    map(select(.publish_profile == 1)) |
-   map(select(.is_swc_instructor or .is_dc_instructor or .is_lc_instructor))  |
+   map(select(.is_instructor))  |
   .[].person_name_with_middle |= (. | gsub("(\\b(?<fl>[A-Za-z]{1})\\w*)";"\(.fl)") |
    gsub("[^A-Za-z]"; "")) |
    map(select(.iata != null)) |
@@ -116,93 +116,6 @@ jq '
      }
    )
 ' < /tmp/badged_people_raw.json > "$OUTPUT_PATH"/all_instructors_by_airport.json
-
-jq '
-   map(select(.publish_profile == 1)) |
-   map(select(.is_swc_instructor))  |
-  .[].person_name_with_middle |= (. | gsub("(\\b(?<fl>[A-Za-z]{1})\\w*)";"\(.fl)") |
-   gsub("[^A-Za-z]"; "")) |
-   map(select(.iata != null)) |
-   group_by(.iata) |
-   map(
-     reduce .[] as $x(.[0] | del (.person_name_with_middle);
-     .people += [ $x.person_name_with_middle ])
-   ) |
-   map(
-      del(
-        .person_name, .person_email, .publish_profile,
-        .github, .url, .country, .twitter, .orcid,
-        .badges
-         )
-   ) |
-   map(
-     {
-       airport_code: .iata,
-       airport_latitude: .latitude,
-       airport_longitude: .longitude,
-       instructors: .people
-     }
-   )
-' < /tmp/badged_people_raw.json > "$OUTPUT_PATH"/swc_instructors_by_airport.json
-
-
-jq '
-   map(select(.publish_profile == 1)) |
-   map(select(.is_dc_instructor))  |
-  .[].person_name_with_middle |= (. | gsub("(\\b(?<fl>[A-Za-z]{1})\\w*)";"\(.fl)") |
-   gsub("[^A-Za-z]"; "")) |
-   map(select(.iata != null)) |
-   group_by(.iata) |
-   map(
-     reduce .[] as $x(.[0] | del (.person_name_with_middle);
-     .people += [ $x.person_name_with_middle ])
-   ) |
-   map(
-      del(
-        .person_name, .person_email, .publish_profile,
-        .github, .url, .country, .twitter, .orcid,
-        .badges
-         )
-   ) |
-   map(
-     {
-       airport_code: .iata,
-       airport_latitude: .latitude,
-       airport_longitude: .longitude,
-       instructors: .people
-     }
-   )
-' < /tmp/badged_people_raw.json > "$OUTPUT_PATH"/dc_instructors_by_airport.json
-
-
-jq '
-   map(select(.publish_profile == 1)) |
-   map(select(.is_lc_instructor))  |
-  .[].person_name_with_middle |= (. | gsub("(\\b(?<fl>[A-Za-z]{1})\\w*)";"\(.fl)") |
-   gsub("[^A-Za-z]"; "")) |
-   map(select(.iata != null)) |
-   group_by(.iata) |
-   map(
-     reduce .[] as $x(.[0] | del (.person_name_with_middle);
-     .people += [ $x.person_name_with_middle ])
-   ) |
-   map(
-      del(
-        .person_name, .person_email, .publish_profile,
-        .github, .url, .country, .twitter, .orcid,
-        .badges
-         )
-   ) |
-   map(
-     {
-       airport_code: .iata,
-       airport_latitude: .latitude,
-       airport_longitude: .longitude,
-       instructors: .people
-     }
-   )
-' < /tmp/badged_people_raw.json > "$OUTPUT_PATH"/lc_instructors_by_airport.json
-
 
 
 ###  Feed for instructor page
