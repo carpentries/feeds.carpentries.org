@@ -48,39 +48,18 @@ jq '{
   n_instructors: map(select(.is_instructor)) | length,
   n_mentors:         map(select(.is_mentor))  | length,
   n_mentees:         map(select(.is_mentee))  |length,
+
+
   instructors_by_country: map(
     select(
        .country != "" and
-      (.is_swc_instructor or .is_lc_instructor or .is_dc_instructor)
+      .is_instructor
     )) |
     group_by(.country) |
     map(
       { (.[].country): . | length }
     ) | unique ,
-  dc_instructors_by_country: map(
-    select(
-     .country != "" and .is_dc_instructor
-    )) |
-    group_by(.country) |
-    map(
-      { (.[].country): . | length }
-    ) | unique,
-  lc_instructors_by_country: map(
-    select(
-     .country != "" and .is_lc_instructor
-    )) |
-    group_by(.country) |
-    map(
-      { (.[].country): . | length }
-    ) | unique,
-  swc_instructors_by_country: map(
-    select(
-     .country != "" and .is_swc_instructor
-    )) |
-    group_by(.country) |
-    map(
-      { (.[].country): . | length }
-    ) | unique,
+
   trainers_by_country: map(
       select(
      .country != "" and .is_trainer
