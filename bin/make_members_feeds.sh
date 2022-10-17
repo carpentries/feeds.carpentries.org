@@ -26,9 +26,6 @@ curl "$REDASH_API_INSTRUCTORS" |
     jq '.query_result.data.rows |
     map(
    .is_maintainer =  contains({badges: "6"}) |
-   .is_swc_instructor = contains({badges: "2"}) |
-   .is_dc_instructor = contains({badges: "5"}) |
-   .is_lc_instructor = contains({badges: "10"}) |
    .is_trainer = contains({badges: "7"}) |
    .is_trainer_inactive = contains({badges: "11"}) |
    .is_mentor = contains({badges: "8"}) |
