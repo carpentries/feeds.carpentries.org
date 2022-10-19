@@ -22,6 +22,7 @@ workshops :
 ## members    : feeds with information about our community members
 members:
 	./bin/make_members_feeds.sh _data/
+	./bin/make_active_roles.sh _data/
 
 ## amy_curricula  : feeds with information about our curricula as recorded in AMY
 amy_curricula:
