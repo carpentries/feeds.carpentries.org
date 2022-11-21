@@ -25,34 +25,18 @@ checkout_wide = checkout.pivot_table(index='trainee_id', columns = 'requirement'
 checkout_wide.fillna(False, inplace=True)
 
 # Drop rows where `Training == False`. These are likely cases where data was incorrectly entered or carryovers from old systems.
-
 checkout_wide = checkout_wide[checkout_wide['Training'] == True]
 
-# Combine the demo and homework columns as lesson program doesn't matter
-# This "adds" the true/false values, to return a 1 (true value)
+checkout_condensed = checkout_wide[['trainee_id','Training', 'Discussion', 'Lesson Contribution', 'Demo']]
 
-checkout_wide["Demo"] =  checkout_wide[['SWC Demo', 'DC Demo', 'LC Demo']].any(axis = "columns")
-checkout_wide["Homework"] = checkout_wide[['SWC Homework', 'DC Homework', 'LC Homework']].any(axis = "columns")
-
-## Re-order the columns so the necessary ones are at the end.
-
-checkout_wide = checkout_wide[[  'DC Demo',
-                                 'DC Homework',
-                                 'LC Demo',
-                                 'LC Homework',
-                                 'SWC Demo',
-                                 'SWC Homework',
-                                 'trainee_id',
-                                 'Training',
-                                 'Discussion',
-                                 'Homework',
-                                 'Demo']]
-
-# Get just the last columns (`'trainee_id','Training', 'Discussion', 'Homework', 'Demo'`). Save this to a new dataframe
-checkout_condensed = checkout_wide[['trainee_id','Training', 'Discussion', 'Homework', 'Demo']]
+checkout_condensed.loc[checkout_condensed['Training'] == 1.0, 'Training'] = True
+checkout_condensed.loc[checkout_condensed['Discussion'] == 1.0, 'Discussion'] = True
+checkout_condensed.loc[checkout_condensed['Lesson Contribution'] == 1.0, 'Lesson Contribution'] = True
+checkout_condensed.loc[checkout_condensed['Demo'] == 1.0, 'Demo'] = True
 
 # Aggregate this to a table that has counts grouped by each combination of checkout steps
-checkout_counts = checkout_condensed.groupby(['Training', 'Discussion', 'Homework', 'Demo']).size().reset_index()
+checkout_counts = checkout_condensed.groupby(['Training', 'Discussion', 'Lesson Contribution', 'Demo']).size().reset_index()
+
 checkout_counts.rename(columns={0:"count"}, inplace=True)
 
 checkout_counts.to_json('_data/checkout_counts.json', orient='records')
