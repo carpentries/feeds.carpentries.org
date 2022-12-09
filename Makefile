@@ -7,7 +7,7 @@ everything:
 	@make amy_curricula
 	@make newsletter
 	@make plots
-	@make incubator || echo 'an error occured; skipping'
+	@make incubator
 	@make help-wanted
 	@make lessons
 	@make memberships
