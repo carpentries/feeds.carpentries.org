@@ -134,8 +134,27 @@ jobs:
 
       ### Finally --------------------------------------------------------------
 
-      - name: Make everything
-        run: make everything
+      - name: Make workshops
+        run: make workshops
+      - name: Make members
+        run: make members
+      - name: Make amy_curricula
+        run: make amy_curricula
+      - name: Make newsletter
+        run: make newsletter
+      - name: Make plots
+        run: make plots
+      - name: Make incubator
+        run: |
+          make incubator || echo "EXIT_STATUS=2" >> $GITHUB_ENV && echo 'an error occured; skipping incubator'
+      - name: Make help-wanted
+        run: make help-wanted
+      - name: Make lessons
+        run: make lessons
+      - name: Make memberships
+        run: make memberships
+      - name: Make site
+        run: make site
 
       - name: Deploy to AWS S3
         id: deploy
