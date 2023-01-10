@@ -3,6 +3,7 @@ name: build and deploy data feeds
 on:
   push:
     branches: main
+  pull_request:
   schedule:
     - cron: '0 */6 * * *'
 
@@ -34,6 +35,9 @@ jobs:
         shell: bash
 
     steps:
+      - name: show github context
+        run: echo ${{ toJSON(github) }}
+
       - name: checkout the Repository
         uses: actions/checkout@v2
 
@@ -47,44 +51,46 @@ jobs:
           install-r: false
 
       - name: Install Pandoc
-        uses: r-lib/actions/setup-pandoc@v1
+        uses: r-lib/actions/setup-pandoc@v2
 
-      - name: Query dependencies
-        run: |
-          install.packages(setdiff(c('remotes', 'sessioninfo'), installed.packages()[, "Package"]))
-          saveRDS(remotes::dev_package_deps(dependencies = TRUE), ".github/depends.Rds", version = 2)
-          writeLines(sprintf("R-%i.%i", getRversion()$major, getRversion()$minor), ".github/R-version")
-        shell: Rscript {0}
+      - name: Set up dependencies
+        uses: r-lib/actions/setup-r-dependencies@v2
+      # - name: Query dependencies
+      #   run: |
+      #     install.packages(setdiff(c('remotes', 'sessioninfo'), installed.packages()[, "Package"]))
+      #     saveRDS(remotes::dev_package_deps(dependencies = TRUE), ".github/depends.Rds", version = 2)
+      #     writeLines(sprintf("R-%i.%i", getRversion()$major, getRversion()$minor), ".github/R-version")
+      #   shell: Rscript {0}
 
-      - name: Cache R packages
-        uses: actions/cache@v2
-        with:
-          path: ${{ env.R_LIBS_USER }}
-          key: ${{ hashFiles('.github/R-version') }}-1-${{ hashFiles('.github/depends.Rds') }}
-          restore-keys: ${{ hashFiles('.github/R-version') }}-1-
+      # - name: Cache R packages
+      #   uses: actions/cache@v2
+      #   with:
+      #     path: ${{ env.R_LIBS_USER }}
+      #     key: ${{ hashFiles('.github/R-version') }}-1-${{ hashFiles('.github/depends.Rds') }}
+      #     restore-keys: ${{ hashFiles('.github/R-version') }}-1-
 
-      - name: Install system dependencies
-        run: |
-          sudo apt update
-          sudo apt upgrade
-          while read -r cmd
-          do
-            eval sudo $cmd
-          done < <(Rscript -e 'writeLines(remotes::system_requirements("ubuntu", "20.04"))')
+      # - name: Install system dependencies
+      #   run: |
+      #     sudo apt update
+      #     sudo apt upgrade
+      #     while read -r cmd
+      #     do
+      #       eval sudo $cmd
+      #     done < <(Rscript -e 'writeLines(remotes::system_requirements("ubuntu", "20.04"))')
 
-      - name: Install dependencies
-        run: |
-          remotes::install_deps(dependencies = TRUE)
-          ## for system packages
-          update.packages(lib.loc = Sys.getenv("R_LIBS_USER"), ask = FALSE, checkBuilt = TRUE)
-        shell: Rscript {0}
+      # - name: Install dependencies
+      #   run: |
+      #     remotes::install_deps(dependencies = TRUE)
+      #     ## for system packages
+      #     update.packages(lib.loc = Sys.getenv("R_LIBS_USER"), ask = FALSE, checkBuilt = TRUE)
+      #   shell: Rscript {0}
 
-      - name: Session info
-        run: |
-          options(width = 100)
-          pkgs <- installed.packages()[, "Package"]
-          sessioninfo::session_info(pkgs, include_base = TRUE)
-        shell: Rscript {0}
+      # - name: Session info
+      #   run: |
+      #     options(width = 100)
+      #     pkgs <- installed.packages()[, "Package"]
+      #     sessioninfo::session_info(pkgs, include_base = TRUE)
+      #   shell: Rscript {0}
 
 
       ### Install Ruby ---------------------------------------------------------
@@ -157,6 +163,7 @@ jobs:
         run: make site
 
       - name: Deploy to AWS S3
+        if: ${{ endsWith(github.ref, '/main') }}
         id: deploy
         uses: fmichonneau/s3-sync-action@log-output
         with:
@@ -170,11 +177,11 @@ jobs:
       ### Post actions ---------------------------------------------------------
 
       - name: Ping Healthcheck when successful
-        if: ${{ success() }}
+        if: ${{ endsWith(github.ref, '/main') && success() }}
         run: |
           curl -fsS --retry 3 ${{ secrets.HEALTHCHECK_URL }}/${{ env.EXIT_STATUS }}
 
       - name: Ping Healthcheck when failure
-        if: ${{ failure() }}
+        if: ${{ endsWith(github.ref, '/main') && failure() }}
         run: |
           curl -fsS --retry 3 ${{ secrets.HEALTHCHECK_URL }}/fail
