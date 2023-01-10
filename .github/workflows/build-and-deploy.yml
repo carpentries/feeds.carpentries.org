@@ -53,6 +53,9 @@ jobs:
       - name: Install Pandoc
         uses: r-lib/actions/setup-pandoc@v2
 
+      - name: Setup Apt
+        run: sudo apt update -y
+
       - name: Set up dependencies
         uses: r-lib/actions/setup-r-dependencies@v2
       # - name: Query dependencies
