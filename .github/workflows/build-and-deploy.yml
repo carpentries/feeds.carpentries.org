@@ -108,7 +108,7 @@ jobs:
           gem install bundler
 
       - name: Set up caching for Bundler
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: .vendor/bundle
           key: gems-${{ hashFiles('**/Gemfile') }}
@@ -129,7 +129,7 @@ jobs:
         with:
           python-version: '3.x'
 
-      - uses: actions/cache@v2
+      - uses: actions/cache@v3
         with:
           path: ~/.cache/pip
           key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
@@ -166,7 +166,7 @@ jobs:
         run: make site
 
       - name: Deploy to AWS S3
-        if: ${{ endsWith(github.ref, '/main') }}
+        if: ${{ github.event != 'pull_request' }}
         id: deploy
         uses: fmichonneau/s3-sync-action@log-output
         with:
@@ -180,11 +180,11 @@ jobs:
       ### Post actions ---------------------------------------------------------
 
       - name: Ping Healthcheck when successful
-        if: ${{ endsWith(github.ref, '/main') && success() }}
+        if: ${{ github.event != 'pull_request' && success() }}
         run: |
           curl -fsS --retry 3 ${{ secrets.HEALTHCHECK_URL }}/${{ env.EXIT_STATUS }}
 
       - name: Ping Healthcheck when failure
-        if: ${{ endsWith(github.ref, '/main') && failure() }}
+        if: ${{ github.event != 'pull_request' && failure() }}
         run: |
           curl -fsS --retry 3 ${{ secrets.HEALTHCHECK_URL }}/fail
