@@ -166,7 +166,7 @@ jobs:
         run: make site
 
       - name: Deploy to AWS S3
-        if: ${{ github.event != 'pull_request' }}
+        if: ${{ github.event_name != 'pull_request' }}
         id: deploy
         uses: fmichonneau/s3-sync-action@log-output
         with:
@@ -180,11 +180,11 @@ jobs:
       ### Post actions ---------------------------------------------------------
 
       - name: Ping Healthcheck when successful
-        if: ${{ github.event != 'pull_request' && success() }}
+        if: ${{ github.event_name != 'pull_request' && success() }}
         run: |
           curl -fsS --retry 3 ${{ secrets.HEALTHCHECK_URL }}/${{ env.EXIT_STATUS }}
 
       - name: Ping Healthcheck when failure
-        if: ${{ github.event != 'pull_request' && failure() }}
+        if: ${{ github.event_name != 'pull_request' && failure() }}
         run: |
           curl -fsS --retry 3 ${{ secrets.HEALTHCHECK_URL }}/fail
