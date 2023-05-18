@@ -58,7 +58,7 @@ help-wanted:
 
 ## lessons    : data feed for the repository information for all "official" lessons
 lessons:
-	R -q -e "source('R/curriculum_feed.R')"
+	# R -q -e "source('R/curriculum_feed.R')"
 
 ## site       : build files but do not run a server.
 ## some files created from the Redash query need to be copied to the
