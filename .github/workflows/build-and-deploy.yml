@@ -108,31 +108,31 @@ jobs:
 
       - name: Make workshops
         run: |
-          make workshops || echo "EXIT_STATUS=2" >> $GITHUB_ENV && echo 'an error occured; skipping workshops'
+          make workshops || (echo "EXIT_STATUS=2" >> $GITHUB_ENV && echo 'an error occured; skipping workshops')
       - name: Make members
         run: |          
-          make members || echo "EXIT_STATUS=2" >> $GITHUB_ENV && echo 'an error occured; skipping members'
+          make members || (echo "EXIT_STATUS=2" >> $GITHUB_ENV && echo 'an error occured; skipping members')
       - name: Make amy_curricula
         run: | 
-          make amy_curricula || echo "EXIT_STATUS=2" >> $GITHUB_ENV && echo 'an error occured; skipping curricula'
+          make amy_curricula || (echo "EXIT_STATUS=2" >> $GITHUB_ENV && echo 'an error occured; skipping curricula')
       - name: Make newsletter
         run: |
-          make newsletter || echo "EXIT_STATUS=2" >> $GITHUB_ENV && echo 'an error occured; skipping newsletter'
+          make newsletter || (echo "EXIT_STATUS=2" >> $GITHUB_ENV && echo 'an error occured; skipping newsletter')
       - name: Make plots
         run: |
-          make plots || echo "EXIT_STATUS=2" >> $GITHUB_ENV && echo 'an error occured; skipping plots'
+          make plots || (echo "EXIT_STATUS=2" >> $GITHUB_ENV && echo 'an error occured; skipping plots')
       - name: Make incubator
         run: |
-          make incubator || echo "EXIT_STATUS=2" >> $GITHUB_ENV && echo 'an error occured; skipping incubator'
+          make incubator || (echo "EXIT_STATUS=2" >> $GITHUB_ENV && echo 'an error occured; skipping incubator')
       - name: Make help-wanted
         run: |
-          make help-wanted || echo "EXIT_STATUS=2" >> $GITHUB_ENV && echo 'an error occured; skipping help-wanted issues'
+          make help-wanted || (echo "EXIT_STATUS=2" >> $GITHUB_ENV && echo 'an error occured; skipping help-wanted issues')
       - name: Make lessons
         run: |
-          make lessons || echo "EXIT_STATUS=2" >> $GITHUB_ENV && echo 'an error occured; skipping lessons feed'
+          make lessons || (echo "EXIT_STATUS=2" >> $GITHUB_ENV && echo 'an error occured; skipping lessons feed')
       - name: Make memberships
         run: |
-          make memberships || echo "EXIT_STATUS=2" >> $GITHUB_ENV && echo 'an error occured; skipping memberships'
+          make memberships || (echo "EXIT_STATUS=2" >> $GITHUB_ENV && echo 'an error occured; skipping memberships')
       - name: Make site
         run: make site
 
