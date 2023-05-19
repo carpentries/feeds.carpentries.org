@@ -107,15 +107,20 @@ jobs:
       ### Finally --------------------------------------------------------------
 
       - name: Make workshops
-        run: make workshops
+        run: |
+          make workshops || echo "EXIT_STATUS=2" >> $GITHUB_ENV && echo 'an error occured; skipping workshops'
       - name: Make members
-        run: make members
+        run: |          
+          make members || echo "EXIT_STATUS=2" >> $GITHUB_ENV && echo 'an error occured; skipping members'
       - name: Make amy_curricula
-        run: make amy_curricula
+        run: | 
+          make amy_curricula || echo "EXIT_STATUS=2" >> $GITHUB_ENV && echo 'an error occured; skipping curricula'
       - name: Make newsletter
-        run: make newsletter
+        run: |
+          make newsletter || echo "EXIT_STATUS=2" >> $GITHUB_ENV && echo 'an error occured; skipping newsletter'
       - name: Make plots
-        run: make plots
+        run: |
+          make plots || echo "EXIT_STATUS=2" >> $GITHUB_ENV && echo 'an error occured; skipping plots'
       - name: Make incubator
         run: |
           make incubator || echo "EXIT_STATUS=2" >> $GITHUB_ENV && echo 'an error occured; skipping incubator'
@@ -126,7 +131,8 @@ jobs:
         run: |
           make lessons || echo "EXIT_STATUS=2" >> $GITHUB_ENV && echo 'an error occured; skipping lessons feed'
       - name: Make memberships
-        run: make memberships
+        run: |
+          make memberships || echo "EXIT_STATUS=2" >> $GITHUB_ENV && echo 'an error occured; skipping memberships'
       - name: Make site
         run: make site
 
