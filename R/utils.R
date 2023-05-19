@@ -62,6 +62,7 @@ get_list_repos <- function(org, ignore_archived = FALSE,
   res  <- gh::gh(
     "GET /orgs/:org/repos",
     org = org,
+    per_page = 100,
     .limit = Inf,
     .send_headers = c(
       "If-Modified-Since" = six_hours_ago()
