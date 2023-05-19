@@ -2,10 +2,28 @@ library(gh)
 library(jsonlite)
 library(purrr)
 
+#' Create a fallback pipe 
+#' 
+#' @param x an R object
+#' @param y an R object to use if x is missing in some fashion
+#'
+#' @examples
+#' "hello there" %<<% "goodbye" # says hello
+#' sleep %<<% "no sleep data" # prints the sleep data set
+#' 
+#' # examples when this is useful: missing data
+#' "" %<<% "missing data"
+#' NULL %<<% "missing data"
+#' character(0) %<<% "missing data" 
+#' c(NA, NA) %<<% "missing data"
 `%<<%` <- function(x, y) {
-  if (identical(length(x), 0L)) return(y)
-  if (is.null(x) || identical(x, "") ||
-        is.na(x)) return(y)
+  if (identical(length(x), 0L)) {
+    return(y)
+  }
+  all_missing <- is.null(x) || identical(x, "") || all(is.na(x))
+  if (all_missing) {
+    return(y)
+  }
   x
 }
 
