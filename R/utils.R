@@ -2,10 +2,28 @@ library(gh)
 library(jsonlite)
 library(purrr)
 
+#' Create a fallback pipe 
+#' 
+#' @param x an R object
+#' @param y an R object to use if x is missing in some fashion
+#'
+#' @examples
+#' "hello there" %<<% "goodbye" # says hello
+#' sleep %<<% "no sleep data" # prints the sleep data set
+#' 
+#' # examples when this is useful: missing data
+#' "" %<<% "missing data"
+#' NULL %<<% "missing data"
+#' character(0) %<<% "missing data" 
+#' c(NA, NA) %<<% "missing data"
 `%<<%` <- function(x, y) {
-  if (identical(length(x), 0L)) return(y)
-  if (is.null(x) || identical(x, "") ||
-        is.na(x)) return(y)
+  if (identical(length(x), 0L)) {
+    return(y)
+  }
+  all_missing <- is.null(x) || identical(x, "") || all(is.na(x))
+  if (all_missing) {
+    return(y)
+  }
   x
 }
 
@@ -41,30 +59,32 @@ check_rate_limit <- function() {
 get_list_repos <- function(org, ignore_archived = FALSE,
                            ignore_pattern = NULL, ...) {
 
-  init_res  <- gh::gh(
+  res  <- gh::gh(
     "GET /orgs/:org/repos",
     org = org,
+    per_page = 100,
+    .limit = Inf,
     .send_headers = c(
       "If-Modified-Since" = six_hours_ago()
     )
   )
-  res <- list()
-  test <- TRUE
-  i <- 1
+  # res <- list()
+  # test <- TRUE
+  # i <- 1
 
-  while (test) {
-    message("Getting page: ", i, " for ", sQuote(org))
-    res <- append(res, init_res)
+  # while (test) {
+  #   message("Getting page: ", i, " for ", sQuote(org))
+  #   res <- append(res, init_res)
 
-    init_res <- tryCatch({
-      gh::gh_next(init_res)
-    },
-    error = function(e) {
-      test <<- FALSE
-      NULL
-    })
-    i <- i+1
-  }
+  #   init_res <- tryCatch({
+  #     gh::gh_next(init_res)
+  #   },
+  #   error = function(e) {
+  #     test <<- FALSE
+  #     NULL
+  #   })
+  #   i <- i+1
+  # }
 
   res <- purrr::map_df(res, function(.x) {
     list(
