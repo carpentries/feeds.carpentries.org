@@ -59,30 +59,31 @@ check_rate_limit <- function() {
 get_list_repos <- function(org, ignore_archived = FALSE,
                            ignore_pattern = NULL, ...) {
 
-  init_res  <- gh::gh(
+  res  <- gh::gh(
     "GET /orgs/:org/repos",
     org = org,
+    .limit = Inf,
     .send_headers = c(
       "If-Modified-Since" = six_hours_ago()
     )
   )
-  res <- list()
-  test <- TRUE
-  i <- 1
+  # res <- list()
+  # test <- TRUE
+  # i <- 1
 
-  while (test) {
-    message("Getting page: ", i, " for ", sQuote(org))
-    res <- append(res, init_res)
+  # while (test) {
+  #   message("Getting page: ", i, " for ", sQuote(org))
+  #   res <- append(res, init_res)
 
-    init_res <- tryCatch({
-      gh::gh_next(init_res)
-    },
-    error = function(e) {
-      test <<- FALSE
-      NULL
-    })
-    i <- i+1
-  }
+  #   init_res <- tryCatch({
+  #     gh::gh_next(init_res)
+  #   },
+  #   error = function(e) {
+  #     test <<- FALSE
+  #     NULL
+  #   })
+  #   i <- i+1
+  # }
 
   res <- purrr::map_df(res, function(.x) {
     list(
