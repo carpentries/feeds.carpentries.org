@@ -120,9 +120,11 @@ jobs:
         run: |
           make incubator || echo "EXIT_STATUS=2" >> $GITHUB_ENV && echo 'an error occured; skipping incubator'
       - name: Make help-wanted
-        run: make help-wanted
+        run: |
+          make help-wanted || echo "EXIT_STATUS=2" >> $GITHUB_ENV && echo 'an error occured; skipping help-wanted issues'
       - name: Make lessons
-        run: make lessons
+        run: |
+          make lessons || echo "EXIT_STATUS=2" >> $GITHUB_ENV && echo 'an error occured; skipping lessons feed'
       - name: Make memberships
         run: make memberships
       - name: Make site
