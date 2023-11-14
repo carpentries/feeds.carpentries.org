@@ -36,9 +36,6 @@ jobs:
         shell: bash
 
     steps:
-      - name: show github context
-        run: echo '${{ toJSON(github) }}'
-
       - name: checkout the Repository
         uses: actions/checkout@v3
 
