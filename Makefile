@@ -68,7 +68,7 @@ lessons:
 site :
 	bundle exec jekyll build
 	find _data -name '*.json' -exec cp {} _site/ \;
-	./bin/make_index.sh
+	./bin/make_full_list.sh
 
 ## install    : install missing Ruby gems using bundle.
 install :
