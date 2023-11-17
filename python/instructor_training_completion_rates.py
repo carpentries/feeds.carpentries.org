@@ -29,8 +29,8 @@ tp_pass = tp[tp['checkout_step_status']=='p']
 tp_pass = tp_pass.groupby(['person_name', 'badges'])['checkout_step'].apply(','.join).reset_index()
 
 # Check whether Discussion, Homework, or Demo appear in the training progress and add to column
-tp_pass['Discussion'] = tp_pass['checkout_step'].apply(lambda x: "Discussion" in x)
-tp_pass['Homework'] = tp_pass['checkout_step'].apply(lambda x: "Homework" in x)
+tp_pass['Welcome Session'] = tp_pass['checkout_step'].apply(lambda x: "Welcome Session" in x)
+tp_pass['Get Involved'] = tp_pass['checkout_step'].apply(lambda x: "Get Involved" in x)
 tp_pass['Demo'] = tp_pass['checkout_step'].apply(lambda x: "Demo" in x)
 
 # Check whether person has a badge
@@ -38,7 +38,7 @@ tp_pass['Badged'] = tp_pass['badges'].apply(lambda x: "Instructor" in x)
 
 
 # Count how many of the three steps (Discussion, Homework, or Demo) have been completed
-tp_pass['steps_completed'] = (tp_pass[['Discussion', 'Homework', 'Demo']] == True).sum(axis=1)
+tp_pass['steps_completed'] = (tp_pass[['Welcome Session', 'Get Involved', 'Demo']] == True).sum(axis=1)
 
 
 # Group count by number of steps completed

@@ -27,15 +27,15 @@ checkout_wide.fillna(False, inplace=True)
 # Drop rows where `Training == False`. These are likely cases where data was incorrectly entered or carryovers from old systems.
 checkout_wide = checkout_wide[checkout_wide['Training'] == True]
 
-checkout_condensed = checkout_wide[['trainee_id','Training', 'Discussion', 'Lesson Contribution', 'Demo']]
+checkout_condensed = checkout_wide[['trainee_id','Training', 'Welcome Session', 'Get Involved', 'Demo']]
 
 checkout_condensed.loc[checkout_condensed['Training'] == 1.0, 'Training'] = True
-checkout_condensed.loc[checkout_condensed['Discussion'] == 1.0, 'Discussion'] = True
-checkout_condensed.loc[checkout_condensed['Lesson Contribution'] == 1.0, 'Lesson Contribution'] = True
+checkout_condensed.loc[checkout_condensed['Welcome Session'] == 1.0, 'Welcome Session'] = True
+checkout_condensed.loc[checkout_condensed['Get Involved'] == 1.0, 'Get Involved'] = True
 checkout_condensed.loc[checkout_condensed['Demo'] == 1.0, 'Demo'] = True
 
 # Aggregate this to a table that has counts grouped by each combination of checkout steps
-checkout_counts = checkout_condensed.groupby(['Training', 'Discussion', 'Lesson Contribution', 'Demo']).size().reset_index()
+checkout_counts = checkout_condensed.groupby(['Training', 'Welcome Session', 'Get Involved', 'Demo']).size().reset_index()
 
 checkout_counts.rename(columns={0:"count"}, inplace=True)
 
