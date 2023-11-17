@@ -66,6 +66,6 @@ layout = dict(title= title_text + ': 2019',
 fig = go.Figure(data=data, layout=layout)
 
 curr_group.to_csv('_data/curriculum_teaching_frequency.csv')
-plotly.offline.plot(fig, filename='./curriculum_teaching_frequency.html', auto_open=False)
+plotly.offline.plot(fig, filename='images/curriculum_teaching_frequency.html', auto_open=False)
 
 

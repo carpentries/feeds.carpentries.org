@@ -128,4 +128,4 @@ fig = go.Figure(data=data, layout=layout)
 
 
 all_events_df.to_csv('_data/IT_seat_usage.csv')
-plotly.offline.plot(fig, filename='./plot_IT_seat_usage.html', auto_open=False)
+plotly.offline.plot(fig, filename='images/plot_IT_seat_usage.html', auto_open=False)
