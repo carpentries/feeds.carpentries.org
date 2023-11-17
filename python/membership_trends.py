@@ -75,6 +75,6 @@ ax.legend(['Member count', '6 Month Moving Average'], fontsize = 16)
 # Save plot image and json
 plt.savefig('./plot_membership_trends.svg')
 member_count_by_month_df['start_month'] = member_count_by_month_df['start_month'].dt.strftime('%Y-%m-%d')
-member_count_by_month_df.to_json('membership_trends.json')
+member_count_by_month_df.to_json('_data/membership_trends.json')
 
 
