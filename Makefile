@@ -40,10 +40,12 @@ memberships:
 plots:
 	R -q -e "source('R/workshop_summary.R')"
 	python3 python/lesson_contributor_count.py
-	# python3 python/instructor_training_completion_rates.py
-	# python3 python/instructor_training_seat_usage.py
+	python3 python/instructor_training_completion_rates.py
+	# Drop seat usage feed/plot for now - does not work well 
+	# python3 python/instructor_training_seat_usage.py 
+	# Drop curriculum frequency for now - needs to be updated 
 	# python3 python/curriculum_teaching_frequency.py
-	# python3 python/instructor_teaching_frequency.py
+	python3 python/instructor_teaching_frequency.py
 	python3 python/checkout_steps.py
 	python3 python/membership_trends.py
 
