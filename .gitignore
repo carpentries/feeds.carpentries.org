@@ -5,7 +5,9 @@ _data/*.yml
 _data/*.json
 _data/*.csv
 plot_*.*
-images/
+images/*.html
+images/*.png
+images/*.svg
 
 _site
 .sass-cache
