@@ -1,4 +1,16 @@
+# Ignore generated feeds and plots
+# as they do not get stored in the repo
+# and clutter the local build 
 _data/*.yml
+_data/*.json
+_data/*.csv
+plot_*.*
+_images/*.html
+_images/*.png
+_images/*.svg
+_images/*.jpg
+_images/*.jpeg
+
 _site
 .sass-cache
 .jekyll-metadata

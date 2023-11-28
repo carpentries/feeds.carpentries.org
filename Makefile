@@ -68,6 +68,7 @@ lessons:
 site :
 	bundle exec jekyll build
 	find _data -name '*.json' -exec cp {} _site/ \;
+	find _images -iregex ".*.\(svg\|html\|png\|jpg\|jpeg\)" -exec cp {} _site/ \;
 	./bin/make_index.sh
 
 ## install    : install missing Ruby gems using bundle.
