@@ -69,7 +69,7 @@ prepare_workshops_through_time <- function(wksp_data) {
   summary_through_time
 }
 
-workshops_through_time <- function(wksp_data, outfile = "images/plot_workshops_through_time.html") {
+workshops_through_time <- function(wksp_data, outfile = "_images/plot_workshops_through_time.html") {
   check_export_dir(outfile)
 
   summary_through_time <- prepare_workshops_through_time(wksp_data)
@@ -91,7 +91,7 @@ workshops_through_time <- function(wksp_data, outfile = "images/plot_workshops_t
   outfile
 }
 
-workshops_by_year <- function(wksp_data, outfile = "images/plot_workshops_by_year.html") {
+workshops_by_year <- function(wksp_data, outfile = "_images/plot_workshops_by_year.html") {
   check_export_dir(outfile)
 
   summary_per_year <- prepare_workshops_through_time(wksp_data) %>%
@@ -121,7 +121,7 @@ workshops_by_year <- function(wksp_data, outfile = "images/plot_workshops_by_yea
   outfile
 }
 
-workshops_map <- function(wksp_data, outfile = "images/plot_workshops_map.svg") {
+workshops_map <- function(wksp_data, outfile = "_images/plot_workshops_map.svg") {
   check_export_dir(outfile)
 
   wksp_data <- wksp_data %>%
