@@ -5,11 +5,11 @@ _data/*.yml
 _data/*.json
 _data/*.csv
 plot_*.*
-images/*.html
-images/*.png
-images/*.svg
-images/*.jpg
-images/*.jpeg
+_images/*.html
+_images/*.png
+_images/*.svg
+_images/*.jpg
+_images/*.jpeg
 
 _site
 .sass-cache
