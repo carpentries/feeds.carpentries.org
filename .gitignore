@@ -8,6 +8,8 @@ plot_*.*
 images/*.html
 images/*.png
 images/*.svg
+images/*.jpg
+images/*.jpeg
 
 _site
 .sass-cache
