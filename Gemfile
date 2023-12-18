@@ -22,6 +22,10 @@ group :jekyll_plugins do
   gem "jekyll-feed", "~> 0.6"
 end
 
+if Gem::Version.new(RUBY_VERSION) >= Gem::Version.new('3.0.0')
+    gem 'webrick', '>= 1.6.1'
+end
+
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem "tzinfo-data", platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
