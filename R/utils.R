@@ -28,7 +28,7 @@ library(purrr)
 }
 
 use_pat <- function() {
-  if (Sys.getenv("GITHUB_PAT") != "" || Sys.getenv("GITHUB_TOKEN") != "") {
+  if (gh::gh_token() != "" || Sys.getenv("GITHUB_PAT") != "" || Sys.getenv("GITHUB_TOKEN") != "") {
     cli::cli_alert_success("Using GitHub token!")
   } else {
     cli::cli_alert_danger("No GitHub token detected.")
