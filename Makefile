@@ -11,8 +11,12 @@ everything:
 	@make help-wanted
 	@make lessons
 	@make memberships
+	@make website_stats
 	@make site
 
+## website_stats : quick stats for bubbles on website
+website_stats:
+	./bin/make_website_stats_feed.sh _data/
 
 ## workshops  : workshop JSON feeds from AMY data accessed from redash
 workshops :
