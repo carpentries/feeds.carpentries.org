@@ -26,7 +26,7 @@ fi
 ## Make sure data is not empty
 if [ -z "$json_body" ]
 then
-    echo "The variable REDASH_KEY_QUERY713 is not set"
+    echo "The returned data is empty."
     exit 1
 fi
 
