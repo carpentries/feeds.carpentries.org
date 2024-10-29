@@ -131,6 +131,9 @@ jobs:
       - name: Make memberships
         run: |
           make memberships || (echo "EXIT_STATUS=2" >> $GITHUB_ENV && echo 'an error occured; skipping memberships')
+      - name: Make website_stats
+        run: |
+          make website_stats || (echo "EXIT_STATUS=2" >> $GITHUB_ENV && echo 'an error occured; skipping website_stats')
       - name: Make site
         run: make site
 
