@@ -25,6 +25,7 @@ jobs:
       REDASH_KEY_QUERY298: ${{ secrets.REDASH_KEY_QUERY298 }}
       REDASH_KEY_QUERY523: ${{ secrets.REDASH_KEY_QUERY523}}
       REDASH_KEY_QUERY524: ${{ secrets.REDASH_KEY_QUERY524}}
+      REDASH_KEY_QUERY713: ${{ secrets.REDASH_KEY_QUERY713}}
       AIRTABLE_API_KEY: ${{ secrets.AIRTABLE_API_KEY }}
       REDASH_API_INSTRUCTORS_KEY: ${{ secrets.REDASH_API_INSTRUCTORS_KEY }}
       MAILCHIMP_NEWSLETTER_KEY: ${{ secrets.MAILCHIMP_NEWSLETTER_KEY }}
@@ -62,7 +63,7 @@ jobs:
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: '2.7'
+          ruby-version: '3.1'
 
       - name: Install Bundler
         run: >-
@@ -131,6 +132,9 @@ jobs:
       - name: Make memberships
         run: |
           make memberships || (echo "EXIT_STATUS=2" >> $GITHUB_ENV && echo 'an error occured; skipping memberships')
+      - name: Make website_stats
+        run: |
+          make website_stats || (echo "EXIT_STATUS=2" >> $GITHUB_ENV && echo 'an error occured; skipping website_stats')
       - name: Make site
         run: make site
 

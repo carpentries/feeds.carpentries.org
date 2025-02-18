@@ -11,8 +11,12 @@ everything:
 	@make help-wanted
 	@make lessons
 	@make memberships
+	@make website_stats
 	@make site
 
+## website_stats : quick stats for bubbles on website
+website_stats:
+	./bin/make_website_stats_feed.sh _data/
 
 ## workshops  : workshop JSON feeds from AMY data accessed from redash
 workshops :
@@ -68,7 +72,8 @@ lessons:
 site :
 	bundle exec jekyll build
 	find _data -name '*.json' -exec cp {} _site/ \;
-	./bin/make_full_list.sh
+	find _images -iregex ".*.\(svg\|html\|png\|jpg\|jpeg\)" -exec cp {} _site/ \;
+	./bin/make_index.sh
 
 ## install    : install missing Ruby gems using bundle.
 install :

@@ -7,9 +7,22 @@
 ### github topic have the appropriate other topics (at least for life cycle and
 ### human languages).
 
+# NOTE:
+#
+# If you find yourself here wondering why the lesson feed has failed yet again,
+# remember that this works on GitHub topic tags, which are not part of the git
+# repository, but specific to GitHub. 
+#
+# --- Zhian (2023-12-14)
+
 source("R/utils.R")
 
-LIFE_CYCLE_TAGS <- c("pre-alpha", "alpha", "beta", "stable", "on-hold")
+# ZNK 2023-12-14: 
+# Adding the "template" tag here so that we can exclude the templates from our
+# official lesson count. This _is_ a new tag and it's not one that's present in
+# the workbench yet. For now, it will allow the feeds to work.
+LIFE_CYCLE_TAGS <- c("pre-alpha", "alpha", "beta", "stable", "on-hold", 
+  "template")
 HUMAN_LANGUAGE <- c("english", "spanish")
 
 GITHUB_ORGS <- c(
