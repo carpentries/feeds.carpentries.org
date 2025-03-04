@@ -13,7 +13,7 @@ jobs:
     if: github.repository_owner == 'carpentries'
     runs-on: ubuntu-24.04
     env:
-      RSPM: https://packagemanager.posit.co/cran/__linux__/noble/latest"
+      RSPM: "https://packagemanager.posit.co/cran/__linux__/noble/latest"
       REDASH_KEY_QUERY33: ${{ secrets.REDASH_KEY_QUERY33 }}
       REDASH_KEY_QUERY39: ${{ secrets.REDASH_KEY_QUERY39 }}
       REDASH_KEY_QUERY157: ${{ secrets.REDASH_KEY_QUERY157 }}
