@@ -1,6 +1,6 @@
 # Import all the things
 import requests
-import os 
+import os
 from datetime import datetime
 import time
 import json
@@ -30,9 +30,9 @@ headers = {
 def get_json(url, headers, params=None):
     """
     Function takes
-    * GH API url as string 
+    * GH API url as string
     * Authentication headers as dict
-    * Optional params to pass to API call 
+    * Optional params to pass to API call
     Returns the retrieved json or error message
     """
     r = requests.get(url, headers=headers, params=params)
@@ -46,7 +46,7 @@ def get_repos_by_topic(org, repo_topics):
     """
     Function takes:
     * GH organization name as a string (eg "swcarpentry" or "carpentries")
-    * GH repo topics to search for as a csv string. 
+    * GH repo topics to search for as a csv string.
     Queries for all GH repos in that organization that have the topic "stable".
     Returns list of dicts with repo and org data (to be used to gather help-wanted issues in that repo).
     """
@@ -69,7 +69,6 @@ def get_repos_by_topic(org, repo_topics):
         print("Key 'html_url' not found.")
         return gh_org
 
-
     # Get all repos in that organization the topic "stable"
     # Additional topics can be added separated by commas and use OR logic.
     params = {
@@ -85,14 +84,14 @@ def get_repos_by_topic(org, repo_topics):
         print("Key 'items' not found.")
         return repos_with_topic_req
 
-    # Build list of dicts 
+    # Build list of dicts
     # This will be used as base dict for each repo
-    repos_with_topic_clean = [{ "repo_url": repo["html_url"], 
-                                "repo_description": repo["description"], 
-                                 "repo_name":repo["name"], 
-                                 "org_name":org,
-                                 "org_full_name":org_full_name,
-                                 "org_url": org_url } for repo in repos_with_topic]
+    repos_with_topic_clean = [{"repo_url": repo["html_url"],
+                               "repo_description": repo["description"],
+                               "repo_name": repo["name"],
+                               "org_name": org,
+                               "org_full_name": org_full_name,
+                               "org_url": org_url} for repo in repos_with_topic]
     count_repos = len(repos_with_topic_clean)
     print(f"Found {count_repos} repos.")
     return repos_with_topic_clean
@@ -102,11 +101,11 @@ def get_help_wanted_issues(repos_with_topic, issue_labels):
     """
     Function takes:
     * list of dicts created by get_repos_by_topic()
-    * GH issue labels to search for as a csv string. Issue names with whitespace 
+    * GH issue labels to search for as a csv string. Issue names with whitespace
     must be surrounded by escaped double quotes.
 
     Iterates over each dict to search for all issues in that repo with those labels.
-    Returns list of issues with those tags identified by repo & organization.    
+    Returns list of issues with those tags identified by repo & organization.
     """
 
     # Rough hacky check on if `repos_with_topic` is non-zero length and properly formatted list of dicts
@@ -116,14 +115,14 @@ def get_help_wanted_issues(repos_with_topic, issue_labels):
     if type(repos_with_topic) != list or "org_url" not in repos_with_topic[0].keys():
         print("Invalid source data for repos_with_topic")
         return
-    
+
     print(f"Searching for issues with labels: {issue_labels}")
     # Initialize empty list to store list of dicts for each issue
-    all_help_wanted_issues = [] 
+    all_help_wanted_issues = []
 
     # Go through each repo
     # Search for issues labeled "help wanted" or "good first issue"
-    
+
     for r in repos_with_topic:
 
         # Set up API request
@@ -135,7 +134,7 @@ def get_help_wanted_issues(repos_with_topic, issue_labels):
         params = {
                 "q": query
                 }
-        
+
         help_wanted_issues_req = get_json(url, headers, params)
 
         if 'items' in help_wanted_issues_req:
@@ -144,13 +143,12 @@ def get_help_wanted_issues(repos_with_topic, issue_labels):
             print("Key 'items' not found.")
             return help_wanted_issues_req
 
-   
         for i in help_wanted_issues:
 
             # Create copy of the repo dict
-            hw_issue = r.copy() 
+            hw_issue = r.copy()
 
-            # Create csv string of label names 
+            # Create csv string of label names
             labels = [x['name'] for x in i['labels']]
             labels = ", ".join(labels)
 
@@ -165,14 +163,14 @@ def get_help_wanted_issues(repos_with_topic, issue_labels):
             hw_issue['updated_at'] = updated_at
             hw_issue['labels'] = labels
 
-            # Add this dict to list of all help wanted issues 
+            # Add this dict to list of all help wanted issues
             all_help_wanted_issues.append(hw_issue)
 
     count_issues = len(all_help_wanted_issues)
     print(f"Found {count_issues} issues.\n")
-    return all_help_wanted_issues 
+    return all_help_wanted_issues
 
-# Initialize empty list to hold all issues 
+# Initialize empty list to hold all issues
 all_issues = []
 
 # Loop through all orgs, get repos and issues
@@ -203,4 +201,3 @@ try:
         json.dump(all_issues, file)
 except Exception as e:
     print(f'An error occured when writing to {filename}: {e}')
-
