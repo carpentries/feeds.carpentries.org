@@ -60,7 +60,7 @@ incubator:
 
 ## help-wanted: list of issues that have the label "help wanted"
 help-wanted:
-	R -q -e "source('R/help_wanted_issues.R')"
+	python3 python/lessons_help_wanted.py
 
 ## lessons    : data feed for the repository information for all "official" lessons
 lessons:
