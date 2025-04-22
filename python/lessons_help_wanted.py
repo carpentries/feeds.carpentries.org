@@ -198,6 +198,9 @@ filename = 'lessons_help_wanted.json'
 print(f'Total {len(all_issues)} issues retrieved')
 print(f'Saving to file {filename}')
 
-with open(filename, 'w') as file:
-    json.dump(all_issues, file)
+try:
+    with open(filename, 'w') as file:
+        json.dump(all_issues, file)
+except Exception as e:
+    print(f'An error occured when writing to {filename}: {e}')
 
