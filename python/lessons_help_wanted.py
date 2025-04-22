@@ -116,9 +116,7 @@ def get_help_wanted_issues(repos_with_topic, issue_labels):
         org_name = r['org_name']
         repo_name = r['repo_name']
         url = "https://api.github.com/search/issues"
-        # lbl = "\"help wanted\",\"good first issue\""
         query = f"repo:{org_name}/{repo_name} label:{issue_labels} state:open is:issue"
-        # query = f"repo:{org_name}/{repo_name} label:'help wanted','good first issue' state:open is:issue"
 
         params = {
                 "q": query
