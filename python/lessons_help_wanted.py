@@ -187,7 +187,7 @@ for i in ALL_ORGS:
     try:
         repos = get_repos_by_topic(i, topics)
         issues = get_help_wanted_issues(repos, labels)
-        all_issues += issues
+        all_issues.extend(issues)
     except Exception as e:
         print(f"Error with repo: '{i}', '{e}'")
         continue
