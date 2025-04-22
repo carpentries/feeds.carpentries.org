@@ -27,6 +27,21 @@ headers = {
 }
 
 
+def get_json(url, headers, params=None):
+    """
+    Function takes
+    * GH API url as string 
+    * Authentication headers as dict
+    * Optional params to pass to API call 
+    Returns the retrieved json or error message
+    """
+    r = requests.get(url, headers=headers, params=params)
+    if r.status_code != 200:
+        print(f"Failed to retrieve data: {r.status_code}, {r.json()}")
+        return r.status_code
+    return r.json()
+
+
 def get_repos_by_topic(org, repo_topics):
     """
     Function takes:
@@ -39,12 +54,8 @@ def get_repos_by_topic(org, repo_topics):
     print(f"Searching for repos in {org} with topics: {topics}")
     # Get GH organization name and url
     org_url = f"https://api.github.com/orgs/{org}"
-    gh_org_req = requests.get(org_url, headers=headers)
-    if gh_org_req.status_code != 200:
-        print(f"Failed to retrieve repos by organization: {gh_org_req.status_code}, {gh_org_req.json()}")
-        return gh_org_req.status_code
 
-    gh_org = gh_org_req.json()
+    gh_org = get_json(org_url, headers)
 
     if 'name' in gh_org:
         org_full_name = gh_org['name']
@@ -65,14 +76,14 @@ def get_repos_by_topic(org, repo_topics):
         "q": f"org:{org} topic:{repo_topics}",
     }
 
-    repos_with_topic_req = requests.get(REPO_SEARCH_BASE_URL, headers=headers, params=params)
+    repos_with_topic_req = get_json(REPO_SEARCH_BASE_URL, headers, params)
 
-    if repos_with_topic_req.status_code != 200:
-        print(f"Failed to retreive repos: {repos_with_topic_req.status_code}, {repos_with_topic_req.json()}")
-        return repos_with_topic_req.status_code
-
-    repos_with_topic = repos_with_topic_req.json()['items']
-    
+    # repos_with_topic = repos_with_topic_req.json()['items']
+    if 'items' in repos_with_topic_req:
+        repos_with_topic = repos_with_topic_req['items']
+    else:
+        print("Key 'items' not found.")
+        return repos_with_topic_req
 
     # Build list of dicts 
     # This will be used as base dict for each repo
@@ -122,15 +133,14 @@ def get_help_wanted_issues(repos_with_topic, issue_labels):
                 "q": query
                 }
         
-        help_wanted_issues_req = requests.get(url, headers=headers, params=params)
+        help_wanted_issues_req = get_json(url, headers, params)
 
-        if help_wanted_issues_req.status_code != 200:
-            print(f"Failed to retreive issues: {help_wanted_issues_req.status_code}, {help_wanted_issues_req.json()}")
-            return help_wanted_issues_req.status_code
-        help_wanted_issues = help_wanted_issues_req.json()['items']
+        if 'items' in help_wanted_issues_req:
+            help_wanted_issues = help_wanted_issues_req['items']
+        else:
+            print("Key 'items' not found.")
+            return help_wanted_issues_req
 
-        # Process data 
-      
    
         for i in help_wanted_issues:
 
