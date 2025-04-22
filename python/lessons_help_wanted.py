@@ -194,7 +194,7 @@ for i in ALL_ORGS:
     print("Pausing 60 seconds to reset GH API rate limit...\n")
     time.sleep(60)
 
-filename = 'lessons_help_wanted.json'
+filename = '_data/lessons_help_wanted.json'
 print(f'Total {len(all_issues)} issues retrieved')
 print(f'Saving to file {filename}')
 
