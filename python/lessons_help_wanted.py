@@ -11,7 +11,7 @@ GH_ORG_SWC = "swcarpentry"
 GH_ORG_LC = "librarycarpentry"
 GH_ORG_LAB = "carpentries-lab"
 GH_ORG_INC = "carpentries-incubator"
-ALL_ORGS = [GH_ORG_DC, GH_ORG_LC, GH_ORG_SWC, 'notanorg', GH_ORG_LAB, GH_ORG_INC, ]
+ALL_ORGS = [GH_ORG_DC, GH_ORG_LC, GH_ORG_SWC, GH_ORG_LAB, GH_ORG_INC,]
 REPO_SEARCH_BASE_URL = "https://api.github.com/search/repositories"
 
 topics = "stable,helpwanted-list"
