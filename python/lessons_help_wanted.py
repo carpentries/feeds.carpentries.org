@@ -112,7 +112,7 @@ def get_help_wanted_issues(repos_with_topic, issue_labels):
     if len(repos_with_topic) == 0:
         print("Empty data for 'repos_with_topic'")
         return
-    if type(repos_with_topic) != list or "org_url" not in repos_with_topic[0].keys():
+    if not isinstance(repos_with_topic, list) or "org_url" not in repos_with_topic[0].keys():
         print("Invalid source data for repos_with_topic")
         return
 
@@ -169,6 +169,7 @@ def get_help_wanted_issues(repos_with_topic, issue_labels):
     count_issues = len(all_help_wanted_issues)
     print(f"Found {count_issues} issues.\n")
     return all_help_wanted_issues
+
 
 # Initialize empty list to hold all issues
 all_issues = []
