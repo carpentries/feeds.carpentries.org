@@ -45,8 +45,19 @@ def get_repos_by_topic(org, repo_topics):
         return gh_org_req.status_code
 
     gh_org = gh_org_req.json()
-    org_full_name = gh_org['name']
-    org_url = gh_org['html_url']
+
+    if 'name' in gh_org:
+        org_full_name = gh_org['name']
+    else:
+        print("Key 'name' not found.")
+        return gh_org
+
+    if 'html_url' in gh_org:
+        org_url = gh_org['html_url']
+    else:
+        print("Key 'html_url' not found.")
+        return gh_org
+
 
     # Get all repos in that organization the topic "stable"
     # Additional topics can be added separated by commas and use OR logic.
