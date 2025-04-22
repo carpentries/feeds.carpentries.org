@@ -109,7 +109,10 @@ def get_help_wanted_issues(repos_with_topic, issue_labels):
     Returns list of issues with those tags identified by repo & organization.    
     """
 
-    # Rough hacky check on if `repos_with_topic` is properly formatted list of dicts
+    # Rough hacky check on if `repos_with_topic` is non-zero length and properly formatted list of dicts
+    if len(repos_with_topic) == 0:
+        print("Empty data for 'repos_with_topic'")
+        return
     if type(repos_with_topic) != list or "org_url" not in repos_with_topic[0].keys():
         print("Invalid source data for repos_with_topic")
         return
