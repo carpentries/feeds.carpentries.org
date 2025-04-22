@@ -12,7 +12,8 @@ GH_ORG_LC = "librarycarpentry"
 GH_ORG_LAB = "carpentries-lab"
 GH_ORG_INC = "carpentries-incubator"
 ALL_ORGS = [GH_ORG_DC, GH_ORG_LC, GH_ORG_SWC, GH_ORG_LAB, GH_ORG_INC,]
-REPO_SEARCH_BASE_URL = "https://api.github.com/search/repositories"
+GH_SEARCH_BASE_URL = "https://api.github.com/search"
+GH_ORG_BASE_URL = "https://api.github.com/orgs"
 
 topics = "stable,helpwanted-list"
 labels = "\"help wanted\",\"good first issue\""
@@ -52,7 +53,7 @@ def get_repos_by_topic(org, repo_topics):
 
     print(f"Searching for repos in {org} with topics: {topics}")
     # Get GH organization name and url
-    org_url = f"https://api.github.com/orgs/{org}"
+    org_url = f"{GH_ORG_BASE_URL}/{org}"
 
     gh_org = get_json(org_url, headers)
 
@@ -75,7 +76,7 @@ def get_repos_by_topic(org, repo_topics):
         "q": f"org:{org} topic:{repo_topics}",
     }
 
-    repos_with_topic_req = get_json(REPO_SEARCH_BASE_URL, headers, params)
+    repos_with_topic_req = get_json(f"{GH_SEARCH_BASE_URL}/repositories", headers, params)
 
     # repos_with_topic = repos_with_topic_req.json()['items']
     if 'items' in repos_with_topic_req:
@@ -128,7 +129,7 @@ def get_help_wanted_issues(repos_with_topic, issue_labels):
         # Set up API request
         org_name = r['org_name']
         repo_name = r['repo_name']
-        url = "https://api.github.com/search/issues"
+        url = f"{GH_SEARCH_BASE_URL}/issues"
         query = f"repo:{org_name}/{repo_name} label:{issue_labels} state:open is:issue"
 
         params = {
