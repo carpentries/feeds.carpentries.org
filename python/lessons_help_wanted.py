@@ -3,7 +3,6 @@ import requests
 import os 
 from datetime import datetime
 import time
-import traceback
 import json
 
 # Set global vars
