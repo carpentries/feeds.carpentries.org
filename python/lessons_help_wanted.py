@@ -19,7 +19,7 @@ topics = "stable,helpwanted-list"
 labels = "\"help wanted\",\"good first issue\""
 
 # Authentication
-GH_TOKEN = os.environ['GITHUB_PAT_HELPWANTED']
+GH_TOKEN = os.environ['GITHUB_PAT']
 
 headers = {
     "Authorization": f"token {GH_TOKEN}",
