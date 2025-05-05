@@ -30,7 +30,8 @@ curl "$REDASH_API_INSTRUCTORS" |
    .is_trainer_inactive = contains({badges: "11"}) |
    .is_mentor = contains({badges: "8"}) |
    .is_mentee = contains({badges: "9"}) |
-   .is_instructor = contains({badges: "13"})
+   .is_instructor = contains({badges: "13"}) | 
+   .is_lesson_developer = containes({badges: "14"})
    )' > /tmp/badged_people_raw.json
 
 ## Make sure the file was successfully downloaded
