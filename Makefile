@@ -50,7 +50,8 @@ plots:
 	# Drop curriculum frequency for now - needs to be updated 
 	# python3 python/curriculum_teaching_frequency.py
 	python3 python/instructor_teaching_frequency.py
-	python3 python/checkout_steps.py
+	# Temporarily remove checkout_steps until it is fixed to prevent overall build failures
+	# python3 python/checkout_steps.py
 	python3 python/membership_trends.py
 
 
