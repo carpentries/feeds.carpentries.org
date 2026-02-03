@@ -27,7 +27,7 @@ c = ['name',  'consortium',  'agreement_start',  'agreement_end',  'variant', 'c
 all_members = all_members.reindex(columns = c)
 
 # Create an array of the first day of every month from  2018-01-01 to next calendar month from now.
-dates = pd.date_range('2018-01-01', next_month, freq='1M')-pd.offsets.MonthBegin(1)
+dates = pd.date_range('2018-01-01', next_month, freq='ME')-pd.offsets.MonthBegin(1)
 
 # member_count_by_month will be a list of lists
 # each sub list will have two items - date and member count
