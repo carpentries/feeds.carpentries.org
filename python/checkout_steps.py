@@ -22,7 +22,7 @@ checkout=checkout[~checkout['trainee_id'].isin(checkout_old)]
 # "Widen" the checkout progress table
 # This creates one row for each trainee.
 checkout_wide = checkout.pivot_table(index='trainee_id', columns = 'requirement', values="completed").reset_index()
-checkout_wide.fillna(False, inplace=True)
+checkout_wide = checkout_wide.fillna(False).copy()
 
 # Drop rows where `Training == False`. These are likely cases where data was incorrectly entered or carryovers from old systems.
 checkout_wide = checkout_wide[checkout_wide['Training'] == True]
