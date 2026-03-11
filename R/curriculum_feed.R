@@ -38,7 +38,8 @@ make_lessons_feed <- function(path) {
 
   purrr::map_df(
     GITHUB_ORGS,
-    get_org_topics
+    get_org_topics,
+    ignore_archived = TRUE
   )  %>%
     dplyr::filter(
       !private,

@@ -143,9 +143,9 @@ get_github_topics <- function(owner, repo) {
   purrr::map_chr(res[["names"]], ~ .)
 }
 
-get_org_topics <- function(org) {
+get_org_topics <- function(org, ignore_archived=FALSE) {
 
-  get_list_repos(org, ignore_archived=TRUE) %>%
+  get_list_repos(org, ignore_archived=ignore_archived) %>%
     dplyr::filter(
       !private,
       carpentries_org == org

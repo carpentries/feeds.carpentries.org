@@ -46,8 +46,8 @@ check_repo_info <- function(.d, fields) {
 
 make_community_lessons_feed <- function(path, ...) {
 
-  carp_inc <- get_org_topics("carpentries-incubator")
-  carp_lab <- get_org_topics("carpentries-lab")
+  carp_inc <- get_org_topics("carpentries-incubator", ignore_archived=TRUE)
+  carp_lab <- get_org_topics("carpentries-lab", ignore_archived=TRUE)
 
   res <- dplyr::bind_rows(carp_inc, carp_lab) %>%
     dplyr::select(-private) %>%
