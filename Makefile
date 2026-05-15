@@ -11,6 +11,7 @@ everything:
 	@make help-wanted
 	@make lessons
 	@make memberships
+	@make partnerships
 	@make website_stats
 	@make site
 
@@ -36,9 +37,11 @@ amy_curricula:
 newsletter:
 	./bin/make_newsletter_feed.sh _data/
 
-## memberships
+## memberships and partnerships
 memberships:
 	./bin/make_membership_feed.sh _data/
+partnerships:
+	./bin/make_partnership_feed.sh _data/
 
 ## plots: plot summaries
 plots:
