@@ -37,7 +37,7 @@ use_pat <- function() {
 use_pat()
 
 check_rate_limit <- function() {
-  res <- gh::gh("GET /user")
+  res <- gh::gh("GET /user", .token = Sys.getenv("GITHUB_TOKEN"),)
 
   rate_limit <- attr(res, "response")[["x-ratelimit-limit"]]
   rate_remaining <- attr(res, "response")[["x-ratelimit-remaining"]]
@@ -64,6 +64,7 @@ get_list_repos <- function(org, ignore_archived = FALSE,
     org = org,
     per_page = 100,
     .limit = Inf,
+    .token = Sys.getenv("GITHUB_TOKEN"),
     .send_headers = c(
       "If-Modified-Since" = six_hours_ago()
     )
@@ -134,6 +135,7 @@ get_github_topics <- function(owner, repo) {
   res <- gh::gh(
     "GET /repos/:owner/:repo/topics",
     owner = owner, repo = repo,
+    .token = Sys.getenv("GITHUB_TOKEN"),
     .send_headers = c(
       "Accept" = "application/vnd.github.mercy-preview+json",
       "If-Modified-Since" = six_hours_ago()
