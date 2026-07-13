@@ -28,3 +28,7 @@ shapely==2.1.2
 simplejson==4.1.1
 six==1.17.0
 urllib3==2.7.0
+
+scipy
+ipython
+jupyter
