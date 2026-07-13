@@ -45,12 +45,12 @@ partnerships:
 
 ## plots: plot summaries
 plots:
-	R -q -e "source('R/workshop_summary.R')"
+	python3 python/workshop_summary.py
 	python3 python/lesson_contributor_count.py
 	python3 python/instructor_training_completion_rates.py
-	# Drop seat usage feed/plot for now - does not work well 
-	# python3 python/instructor_training_seat_usage.py 
-	# Drop curriculum frequency for now - needs to be updated 
+	# Drop seat usage feed/plot for now - does not work well
+	# python3 python/instructor_training_seat_usage.py
+	# Drop curriculum frequency for now - needs to be updated
 	# python3 python/curriculum_teaching_frequency.py
 	python3 python/instructor_teaching_frequency.py
 	python3 python/checkout_steps.py
@@ -59,7 +59,7 @@ plots:
 
 ## incubator  : carpentries-incubator lesson feed
 incubator:
-	R -q -e "source('R/community_lessons.R')"
+	python3 python/community_lessons.py
 
 ## help-wanted: list of issues that have the label "help wanted"
 help-wanted:
@@ -67,7 +67,7 @@ help-wanted:
 
 ## lessons    : data feed for the repository information for all "official" lessons
 lessons:
-	R -q -e "source('R/curriculum_feed.R')"
+	python3 python/curriculum_feed.py
 
 ## site       : build files but do not run a server.
 ## some files created from the Redash query need to be copied to the
