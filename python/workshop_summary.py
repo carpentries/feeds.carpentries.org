@@ -11,7 +11,7 @@ import pandas as pd
 import pycountry
 
 REDASH_QUERY_125 = "https://redash.carpentries.org/api/queries/125/results.csv?api_key=ef7xp02JqDvg7JkEbxbElfg8ICgBaQEaXnz0NhQS"
-NATURAL_EARTH_COUNTRIES = "https://naciscdn.org/naturalearth/50m/cultural/ne_50m_admin_0_countries.zip"
+NATURAL_EARTH_COUNTRIES = "lib/ne_50m_admin_0_countries.zip"
 WORKSHOP_TYPES = {
     "SWC": "Software Carpentry",
     "DC": "Data Carpentry",
