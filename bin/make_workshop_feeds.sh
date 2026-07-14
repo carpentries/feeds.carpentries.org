@@ -20,7 +20,7 @@ curl "$REDASH_API_WORKSHOPS" | jq '
 ## all
 jq '
   map(select(.end_date | strptime("%Y-%m-%d")? | mktime < now)) |
-  sort_by(.start_date | strptime("%Y-%m-%d")? | mktime | reverse)
+  sort_by(.start_date | strptime("%Y-%m-%d")? | mktime) | reverse
 ' < "$OUTPUT_PATH"/all_workshops.json > "$OUTPUT_PATH"/all_past_workshops.json
 
 ## for each program
