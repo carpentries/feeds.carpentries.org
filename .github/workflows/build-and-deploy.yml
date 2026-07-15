@@ -161,9 +161,13 @@ jobs:
         run: |
           make website_stats || (echo "EXIT_STATUS=2" >> $GITHUB_ENV && echo 'an error occured; skipping website_stats')
         background: true
+
+      - name: Wait for all feeds to finish
+        # wait: ["mk_workshops", "mk_members", "mk_amy_curricula", "mk_newsletter", "mk_plots", "mk_incubator", "mk_help-wanted", "mk_lessons", "mk_memberships", "mk_partnerships", "mk_website_stats"]
+        wait-all:
+
       - name: Make site
         run: make site
-        wait: ["mk_workshops", "mk_members", "mk_amy_curricula", "mk_newsletter", "mk_plots", "mk_incubator", "mk_help-wanted", "mk_lessons", "mk_memberships", "mk_partnerships", "mk_website_stats"]
 
       - name: Deploy to AWS S3
         if: ${{ github.event_name != 'pull_request' }}
