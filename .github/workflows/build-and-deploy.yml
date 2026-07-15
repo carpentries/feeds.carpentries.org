@@ -43,7 +43,7 @@ jobs:
 
 
       ### Install R ------------------------------------------------------------
-      
+
       - name: "Set up R"
         uses: r-lib/actions/setup-r@v2
         with:
@@ -107,39 +107,65 @@ jobs:
       ### Finally --------------------------------------------------------------
 
       - name: Make workshops
+        id: mk_workshops
         run: |
           make workshops || (echo "EXIT_STATUS=2" >> $GITHUB_ENV && echo 'an error occured; skipping workshops')
+        background: true
       - name: Make members
-        run: |          
+        id: mk_members
+        run: |
           make members || (echo "EXIT_STATUS=2" >> $GITHUB_ENV && echo 'an error occured; skipping members')
+        background: true
       - name: Make amy_curricula
-        run: | 
+        id: mk_amy_curricula
+        run: |
           make amy_curricula || (echo "EXIT_STATUS=2" >> $GITHUB_ENV && echo 'an error occured; skipping curricula')
+        background: true
       - name: Make newsletter
+        id: mk_newsletter
         run: |
           make newsletter || (echo "EXIT_STATUS=2" >> $GITHUB_ENV && echo 'an error occured; skipping newsletter')
+        background: true
       - name: Make plots
+        id: mk_plots
         run: |
           make plots || (echo "EXIT_STATUS=2" >> $GITHUB_ENV && echo 'an error occured; skipping plots')
+        background: true
       - name: Make incubator
+        id: mk_incubator
         run: |
           make incubator || (echo "EXIT_STATUS=2" >> $GITHUB_ENV && echo 'an error occured; skipping incubator')
+        background: true
       - name: Make help-wanted
+        id: mk_help-wanted
         run: |
           make help-wanted || (echo "EXIT_STATUS=2" >> $GITHUB_ENV && echo 'an error occured; skipping help-wanted issues')
+        background: true
       - name: Make lessons
+        id: mk_lessons
         run: |
           make lessons || (echo "EXIT_STATUS=2" >> $GITHUB_ENV && echo 'an error occured; skipping lessons feed')
+        background: true
       - name: Make memberships
+        id: mk_memberships
         run: |
           make memberships || (echo "EXIT_STATUS=2" >> $GITHUB_ENV && echo 'an error occured; skipping memberships')
-
+        background: true
       - name: Make partnerships
+        id: mk_partnerships
         run: |
           make partnerships || (echo "EXIT_STATUS=2" >> $GITHUB_ENV && echo 'an error occured; skipping partnerships')
+        background: true
       - name: Make website_stats
+        id: mk_website_stats
         run: |
           make website_stats || (echo "EXIT_STATUS=2" >> $GITHUB_ENV && echo 'an error occured; skipping website_stats')
+        background: true
+
+      - name: Wait for all feeds to finish
+        # wait: ["mk_workshops", "mk_members", "mk_amy_curricula", "mk_newsletter", "mk_plots", "mk_incubator", "mk_help-wanted", "mk_lessons", "mk_memberships", "mk_partnerships", "mk_website_stats"]
+        wait-all:
+
       - name: Make site
         run: make site
 
