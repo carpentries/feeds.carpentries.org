@@ -6,11 +6,21 @@ import pandas as pd
 
 import pycountry
 
+WORKSHOP_TYPES = {
+    "SWC": "Software Carpentry",
+    "DC": "Data Carpentry",
+    "LC": "Library Carpentry",
+    "TTT": "Instructor Training",
+    "HPCC": "HPC Carpentry",
+    "AIC": "AI Carpentry",
+    "Circuits": "Mix & Match"
+}
+
 # Write some functions
 
-def get_country_name(char2): 
+def get_country_name(char2):
     """Converts two character country code into country name"""
-    
+
     try:
         return pycountry.countries.get(alpha_2=char2).name
     except:
@@ -19,21 +29,12 @@ def get_country_name(char2):
 get_country_name("US")
 
 
-
-def get_lesson_program(tags):
-    """Converts string of tags into lesson program name"""
-    if "TTT" in tags:
-        return "Instructor Training"
-    elif "SWC" in tags:
-        return "Software Carpentry"
-    elif "DC" in tags:
-        return "Data Carpentry"
-    elif "LC" in tags:
-        return "Library Carpentry"
-    elif "Circuits" in tags:
-        return "Mix and Match"
-    else:
-        return "Unknown"
+def get_lesson_program(tag_name):
+    tags = [tag.strip() for tag in str(tag_name).split(",")]
+    for tag in tags:
+        if tag in WORKSHOP_TYPES:
+            return WORKSHOP_TYPES[tag]
+    return None
 
 
 def admin_name(row):
@@ -69,7 +70,7 @@ workshops = data[data['administrator'] != 'IT']
 # Drop lesson onboardings (hacky way to do this)
 workshops = workshops[workshops['country'] != 'W3']
 
-# Get workshops by country and year  
+# Get workshops by country and year
 by_country_year =  workshops.groupby(['country_name', 'year'])['slug'].count().reset_index()
 by_country_year = by_country_year.pivot_table(index = 'country_name', columns='year', values='slug')
 by_country_year.fillna(0, inplace=True)
