@@ -153,6 +153,7 @@ jq -c '.[]' < /tmp/badged_people_clean.json |
             .iata, .latitude, .longitude,
             .person_email
           ))
+          | sort_by(.person_name) | reverse 
     '> "$OUTPUT_PATH"/all_badged_people.json
 
 

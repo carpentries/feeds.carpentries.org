@@ -6,7 +6,7 @@ OUTPUT_PATH=$1
 
 REDASH_API_WORKSHOPS="https://redash.carpentries.org/api/queries/125/results.json?api_key=ef7xp02JqDvg7JkEbxbElfg8ICgBaQEaXnz0NhQS"
 
-CARPENTRIES_PROGRAMS=('swc' 'dc' 'lc' 'ttt')
+CARPENTRIES_PROGRAMS=('swc' 'dc' 'lc' 'hpcc' 'aic' 'ttt')
 
 ## ALL workshops ---------------------------------------------------------------
 
@@ -20,7 +20,7 @@ curl "$REDASH_API_WORKSHOPS" | jq '
 ## all
 jq '
   map(select(.end_date | strptime("%Y-%m-%d")? | mktime < now)) |
-  sort_by(.start_date | strptime("%Y-%m-%d")? | mktime | reverse)
+  sort_by(.start_date | strptime("%Y-%m-%d")? | mktime) | reverse
 ' < "$OUTPUT_PATH"/all_workshops.json > "$OUTPUT_PATH"/all_past_workshops.json
 
 ## for each program

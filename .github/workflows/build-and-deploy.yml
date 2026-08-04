@@ -11,9 +11,8 @@ on:
 jobs:
   build-feeds:
     if: github.repository_owner == 'carpentries'
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     env:
-      RSPM: "https://packagemanager.posit.co/cran/__linux__/jammy/latest"
       REDASH_KEY_QUERY33: ${{ secrets.REDASH_KEY_QUERY33 }}
       REDASH_KEY_QUERY39: ${{ secrets.REDASH_KEY_QUERY39 }}
       REDASH_KEY_QUERY157: ${{ secrets.REDASH_KEY_QUERY157 }}
@@ -27,7 +26,6 @@ jobs:
       REDASH_KEY_QUERY524: ${{ secrets.REDASH_KEY_QUERY524}}
       REDASH_KEY_QUERY713: ${{ secrets.REDASH_KEY_QUERY713}}
       REDASH_KEY_QUERY803: ${{ secrets.REDASH_KEY_QUERY803}}
-      AIRTABLE_API_KEY: ${{ secrets.AIRTABLE_API_KEY }}
       REDASH_API_INSTRUCTORS_KEY: ${{ secrets.REDASH_API_INSTRUCTORS_KEY }}
       MAILCHIMP_NEWSLETTER_KEY: ${{ secrets.MAILCHIMP_NEWSLETTER_KEY }}
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
@@ -39,25 +37,10 @@ jobs:
 
     steps:
       - name: checkout the Repository
-        uses: actions/checkout@v6
-
-
-      ### Install R ------------------------------------------------------------
-      
-      - name: "Set up R"
-        uses: r-lib/actions/setup-r@v2
-        with:
-          use-public-rspm: true
-          install-r: false
-
-      - name: Install Pandoc
-        uses: r-lib/actions/setup-pandoc@v2
+        uses: actions/checkout@v7
 
       - name: Setup Apt
         run: sudo apt update -y
-
-      - name: Set up dependencies
-        uses: r-lib/actions/setup-r-dependencies@v2
 
       ### Install Ruby ---------------------------------------------------------
 
@@ -71,7 +54,7 @@ jobs:
           gem install bundler
 
       - name: Set up caching for Bundler
-        uses: actions/cache@v3
+        uses: actions/cache@v6
         with:
           path: .vendor/bundle
           key: gems-${{ hashFiles('**/Gemfile') }}
@@ -84,15 +67,14 @@ jobs:
           bundle install --jobs 4 --retry 3
           bundle update
 
-
       ### Install Python -------------------------------------------------------
 
       - name: Set up Python
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v6
         with:
           python-version: '3.x'
 
-      - uses: actions/cache@v3
+      - uses: actions/cache@v6
         with:
           path: ~/.cache/pip
           key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
@@ -102,44 +84,68 @@ jobs:
       - name: Install Python modules
         run: |
           python3 -m pip install --upgrade pip setuptools wheel
-          python3 -m pip install --user numpy scipy matplotlib ipython jupyter pandas plotly requests pycountry
+          python3 -m pip install --user -r requirements.txt
 
       ### Finally --------------------------------------------------------------
 
       - name: Make workshops
+        id: mk_workshops
         run: |
           make workshops || (echo "EXIT_STATUS=2" >> $GITHUB_ENV && echo 'an error occured; skipping workshops')
+        background: true
       - name: Make members
-        run: |          
+        run: |
           make members || (echo "EXIT_STATUS=2" >> $GITHUB_ENV && echo 'an error occured; skipping members')
+        background: true
       - name: Make amy_curricula
-        run: | 
+        run: |
           make amy_curricula || (echo "EXIT_STATUS=2" >> $GITHUB_ENV && echo 'an error occured; skipping curricula')
+        background: true
       - name: Make newsletter
+        id: mk_newsletter
         run: |
           make newsletter || (echo "EXIT_STATUS=2" >> $GITHUB_ENV && echo 'an error occured; skipping newsletter')
+        background: true
       - name: Make plots
+        id: mk_plots
         run: |
           make plots || (echo "EXIT_STATUS=2" >> $GITHUB_ENV && echo 'an error occured; skipping plots')
+        background: true
       - name: Make incubator
+        id: mk_incubator
         run: |
           make incubator || (echo "EXIT_STATUS=2" >> $GITHUB_ENV && echo 'an error occured; skipping incubator')
+        background: true
       - name: Make help-wanted
+        id: mk_help-wanted
         run: |
           make help-wanted || (echo "EXIT_STATUS=2" >> $GITHUB_ENV && echo 'an error occured; skipping help-wanted issues')
+        background: true
       - name: Make lessons
+        id: mk_lessons
         run: |
           make lessons || (echo "EXIT_STATUS=2" >> $GITHUB_ENV && echo 'an error occured; skipping lessons feed')
+        background: true
       - name: Make memberships
+        id: mk_memberships
         run: |
           make memberships || (echo "EXIT_STATUS=2" >> $GITHUB_ENV && echo 'an error occured; skipping memberships')
-
+        background: true
       - name: Make partnerships
+        id: mk_partnerships
         run: |
           make partnerships || (echo "EXIT_STATUS=2" >> $GITHUB_ENV && echo 'an error occured; skipping partnerships')
+        background: true
       - name: Make website_stats
+        id: mk_website_stats
         run: |
           make website_stats || (echo "EXIT_STATUS=2" >> $GITHUB_ENV && echo 'an error occured; skipping website_stats')
+        background: true
+
+      - name: Wait for all feeds to finish
+        # wait: ["mk_workshops", "mk_members", "mk_amy_curricula", "mk_newsletter", "mk_plots", "mk_incubator", "mk_help-wanted", "mk_lessons", "mk_memberships", "mk_partnerships", "mk_website_stats"]
+        wait-all:
+
       - name: Make site
         run: make site
 
