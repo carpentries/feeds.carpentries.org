@@ -102,7 +102,7 @@ Send2Trash==2.1.0
 shapely==2.1.2
 simplejson==4.1.1
 six==1.17.0
-soupsieve==2.8.4
+soupsieve==2.9
 stack-data==0.6.3
 terminado==0.18.1
 tinycss2==1.5.1
