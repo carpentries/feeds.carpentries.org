@@ -41,6 +41,7 @@ def expand_full_name(org):
         "datacarpentry": "Data Carpentry",
         "librarycarpentry": "Library Carpentry",
         "swcarpentry": "Software Carpentry",
+        "hpc-carpentry": "High Performance Computing Carpentry"
     }
     if org not in names:
         raise ValueError(f"Unrecognised organisation: '{org}'")
@@ -117,9 +118,14 @@ def extract_tag(repo_data, dict_tags, field_name, approach="include", allow_mult
     if len(extracted_tag) == 0:
         if not allow_empty:
             tags_str = ", ".join(dict_tags)
-            raise ValueError(
-                f"No tag found among ({tags_str}) for repo: {repo_data['full_name']}"
-            )
+            # write to GITHUB_STEP_SUMMARY GHA env
+            github_step_summary = os.getenv("GITHUB_STEP_SUMMARY")
+            if github_step_summary:
+                with open(github_step_summary, "a") as summary_file:
+                    summary_file.write(f"::error::No tag found among ({tags_str}) for repo: {repo_data['full_name']}\n")
+            #raise ValueError(
+            #    f"No tag found among ({tags_str}) for repo: {repo_data['full_name']}"
+            #)
         repo_data[field_name] = [] if allow_multiple else ""
     else:
         repo_data[field_name] = extracted_tag if allow_multiple else [extracted_tag[0]]
