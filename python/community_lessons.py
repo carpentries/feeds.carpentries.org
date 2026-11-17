@@ -179,15 +179,16 @@ def make_community_lessons_feed(path):
             allow_multiple=False,
             allow_empty=False,
         )
-        repo = extract_tag(
-            repo,
-            COMMON_TAGS,
-            "lesson_tags",
-            approach="exclude",
-            allow_multiple=True,
-            allow_empty=True,
-        )
+
         if repo:
+            repo = extract_tag(
+                repo,
+                COMMON_TAGS,
+                "lesson_tags",
+                approach="exclude",
+                allow_multiple=True,
+                allow_empty=True,
+            )
             processed.append(repo)
 
     check_repo_info(processed, ["description", "rendered_site"])
