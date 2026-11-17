@@ -118,11 +118,10 @@ def extract_tag(repo_data, dict_tags, field_name, approach="include", allow_mult
     if len(extracted_tag) == 0:
         if not allow_empty:
             tags_str = ", ".join(dict_tags)
-            # write to GITHUB_STEP_SUMMARY GHA env
             github_step_summary = os.getenv("GITHUB_STEP_SUMMARY")
             if github_step_summary:
                 with open(github_step_summary, "a") as summary_file:
-                    summary_file.write(f"::error::No tag found among ({tags_str}) for repo: {repo_data['full_name']}\n")
+                    summary_file.write(f"❗ No tag found among ({tags_str}) for repo: [{repo_data['full_name']}](https://github.com/{repo_data['full_name']})\n")
             #raise ValueError(
             #    f"No tag found among ({tags_str}) for repo: {repo_data['full_name']}"
             #)
@@ -138,6 +137,10 @@ def check_missing_repo_info(rows, field):
     missing = [row["repo_url"] for row in rows if not str(row.get(field, "")).strip()]
     if missing:
         urls = "\n".join([f"  - {url}" for url in missing])
+        github_step_summary = os.getenv("GITHUB_STEP_SUMMARY")
+        if github_step_summary:
+            with open(github_step_summary, "a") as summary_file:
+                summary_file.write(f"❗ Missing repo {field} for:\n{urls}\n")
         return f"Missing repo {field} for:\n{urls}\n"
     return None
 
