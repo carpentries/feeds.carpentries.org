@@ -125,6 +125,7 @@ def extract_tag(repo_data, dict_tags, field_name, approach="include", allow_mult
             #raise ValueError(
             #    f"No tag found among ({tags_str}) for repo: {repo_data['full_name']}"
             #)
+            return None
         repo_data[field_name] = [] if allow_multiple else ""
     else:
         repo_data[field_name] = extracted_tag if allow_multiple else [extracted_tag[0]]
@@ -186,7 +187,8 @@ def make_community_lessons_feed(path):
             allow_multiple=True,
             allow_empty=True,
         )
-        processed.append(repo)
+        if repo:
+            processed.append(repo)
 
     check_repo_info(processed, ["description", "rendered_site"])
 
