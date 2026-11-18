@@ -2,6 +2,9 @@
 
 # Import all the things
 import json
+from urllib3.util import Retry
+from requests import Session
+from requests.adapters import HTTPAdapter
 import os
 import requests
 
@@ -25,8 +28,20 @@ def get_json(url, headers, params=None):
     * Authentication headers as dict
     * Optional params to pass to API call
     Returns the retrieved json or error message
+
+    Use HTTPAdapter to force retry 3x 
     """
-    r = requests.get(url, headers=headers, params=params)
+    session = requests.Session()
+    retries = Retry(
+        total=3,
+        backoff_factor=0.1,
+        status_forcelist=[492, 500, 502, 503, 504],
+        allowed_methods={'POST'},
+    )
+    session.mount('https://', HTTPAdapter(max_retries=retries))
+
+    r = session.get(url, headers=headers, params=params)
+
     if r.status_code != 200:
         print(f"Failed to retrieve data: {r.status_code}, {r.json()}")
         return r.status_code
